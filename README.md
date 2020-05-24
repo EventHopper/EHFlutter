@@ -11,7 +11,7 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 
 </center>
 
-### For Developers: 
+### For EHFlutter Developers: 
 **1. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
 ```diff
 + color = selectedGender == Gender.MALE ? activeCardColour : inactiveCardColour
