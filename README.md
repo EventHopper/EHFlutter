@@ -15,7 +15,15 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 
 </center>
 
-## Workflow Rules for EHFlutter Developers: 
+# For EHFlutter Developers
+
+<br>
+
+## Releases:
+
+![](docs/releaseExplanation.PNG)
+
+## Workflow Rules:
 
 **1. Version Branches Never Break**: <br>
 "Master" sometimes is seen as the branch that is most official, however from the very beginning, **we will be using a remote branches per development phase that represent a particular version of the app (i.e. alpha, beta, stable)**. Group consensus is required for a push to one of the version branches as eventually these branches <br><br>
