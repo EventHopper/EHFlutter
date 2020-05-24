@@ -57,11 +57,12 @@ Please review and refer to [Dart Style Guide](https://dart.dev/guides/language/e
 <em><br><a href="https://dev.to/shreyasminocha/what-do-you-think-about-the-ternary-operator-5ajg" target="_blank">comment on ternary operators</a></em>
 </p>
 
-#### **2. Don't be afraid to use Functions as 1st Order Objects** <br> Example: <br>
+#### **2. Don't be afraid to use Functions as 1st Order Objects**
+<br> Dart allows you to pass functions as objects which can be very useful for custom widgets. Where there is an opportunity to modularize code, and generify functionality of a widget definitely take it within reason! We would like to keep the code as D.R.Y as possible and reuse of generic widgets can be helpful in this regard.
+
 ```diff
 +  final Function onPress;
 ```
-<br> Dart allows you to pass functions as objects which can be very useful for custom widgets. Where there is an opportunity to modularize code, and generify functionality of a widget definitely take it within reason! We would like to keep the code as D.R.Y as possible and reuse of generic widgets can be helpful in this regard.
 
 #### **3. Respect the lib folder (Package layout conventions)** <br>
 The **lib folder** contains all local dart packages/files and it is important that appropriate structure is maintained. This includes the assets folder and its subfolders, the constants.dart file which dictates constants throughout the app etc. The following is an example of appropriate project folder structure for an project called 'enchilada':
