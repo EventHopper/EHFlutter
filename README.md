@@ -104,3 +104,22 @@ enchilada/
  ```
 
  <br> Please note, that while asset folders in dart can have any name (as long as the path is specified in the pubspec.yaml file), **we will put all assets inside of a universal assets folder**. Subsequent subdirectories can be named at the discretion of the developer. The reason for the universal subfolder is so that all assets can be dictated in the pubspec.yaml file with the simple path '/assets.' This will keep the pubspec.yaml file as clean and efficient as possible. For more on Package layout conventions see the [dart developer docs](https://dart.dev/tools/pub/package-layout).
+ 
+ #### **4.Constants.dart** <br>
+ constants.dart is a very important file for ensuring uniformity accross the app. Please note there are some brilliant conventions for style utilized in constants.dart that ensure enhanced productivity. For starters, all const variables in constants.dart must begin with a leading 'k' as so:
+  ```
+import 'package:flutter/material.dart';
+
+const kBottomContainerHeight = 80.0;
+const kActiveCardColour = Color(0xFF1d1e33);
+const kInactiveCardColour = Color(0xFF111328);
+const kButtonColour = Color(0xFFD01247);
+const double kIconSize = 80.0;
+const kLabelTextStyle = TextStyle(color: Color(0xFF8D8E98), fontSize: 18);
+
+ ```
+ 
+**Why do this?** Because Dart is Smart! <br>
+Dart looks for instances of the developer typing 'k' when applying a value to an attribute and automatically populates a list of all constants for you to choose from which can save on time and ensure uniformity accross the app.
+
+![](/docs/constants.PNG)
