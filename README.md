@@ -24,7 +24,7 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 
 ![](docs/releaseExplanation2.png)
 
-At each development phase we will create a release. What is a release? A release is simply a neatly packaged **executable form** of the project. In this case, a release will be comprised of a few files - specifically Andriod APK, iOS IPA and WebApp files. These files will represent the project in it's complete form at a given point in the development phase (i.e. alpha, beta, stable, experimental etc.). Read more about releases in the **Version Branches** section of Workflow Rules below.
+At each development phase we will create a release. **What is a release?** A release is simply a neatly packaged **executable form** of the project. In this case, a release will be comprised of a few files - specifically Andriod APK, iOS IPA and WebApp files. These files will represent the project in it's complete form at a given point in the development phase (i.e. alpha, beta, stable, experimental etc.). Read more about releases in the **Version Branches** section of Workflow Rules below.
 
 ## Workflow Rules:
 
