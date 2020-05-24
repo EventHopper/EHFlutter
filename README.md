@@ -1,5 +1,7 @@
 # EventHopper Flutter (EHFlutter)
-## This Repository Contains All Relevant EventHopper Web & Mobile App Code
+#### This Repository Contains All Relevant EventHopper Web & Mobile App Code
+
+## Feature Review
 
 The following tables detail feature specifications and corresponding mockups:
 
@@ -11,7 +13,7 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 
 </center>
 
-### For EHFlutter Developers: 
+## Best Practices for EHFlutter Developers: 
 **1. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
 ```diff
 + color = selectedGender == Gender.MALE ? activeCardColour : inactiveCardColour
