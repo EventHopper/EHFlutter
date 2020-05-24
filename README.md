@@ -28,7 +28,7 @@ At each development phase we will create a release. What is a release? A release
 ## Workflow Rules:
 
 **1. Version Branches**: <br>
-"Master" sometimes is seen as the branch that is most official, however from the very beginning, **we will be using a remote branches per development phase that represent a particular version of the app (i.e. alpha, beta, stable)**. Group consensus is required for a push to one of the version branches as eventually these branches <br><br>
+"Master" sometimes is seen as the branch that is "most official" or up-to-date, however, and from the very beginning, **we will be working on a remote branch per development phase that represent a particular version of the app (i.e. alpha, beta, stable)**. Group consensus is required for a push to one of the version branches as eventually these branches <br><br>
 **2. Always Open an Issue for a Feature**: <br>
 This is an important one. To track progress and ensure good project structure, an **issue must be created per feature** within the relevant project. <br><br>
 **3. Always Add a Reviewer Before Merging**: <br>
