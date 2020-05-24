@@ -1,6 +1,7 @@
 # EHFlutter <br> 
 ### EventHopper Flutter
-##### This Repository Contains All Relevant EventHopper Web & Mobile App Code
+##### This Repository Contains All Relevant EventHopper Web & Mobile App Code. This README file contains relevant information for all EHFlutter Developers and will ensure consistency in development practices to minimize breakages.
+<br>
 
 ## Feature Review
 
@@ -15,10 +16,15 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 </center>
 
 ## Workflow Rules for EHFlutter Developers: 
-**1. Always Open an Issue for a Feature**: <br>
+
+**1. Version Branches Never Break**: <br>
+"Master" sometimes is seen as the branch that is most official, however from the very beginning, **we will be using a remote branches per development phase that represent a particular version of the app (i.e. alpha, beta, stable)**. Group consensus is required for a push to one of the version branches as eventually these branches <br><br>
+**2. Always Open an Issue for a Feature**: <br>
 This is an important one. To track progress and ensure good project structure, an **issue must be created per feature** within the relevant project. <br><br>
-**2. Always Add a Reviewer**: <br>
+**3. Always Add a Reviewer Before Merging**: <br>
 No code is to be merged into master without review from another developer. A reviewer can be added to a particular commit. **For flutter-related code, add @kylermintah as a reviewer.**<br><br>
+**4. Always Work on a Separate Branch per Feature (BPF)**: <br>
+Branch Per Feature (BPF) is a commonly used methodology to upkeep Quality Assurance (QA)<br><br>
 
 ## Style Notes for EHFlutter Developers: <br>
 Please review and refer to [Dart Style Guide](https://dart.dev/guides/language/effective-dart/style) for style consistency.
