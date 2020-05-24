@@ -1,6 +1,8 @@
 # EventHopper Flutter (EHFlutter)
-This repository contains all relevant EventHopper web and mobile app code
+### This Repository Contains All Relevant EventHopper Web & Mobile App Code
+
+The following tables detail feature specifications and corresponding mockups:
 
 Messaging Feature             |  Mockup
 :-------------------------:|:-------------------------:
-Groupchats are created each time an event is organized|  ![](docs/Messages.png) 
+Groupchats are created each <br/> time an event is organized |  <img src="docs/Messages.png" alt="drawing" width="200"/>
