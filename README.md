@@ -21,11 +21,13 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 
 ## Releases:
 
-![](docs/releaseExplanation.PNG)
+![](docs/releaseExplanation2.png)
+
+At each development phase we will create a release. What is a release? A release is simply a neatly packaged **executable form** of the project. In this case, a release will be comprised of a few files - specifically Andriod APK, iOS IPA and WebApp files. These files will represent the project in it's complete form at a given point in the development phase (i.e. alpha, beta, stable, experimental etc.). Read more about releases in the **Version Branches** section of Workflow Rules below.
 
 ## Workflow Rules:
 
-**1. Version Branches Never Break**: <br>
+**1. Version Branches**: <br>
 "Master" sometimes is seen as the branch that is most official, however from the very beginning, **we will be using a remote branches per development phase that represent a particular version of the app (i.e. alpha, beta, stable)**. Group consensus is required for a push to one of the version branches as eventually these branches <br><br>
 **2. Always Open an Issue for a Feature**: <br>
 This is an important one. To track progress and ensure good project structure, an **issue must be created per feature** within the relevant project. <br><br>
