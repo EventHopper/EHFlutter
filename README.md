@@ -26,5 +26,5 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 >Ternary Operators are great for widget trees and can simplify code. However, please also note that it is important to ensure good formatting to maintain ternary operator code readability:<br>
 <p align="center">
 <img src="./docs/thecaseforternaryoperator.PNG" alt="drawing" width="600"/>
-<em><br><a href="https://dev.to/shreyasminocha/what-do-you-think-about-the-ternary-operator-5ajg">comment on ternary operators</a></em>
+<em><br><a href="https://dev.to/shreyasminocha/what-do-you-think-about-the-ternary-operator-5ajg" target="_blank">comment on ternary operators</a></em>
 </p>
