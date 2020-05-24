@@ -28,19 +28,19 @@ At each development phase we will create a release. **What is a release?** A rel
 
 ## Workflow Rules:
 
-**1. Version Branches**: <br>
+#### **1. Version Branches**: <br>
 "Master" sometimes is seen as the branch that is "most official" or up-to-date, however, and from the very beginning, **we will be working on a remote branch per development phase that represent a particular version of the app (i.e. alpha, beta, stable)**. Group consensus is required for a push to one of the version branches as eventually these branches <br><br>
-**2. Always Open an Issue for a Feature**: <br>
+#### **2. Always Open an Issue for a Feature**: <br>
 This is an important one. To track progress and ensure good project structure, an **issue must be created per feature** within the relevant project. <br><br>
-**3. Always Add a Reviewer Before Merging**: <br>
+#### **3. Always Add a Reviewer Before Merging**: <br>
 No code is to be merged into master without review from another developer. A reviewer can be added to a particular commit. **For flutter-related code, add [@kylermintah](https://www.github.com/kylermintah) as a reviewer.**<br><br>
-**4. Always Work on a Separate Branch per Feature (BPF)**: <br>
+#### **4. Always Work on a Separate Branch per Feature (BPF)**: <br>
 Branch Per Feature (BPF) is a commonly used methodology to upkeep Quality Assurance (QA)<br><br>
 
 ## Style Notes: <br>
 Please review and refer to [Dart Style Guide](https://dart.dev/guides/language/effective-dart/style) for style consistency.
 <br>
-**1. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
+#### **1. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
 ```diff
 + color = selectedGender == Gender.MALE ? activeCardColour : inactiveCardColour
 
@@ -57,13 +57,13 @@ Please review and refer to [Dart Style Guide](https://dart.dev/guides/language/e
 <em><br><a href="https://dev.to/shreyasminocha/what-do-you-think-about-the-ternary-operator-5ajg" target="_blank">comment on ternary operators</a></em>
 </p>
 
-**2. Don't be afraid to use Functions as 1st Order Objects** <br> Example: <br>
+#### **2. Don't be afraid to use Functions as 1st Order Objects** <br> Example: <br>
 ```diff
 +  final Function onPress;
 ```
 <br> Dart allows you to pass functions as objects which can be very useful for custom widgets. Where there is an opportunity to modularize code, and generify functionality of a widget definitely take it within reason! We would like to keep the code as D.R.Y as possible and reuse of generic widgets can be helpful in this regard.
 
-**3. Respect the lib folder (Package layout conventions)** <br>
+#### **3. Respect the lib folder (Package layout conventions)** <br>
 The **lib folder** contains all local dart packages/files and it is important that appropriate structure is maintained. This includes the assets folder and its subfolders, the constants.dart file which dictates constants throughout the app etc. The following is an example of appropriate project folder structure for an project called 'enchilada':
 
 ```diff
