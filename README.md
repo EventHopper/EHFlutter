@@ -12,7 +12,7 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 </center>
 
 ### For Developers: 
-**Please utilize Ternary Operators wherever possible.** <br> Example: <br>
+**1. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
 ```diff
 + color = selectedGender == Gender.MALE ? activeCardColour : inactiveCardColour
 
@@ -23,4 +23,7 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 - }
 ```
 
-Ternary Operators are great for widget trees in certain cases.
+Ternary Operators are great for widget trees and can simplify code. It is important to ensure good formatting to maintain readability:<br>
+<p align="center">
+<img src="./docs/thecaseforternaryoperator.PNG" alt="drawing" width="600"/>
+</p>
