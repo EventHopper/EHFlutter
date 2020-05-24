@@ -19,7 +19,9 @@ This is an important one. To track progress and ensure good project structure, a
 **2. Always Add a Reviewer**: <br>
 No code is to be merged into master without review from another developer. A reviewer can be added to a particular commit. **For flutter-related code, add @kylermintah as a reviewer.**<br><br>
 
-## Style Notes for EHFlutter Developers: 
+## Style Notes for EHFlutter Developers: <br>
+Please review and refer to ![Dart Style Guide](https://dart.dev/guides/language/effective-dart/style) for style consistency.
+<br>
 **1. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
 ```diff
 + color = selectedGender == Gender.MALE ? activeCardColour : inactiveCardColour
