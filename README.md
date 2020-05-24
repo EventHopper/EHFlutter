@@ -1,5 +1,6 @@
-# EHFlutter (EventHopper Flutter)
-#### This Repository Contains All Relevant EventHopper Web & Mobile App Code
+# EHFlutter <br> 
+### EventHopper Flutter
+##### This Repository Contains All Relevant EventHopper Web & Mobile App Code
 
 ## Feature Review
 
