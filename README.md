@@ -59,17 +59,47 @@ Please review and refer to [Dart Style Guide](https://dart.dev/guides/language/e
 
 **2. Don't be afraid to use Functions as 1st Order Objects** <br> Example: <br>
 ```diff
-+ color = selectedGender == Gender.MALE ? activeCardColour : inactiveCardColour
-
-- if (selectedGender == Gender.MALE) {
--   color = activeCardColour;
-- } else {
--   color = inactiveCardColour;
-- }
++  final Function onPress;
 ```
+<br> Dart allows you to pass functions as objects which can be very useful for custom widgets. Where there is an opportunity to modularize code, and generify functionality of a widget definitely take it within reason! We would like to keep the code as D.R.Y as possible and reuse of generic widgets can be helpful in this regard.
 
->Ternary Operators are great for widget trees and can simplify code. However, please also note that it is important to ensure good formatting to maintain ternary operator code readability:<br>
-<p align="center">
-<img src="./docs/thecaseforternaryoperator.PNG" alt="drawing" width="600"/>
-<em><br><a href="https://dev.to/shreyasminocha/what-do-you-think-about-the-ternary-operator-5ajg" target="_blank">comment on ternary operators</a></em>
-</p>
+**3. Respect the lib folder (Package layout conventions)** <br>
+The **lib folder** contains all local dart packages/files and it is important that appropriate structure is maintained. This includes the assets folder and its subfolders, the constants.dart file which dictates constants throughout the app etc. The following is an example of appropriate project folder structure:
+
+```diff
+enchilada/
+  .dart_tool/ *
+  .packages *
+  pubspec.yaml
+  pubspec.lock **
+  LICENSE
+  README.md
+  CHANGELOG.md
+  benchmark/
+    make_lunch.dart
+  bin/
+    enchilada
+  doc/
+    api/ ***
+    getting_started.md
+  example/
+    main.dart
+  lib/
+    enchilada.dart
+    tortilla.dart
+    guacamole.css
+    src/
+      beans.dart
+      queso.dart
+  test/
+    enchilada_test.dart
+    tortilla_test.dart
+  tool/
+    generate_docs.dart
+  web/
+    index.html
+    main.dart
+    style.css
+ ```
+
+ <br> Please note, that while asset folders in dart can have any name (as long as the path is specified in the pubspec.yaml file), **we will put all assets inside of a universal assets folder**. Subsequent subdirectories can be named at the discretion of the developer. The reason for the universal subfolder is so that all assets can be dictated in the pubspec.yaml file with the simple path '/assets.' This will keep the pubspec.yaml file as clean and efficient as possible. For more on Package layout conventions see the [dart developer docs](https://dart.dev/tools/pub/package-layout).
