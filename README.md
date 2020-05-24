@@ -15,7 +15,7 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 
 </center>
 
-# For EHFlutter Developers
+# For EHF Developers
 
 <br>
 
