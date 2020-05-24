@@ -37,7 +37,7 @@ No code is to be merged into master without review from another developer. A rev
 **4. Always Work on a Separate Branch per Feature (BPF)**: <br>
 Branch Per Feature (BPF) is a commonly used methodology to upkeep Quality Assurance (QA)<br><br>
 
-## Style Notes for EHFlutter Developers: <br>
+## Style Notes: <br>
 Please review and refer to [Dart Style Guide](https://dart.dev/guides/language/effective-dart/style) for style consistency.
 <br>
 **1. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
