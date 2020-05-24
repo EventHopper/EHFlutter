@@ -1,7 +1,7 @@
 # EHFlutter <br> 
 ### EventHopper Flutter
 #### This Repository Contains All Relevant EventHopper Web & Mobile App Code. 
-<br> This README file contains relevant information for all EHFlutter Developers and will ensure consistency in development practices to minimize breakages.
+<br> This README file contains relevant information for all EHFlutter Developers and will ensure consistency in development practices towards our feature goals while minimizing breakages.
 <br>
 
 ## Feature Review
