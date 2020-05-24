@@ -123,6 +123,6 @@ const kLabelTextStyle = TextStyle(color: Color(0xFF8D8E98), fontSize: 18);
 >Dart looks for instances of the developer typing 'k' when applying a value to an attribute and automatically populates a list of all constants for you to choose from which can save on time and ensure uniformity accross the app.
 <p align="center">
 <img src="./docs/constants.PNG" width="400"/>
-<em><br><a href="https://dev.to/shreyasminocha/what-do-you-think-about-the-ternary-operator-5ajg" target="_blank">constants appear like magic wherever you need them!</a></em>
+<em><br><a href="" target="_blank">constants appear like magic wherever you need them!</a></em>
 </p>
-Funny enough this is referred to as variable prefixing and seems to be frowned upon in the Dart developer docs, but let's do it anyway because it's really convinient.
+Funny enough this is referred to as variable prefixing and arose from [Hungarian Notation](https://en.wikipedia.org/wiki/Hungarian_notation). It seems to be [frowned upon in the Dart developer docs](https://dart.dev/guides/language/effective-dart/style#dont-use-prefix-letters), but let's do it anyway because it's really convinient.
