@@ -14,7 +14,11 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 </center>
 
 ## Best Practices for EHFlutter Developers: 
-**1. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
+**1. Always Open an Issue for a Feature**: <br>
+This is an important one. To track progress and ensure good project structure, an **issue must be created per feature** within the relevant project. <br><br>
+**2. Always Add a Reviewer**: <br>
+No code is to be merged into master without review from another developer. A reviewer can be added to a particular commit. **For flutter-related code, add @kylermintah as a reviewer.**<br><br>
+**3. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
 ```diff
 + color = selectedGender == Gender.MALE ? activeCardColour : inactiveCardColour
 
