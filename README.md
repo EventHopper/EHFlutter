@@ -33,7 +33,7 @@ At each development phase we will create a release. **What is a release?** A rel
 **2. Always Open an Issue for a Feature**: <br>
 This is an important one. To track progress and ensure good project structure, an **issue must be created per feature** within the relevant project. <br><br>
 **3. Always Add a Reviewer Before Merging**: <br>
-No code is to be merged into master without review from another developer. A reviewer can be added to a particular commit. **For flutter-related code, add @kylermintah as a reviewer.**<br><br>
+No code is to be merged into master without review from another developer. A reviewer can be added to a particular commit. **For flutter-related code, add [@kylermintah](https://www.github.com/kylermintah) as a reviewer.**<br><br>
 **4. Always Work on a Separate Branch per Feature (BPF)**: <br>
 Branch Per Feature (BPF) is a commonly used methodology to upkeep Quality Assurance (QA)<br><br>
 
@@ -41,6 +41,23 @@ Branch Per Feature (BPF) is a commonly used methodology to upkeep Quality Assura
 Please review and refer to [Dart Style Guide](https://dart.dev/guides/language/effective-dart/style) for style consistency.
 <br>
 **1. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
+```diff
++ color = selectedGender == Gender.MALE ? activeCardColour : inactiveCardColour
+
+- if (selectedGender == Gender.MALE) {
+-   color = activeCardColour;
+- } else {
+-   color = inactiveCardColour;
+- }
+```
+
+>Ternary Operators are great for widget trees and can simplify code. However, please also note that it is important to ensure good formatting to maintain ternary operator code readability:<br>
+<p align="center">
+<img src="./docs/thecaseforternaryoperator.PNG" alt="drawing" width="600"/>
+<em><br><a href="https://dev.to/shreyasminocha/what-do-you-think-about-the-ternary-operator-5ajg" target="_blank">comment on ternary operators</a></em>
+</p>
+
+**2. Don't be afraid to use Functions as 1st Order Objects** <br> Example: <br>
 ```diff
 + color = selectedGender == Gender.MALE ? activeCardColour : inactiveCardColour
 
