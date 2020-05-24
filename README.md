@@ -18,6 +18,7 @@ Groupchats are created each <br/> time an event is organized |  <img src="docs/M
 # For EHF Developers
 
 <br>
+Please see details below pertaining to EventHopper Flutter (EHF) developers to review best practices and approaches for development for EventHopper within the Flutter ecosystem.<br>
 
 ## Releases:
 
