@@ -9,10 +9,10 @@ The following tables detail feature specifications and corresponding mockups:
 
 <center>
 
-Feature            |  Mockup
-:-------------------------:|:-------------------------:
-Groupchats are created each <br/> time an event is organized |  <img src="docs/Messages.png" alt="drawing" width="200"/>
-Swipe view allows users to swipe through events<br/> in their area based on their likes and preferences.<br/> <br/> **Swipe Up:** Invite Friends<br/> **Swipe Left:** Ignore<br/> **Swipe Right:** Add to shortlist<br/> **Swipe Down:** Save for Later|  <img src="/docs/demo_invite.gif" alt="drawing" width="200" height="440"/> <img src="/docs/Swipe-View-Movies.png" alt="drawing" width="200" height="440"/>
+Feature                   |  Mockup
+:-------------------------|:-------------------------:
+ **Groupchat Feature** <br><br>**Lead Dev: [@kylermintah](https://github.com/kylermintah)**<br><br>Groupchats are (optionally) created each time <br> an event is organized. Invited friends are added <br> to the group. This will assist users with logistics. | <img src="docs/Messages.png" alt="drawing" width="200"/>
+**Event Swipe Feature** <br><br>**Lead Dev: [@batchema](https://github.com/batchema)**<br><br>Swipe view allows users to swipe through events<br/> in their area based on their likes and preferences.<br/> <br/> **Swipe Up:** Invite Friends<br/> **Swipe Left:** Ignore<br/> **Swipe Right:** Add to shortlist<br/> **Swipe Down:** Save for Later|  <img src="/docs/demo_invite.gif" alt="drawing" width="200" height="440"/> <img src="/docs/Swipe-View-Movies.png" alt="drawing" width="200" height="440"/>
 
 </center>
 
