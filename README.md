@@ -143,6 +143,10 @@ Udemy and LinkedIn Learning have great resources for Flutter Development. Recomm
 **[The Complete 2020 Flutter Development Bootcamp with Dart](https://www.udemy.com/course/flutter-bootcamp-with-dart/learn/lecture/14485620#content)**<br>4.7 (15,661 ratings)
 55,299 students enrolled
 
-**[LinkedIn Learning Flutter Development](https://www.linkedin.com/learning/search?keywords=flutter)**
+**[LinkedIn Learning Flutter Development](https://www.linkedin.com/learning/search?keywords=flutter)** (Free!)
+
+**[London App Brewery](https://www.appbrewery.co/)**<br>
+A great team dishing out a bunch of comprehensive courses on app development (and not just the technical side).
 
 Note: https://www.youtube.com/watch?v=rkgPvXWjSpI
+
