@@ -3,7 +3,7 @@
 <br> This README file contains relevant information for all EHFlutter Developers and will ensure consistency in development practices towards our feature goals while minimizing breakages.
 <br>
 
-## Feature Review
+## User-Facing Feature Review
 
 The following tables detail feature specifications and corresponding mockups:
 
@@ -17,6 +17,11 @@ Feature Details           |  Mockup
 
 </center>
 
+## Partner-Facing Feature Review
+Feature Details           |  Mockup
+:-------------------------|:-------------------------:
+ **Event Creation Feature** <br><br>**Lead Dev: [@tbd](https://github.com/EventHopper/EHFlutter)**<br><br> Details Pending
+ 
 # For EHF Developers
 
 <br>
