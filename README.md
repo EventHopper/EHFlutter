@@ -134,3 +134,15 @@ const kLabelTextStyle = TextStyle(color: Color(0xFF8D8E98), fontSize: 18);
 </p>
 
 >Funny enough this is referred to as variable prefixing and arose from [Hungarian Notation](https://en.wikipedia.org/wiki/Hungarian_notation). It seems to be [frowned upon in the Dart developer docs](https://dart.dev/guides/language/effective-dart/style#dont-use-prefix-letters), but let's do it anyway because it's really convinient.
+
+
+## Learning:
+
+Udemy and LinkedIn Learning have great resources for Flutter Development. Recommedned course links below:
+
+**[The Complete 2020 Flutter Development Bootcamp with Dart](https://www.udemy.com/course/flutter-bootcamp-with-dart/learn/lecture/14485620#content)**<br>4.7 (15,661 ratings)
+55,299 students enrolled
+
+**[LinkedIn Learning Flutter Development](https://www.linkedin.com/learning/search?keywords=flutter)**
+
+Note: https://www.youtube.com/watch?v=rkgPvXWjSpI
