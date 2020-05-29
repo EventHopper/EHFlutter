@@ -12,7 +12,7 @@ The following tables detail feature specifications and corresponding mockups:
 Messaging Feature             |  Mockup
 :-------------------------:|:-------------------------:
 Groupchats are created each <br/> time an event is organized |  <img src="docs/Messages.png" alt="drawing" width="200"/>
-Swipe view allows users to swipe through events<br/> in their area based on their likes and preferences.<br/> <br/> **Swipe Up:** Invite Friends<br/> **Swipe Left:** Ignore<br/> **Swipe Right:** Add to shortlist<br/> **Swipe Down:** Save for Later|  <img src="/docs/Swipe-View-Fashion.png" alt="drawing" width="200"/> <img src="/docs/Swipe-View-Movies.png" alt="drawing" width="200"/>
+Swipe view allows users to swipe through events<br/> in their area based on their likes and preferences.<br/> <br/> **Swipe Up:** Invite Friends<br/> **Swipe Left:** Ignore<br/> **Swipe Right:** Add to shortlist<br/> **Swipe Down:** Save for Later|  <img src="/docs/demo_invite.gif" alt="drawing" width="200"/> <img src="/docs/Swipe-View-Movies.png" alt="drawing" width="200"/>
 
 </center>
 
