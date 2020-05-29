@@ -1,6 +1,6 @@
 # EventHopper Flutter (EHF) <br> 
 #### This Repository Contains All Relevant EventHopper Web & Mobile App Code. 
-<br> This README file contains relevant information for all EHFlutter Developers and will ensure consistency in development practices towards our feature goals while minimizing breakages. This repository is condusive to **iOS, Android & Web App deployment**.
+<br> This README file contains relevant information for all EHFlutter Developers and will ensure consistency in development practices towards our feature goals while minimizing breakages.
 <br>
 
 ## Feature Review
@@ -12,6 +12,7 @@ The following tables detail feature specifications and corresponding mockups:
 Messaging Feature             |  Mockup
 :-------------------------:|:-------------------------:
 Groupchats are created each <br/> time an event is organized |  <img src="docs/Messages.png" alt="drawing" width="200"/>
+Swipe view allows users to swipe through events<br/> in their area based on their likes and preferences.<br/> <br/> **Swipe Up:** Invite Friends<br/> **Swipe Left:** Ignore<br/> **Swipe Right:** Add to shortlist<br/> **Swipe Down:** Save for Later|  <img src="/docs/Swipe-View-Fashion.png" alt="drawing" width="200"/> <img src="/docs/Swipe-View-Movies.png" alt="drawing" width="200"/>
 
 </center>
 
