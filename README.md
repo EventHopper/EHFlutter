@@ -3,6 +3,8 @@
 <br> This README file contains relevant information for all EHFlutter Developers and will ensure consistency in development practices towards our feature goals while minimizing breakages.
 <br>
 
+![](/docs/RotatoGif.gif)
+
 ## User-Facing Feature Review
 
 The following tables detail feature specifications and corresponding mockups:
