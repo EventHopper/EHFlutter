@@ -3,19 +3,25 @@
 <br> This README file contains relevant information for all EHFlutter Developers and will ensure consistency in development practices towards our feature goals while minimizing breakages.
 <br>
 
-## Feature Review
+## User-Facing Feature Review
 
 The following tables detail feature specifications and corresponding mockups:
 
 <center>
 
-Messaging Feature             |  Mockup
-:-------------------------:|:-------------------------:
-Groupchats are created each <br/> time an event is organized |  <img src="docs/Messages.png" alt="drawing" width="200"/>
-Swipe view allows users to swipe through events<br/> in their area based on their likes and preferences.<br/> <br/> **Swipe Up:** Invite Friends<br/> **Swipe Left:** Ignore<br/> **Swipe Right:** Add to shortlist<br/> **Swipe Down:** Save for Later|  <img src="/docs/Swipe-View-Fashion.png" alt="drawing" width="200"/> <img src="/docs/Swipe-View-Movies.png" alt="drawing" width="200"/>
+Feature Details           |  Mockup
+:-------------------------|:-------------------------:
+ **Groupchat Feature** <br><br>**Lead Dev: [@kylermintah](https://github.com/kylermintah)**<br><br>Groupchats are (optionally) created each time <br> an event is organized. Invited friends are added <br> to the group. This will assist users with logistics. <br/> <br/> **[View Specification](https://github.com/EventHopper/EHFlutter)** <br> | <img src="docs/Messages.png" alt="drawing" width="200"/>
+**Event Swipe Feature** <br><br>**Lead Dev: [@batchema](https://github.com/batchema)**<br><br>Swipe view allows users to swipe through events<br/> in their area based on their likes and preferences.<br/> <br/> **Swipe Up:** Invite Friends<br/> **Swipe Left:** Ignore<br/> **Swipe Right:** Add to shortlist<br/> **Swipe Down:** Save for Later <br/> <br/> **[View Specification](https://github.com/EventHopper/EHFlutter)** <br> |  <img src="/docs/demo_invite.gif" alt="drawing" width="200" height="440"/> <img src="/docs/Swipe-View-Movies.png" alt="drawing" width="200" height="440"/>
+**Event Map Feature** <br><br>**Lead Dev: [@masterford](https://github.com/masterford)**<br><br>Swipe view allows the user to view all upcoming<br/> events in a chronological listview and geographically <br> in a map view.<br/> <br/> **[View Specification](https://pub.dev/packages/timeline_list)** <br>| <img src="/docs/Upcoming Events.png" alt="drawing" width="200" height="440"/> 
 
 </center>
 
+## Partner-Facing Feature Review
+Feature Details           |  Mockup
+:-------------------------|:-------------------------:
+ **Event Creation Feature** <br><br>**Lead Dev: [@tbd](https://github.com/EventHopper/EHFlutter)**<br><br> Details Pending
+ 
 # For EHF Developers
 
 <br>
@@ -128,3 +134,19 @@ const kLabelTextStyle = TextStyle(color: Color(0xFF8D8E98), fontSize: 18);
 </p>
 
 >Funny enough this is referred to as variable prefixing and arose from [Hungarian Notation](https://en.wikipedia.org/wiki/Hungarian_notation). It seems to be [frowned upon in the Dart developer docs](https://dart.dev/guides/language/effective-dart/style#dont-use-prefix-letters), but let's do it anyway because it's really convinient.
+
+
+## Learning:
+
+Udemy and LinkedIn Learning have great resources for Flutter Development. Recommedned course links below:
+
+**[The Complete 2020 Flutter Development Bootcamp with Dart](https://www.udemy.com/course/flutter-bootcamp-with-dart/learn/lecture/14485620#content)**<br>4.7 (15,661 ratings)
+55,299 students enrolled
+
+**[LinkedIn Learning Flutter Development](https://www.linkedin.com/learning/search?keywords=flutter)** (Free!)
+
+**[London App Brewery](https://www.appbrewery.co/)**<br>
+A great team dishing out a bunch of comprehensive courses on app development (and not just the technical side).
+
+Note: https://www.youtube.com/watch?v=rkgPvXWjSpI
+
