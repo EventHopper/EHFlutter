@@ -14,8 +14,8 @@ The following tables detail feature specifications and corresponding mockups:
 Feature Details           |  Mockup
 :-------------------------|:-------------------------:
  **Groupchat Feature** <br><br>**Lead Dev: [@kylermintah](https://github.com/kylermintah)**<br><br>Groupchats are (optionally) created each time <br> an event is organized. Invited friends are added <br> to the group. This will assist users with logistics. <br/> <br/> **[View Specification](https://github.com/EventHopper/EHFlutter)** <br> | <img src="docs/Messages.png" alt="drawing" width="200"/>
-**Event Swipe Feature** <br><br>**Lead Dev: [@batchema](https://github.com/batchema)**<br><br>Swipe view allows users to swipe through events<br/> in their area based on their likes and preferences.<br/> <br/> **Swipe Up:** Invite Friends<br/> **Swipe Left:** Ignore<br/> **Swipe Right:** Add to shortlist<br/> **Swipe Down:** Save for Later <br/> <br/> **[View Specification](https://github.com/EventHopper/EHFlutter)** <br> |  <img src="/docs/demo_invite.gif" alt="drawing" width="200" height="440"/> <img src="/docs/Swipe-View-Movies.png" alt="drawing" width="200" height="440"/>
-**Event Map Feature** <br><br>**Lead Dev: [@masterford](https://github.com/masterford)**<br><br>Swipe view allows the user to view all upcoming<br/> events in a chronological listview and geographically <br> in a map view.<br/> <br/> **[View Specification](https://pub.dev/packages/timeline_list)** <br>| <img src="/docs/Upcoming Events.png" alt="drawing" width="200" height="440"/> 
+**Event Swipe Feature** <br><br>**Lead Dev: [@batchema](https://github.com/batchema)**<br><br>Swipe view allows users to swipe through events<br/> in their area based on their likes and preferences.<br/> <br/> **Swipe Up:** Invite Friends<br/> **Swipe Left:** Ignore<br/> **Swipe Right:** Add to shortlist<br/> **Swipe Down:** Save for Later <br/> <br/> **[View Specification](https://github.com/EventHopper/EHFlutter)** <br> |  <img src="docs/demo_invite.gif" alt="drawing" width="200" height="440"/> <img src="docs/Swipe-View-Movies.png" alt="drawing" width="200" height="440"/>
+**Event Map Feature** <br><br>**Lead Dev: [@masterford](https://github.com/masterford)**<br><br>Swipe view allows the user to view all upcoming<br/> events in a chronological listview and geographically <br> in a map view.<br/> <br/> **[View Specification](https://pub.dev/packages/timeline_list)** <br>| <img src="docs/Upcoming Events.png" alt="drawing" width="200" height="440"/> 
 
 </center>
 
@@ -62,7 +62,7 @@ Please review and refer to [Dart Style Guide](https://dart.dev/guides/language/e
 
 >Ternary Operators are great for widget trees and can simplify code. However, please also note that it is important to ensure good formatting to maintain ternary operator code readability:<br>
 <p align="center">
-<img src="./docs/thecaseforternaryoperator.PNG" alt="drawing" width="600"/>
+<img src="docs/thecaseforternaryoperator.PNG" alt="drawing" width="600"/>
 <em><br><a href="https://dev.to/shreyasminocha/what-do-you-think-about-the-ternary-operator-5ajg" target="_blank">comment on ternary operators</a></em>
 </p>
 
@@ -131,7 +131,7 @@ const kLabelTextStyle = TextStyle(color: Color(0xFF8D8E98), fontSize: 18);
 >**Why do this? Because Dart is Smart!** <br>
 >Dart looks for instances of the developer typing 'k' when applying a value to an attribute and automatically populates a list of all constants for you to choose from which can save on time and ensure uniformity accross the app.
 <p align="center">
-<img src="./docs/constants.PNG" width="400"/>
+<img src="docs/constants.PNG" width="400"/>
 <em><br><a href="" target="_blank">constants appear like magic wherever you need them!</a></em>
 </p>
 
