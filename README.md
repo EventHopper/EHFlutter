@@ -140,7 +140,7 @@ const kLabelTextStyle = TextStyle(color: Color(0xFF8D8E98), fontSize: 18);
 
 ## Learning:
 
-Udemy and LinkedIn Learning have great resources for Flutter Development. Recommedned course links below:
+Udemy and LinkedIn Learning have great resources for Flutter Development. Recommended course links below:
 
 **[The Complete 2020 Flutter Development Bootcamp with Dart](https://www.udemy.com/course/flutter-bootcamp-with-dart/learn/lecture/14485620#content)**<br>4.7 (15,661 ratings)
 55,299 students enrolled
