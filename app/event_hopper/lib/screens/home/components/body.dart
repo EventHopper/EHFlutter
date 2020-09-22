@@ -20,7 +20,7 @@ class Body extends StatelessWidget {
             VerticalSpacing(),
             EventsNearYou(),
             VerticalSpacing(),
-            TopTravelers(),
+            EventCategories(),
             VerticalSpacing(),
           ],
         ),

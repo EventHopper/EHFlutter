@@ -25,19 +25,19 @@ List<Event> events = [
     attendees: users..shuffle(),
     name: "Jim Gaffigan: The Pale Tourist",
     image: "https://s1.ticketm.net/dam/a/ebb/b777581f-13db-42a2-8c23-6a0a21deeebb_1245481_CUSTOM.jpg",
-    date: DateTime(2020, 3, 10),
+    date: DateTime(2021, 8, 10),
   ),
   Event(
     attendees: users..shuffle(),
     name: "Marshmello",
     image: "https://s1.ticketm.net/dam/a/e60/91d8db88-2c00-496b-885c-e4124c9f5e60_1305901_TABLET_LANDSCAPE_16_9.jpg",
-    date: DateTime(2020, 10, 15),
+    date: DateTime(2021, 10, 15),
   ),
   Event(
     attendees: users..shuffle(),
     name: "Deftones Summer Tour 2021",
     image: "https://s1.ticketm.net/dam/a/12f/2b72930c-ea97-4223-b94e-60df7f52012f_1286421_TABLET_LANDSCAPE_16_9.jpg",
-    date: DateTime(2020, 10, 15),
+    date: DateTime(2022, 10, 15),
   ),
 ];
 

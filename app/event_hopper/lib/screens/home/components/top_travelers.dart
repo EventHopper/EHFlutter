@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:travel/components/section_title.dart';
+import 'package:travel/models/Category.dart';
 import 'package:travel/models/User.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-class TopTravelers extends StatelessWidget {
-  const TopTravelers({
+class EventCategories extends StatelessWidget {
+  const EventCategories({
     Key key,
   }) : super(key: key);
 
@@ -14,7 +15,7 @@ class TopTravelers extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SectionTitle(title: "Top Travelers on Spark", press: () {}),
+        SectionTitle(title: "Find Events", press: () {}),
         VerticalSpacing(of: 20),
         Container(
           margin: EdgeInsets.symmetric(
@@ -31,9 +32,9 @@ class TopTravelers extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ...List.generate(
-                topTravelers.length,
-                (index) => UserCard(
-                  user: topTravelers[index],
+                topCategories.length,
+                (index) => CategoryCard(
+                  category: topCategories[index],
                   press: () {},
                 ),
               ),
@@ -44,6 +45,43 @@ class TopTravelers extends StatelessWidget {
     );
   }
 }
+
+class CategoryCard extends StatelessWidget {
+  const CategoryCard({
+    Key key,
+    @required this.category,
+    @required this.press,
+  }) : super(key: key);
+
+  final Category category;
+  final GestureTapCallback press;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: press,
+      child: Column(
+        children: [
+          ClipOval(
+            child: Image.network(
+              category.image,
+              height: getProportionateScreenWidth(55),
+              width: getProportionateScreenWidth(55),
+              fit: BoxFit.cover,
+            ),
+          ),
+          VerticalSpacing(of: 10),
+          Text(
+            category.name,
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
 
 class UserCard extends StatelessWidget {
   const UserCard({
