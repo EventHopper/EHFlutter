@@ -15,7 +15,7 @@ class EventCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SectionTitle(title: "Find Events", press: () {}),
+        SectionTitle(title: "What are you feeling like?", press: () {}),
         VerticalSpacing(of: 20),
         Container(
           margin: EdgeInsets.symmetric(
@@ -80,8 +80,6 @@ class CategoryCard extends StatelessWidget {
     );
   }
 }
-
-
 
 class UserCard extends StatelessWidget {
   const UserCard({
