@@ -3,7 +3,7 @@ import 'package:travel/size_config.dart';
 
 import 'home_header.dart';
 import 'events_near_you.dart';
-import 'top_travelers.dart';
+import 'top_categories.dart';
 
 class Body extends StatelessWidget {
   @override
