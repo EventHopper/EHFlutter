@@ -7,11 +7,32 @@ class Category {
 }
 
 // Demo List of Top Travelers
-List<Category> topCategories = [category1, category2, category3, category4, category5];
+List<Category> topCategories = [
+  category1,
+  category2,
+  category3,
+  category4,
+  category5
+];
 
 // demo user
-Category category1 = Category(name: "Music", image: "https://api.time.com/wp-content/uploads/2019/08/tallconcertshirt.jpeg");
-Category category2 = Category(name: "Dance", image: "https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/3/2020/05/DAYBREAKER_nyc_sasha_1010_1505.jpg");
-Category category3 = Category(name: "Art", image: "https://quizzma.com/wp-content/uploads/2020/08/after-10-12-art-design-college.jpg");
-Category category4 = Category(name: "Nature", image: "https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/6/2017/11/04133712/waterfall.jpg");
-Category category5 = Category(name: "Misc", image: "https://st4.depositphotos.com/16499398/21199/v/380/depositphotos_211990674-stock-illustration-therefore-symbol-icon-vector-sign.jpg");
+Category category1 = Category(
+    name: "Music",
+    image:
+        "https://media1.tenor.com/images/9f241eb34ba69f136ab7673d8ab5fe85/tenor.gif?itemid=4322926");
+Category category2 = Category(
+    name: "Dance",
+    image:
+        "https://media1.tenor.com/images/57696cc0dfe126ac84ed5f04828abdc3/tenor.gif?itemid=9152583");
+Category category3 = Category(
+    name: "Art",
+    image:
+        "https://media1.tenor.com/images/c76e1b21c7544e383b9c6a9829d8f6aa/tenor.gif?itemid=4952929");
+Category category4 = Category(
+    name: "Nature",
+    image:
+        "https://media1.tenor.com/images/23da875fa07afb4a71dd66e22265c8a7/tenor.gif?itemid=7384355");
+Category category5 = Category(
+    name: "Surprise",
+    image:
+        "https://media1.tenor.com/images/6b3160004ff0a49639ddbfea2d895ee5/tenor.gif?itemid=5225075");

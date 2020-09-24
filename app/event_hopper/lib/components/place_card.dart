@@ -33,7 +33,8 @@ class PlaceCard extends StatelessWidget {
                   topRight: Radius.circular(20),
                 ),
                 image: DecorationImage(
-                    image: NetworkImage(eventSpotlight.image), fit: BoxFit.cover),
+                    image: NetworkImage(eventSpotlight.image),
+                    fit: BoxFit.cover),
               ),
             ),
           ),
@@ -135,7 +136,7 @@ class Travelers extends StatelessWidget {
 
   ClipOval buildTravelerFace(int index) {
     return ClipOval(
-      child: Image.asset(
+      child: Image.network(
         users[index].image,
         height: getProportionateScreenWidth(28),
         width: getProportionateScreenWidth(28),

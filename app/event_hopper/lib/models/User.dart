@@ -7,10 +7,18 @@ class User {
 }
 
 // Demo List of Top Travelers
-List<User> topTravelers = [user1, user2, user3, user4];
+List<User> topTravelers = [user1, user2, user3];
 
 // demo user
-User user1 = User(name: "James", image: "assets/images/james.png");
-User user2 = User(name: "John", image: "assets/images/John.png");
-User user3 = User(name: "Marry", image: "assets/images/marry.png");
-User user4 = User(name: "Rosy", image: "assets/images/rosy.png");
+User user1 = User(
+    name: "Ransford",
+    image:
+        "https://entrepreneurship.wharton.upenn.edu/wp-content/uploads/2019/02/headshot-Ransford-200x200.jpg");
+User user2 = User(
+    name: "Batchema",
+    image:
+        "https://pbs.twimg.com/profile_images/1113609838502789126/TKvveUDv.png");
+User user3 = User(
+    name: "Kyler",
+    image:
+        "https://i1.rgstatic.net/ii/profile.image/773438742487040-1561413574079_Q512/Kyler_Mintah.jpg");
