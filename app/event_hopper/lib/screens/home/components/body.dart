@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:travel/size_config.dart';
+import 'package:EventHopper/size_config.dart';
 
 import 'home_header.dart';
 import 'events_near_you.dart';

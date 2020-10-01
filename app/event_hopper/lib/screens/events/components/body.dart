@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:travel/components/place_card.dart';
-import 'package:travel/constants.dart';
-import 'package:travel/models/EventSpotlight.dart';
-import 'package:travel/size_config.dart';
+import 'package:EventHopper/components/event_card.dart';
+import 'package:EventHopper/constants.dart';
+import 'package:EventHopper/models/EventSpotlight.dart';
+import 'package:EventHopper/size_config.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class Body extends StatelessWidget {
+Future<List<Event>> _events;
+
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  @override
+  void initState() {
+    super.initState();
+    _events = getEvents();
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Future<List<Event>> events = getEvents();
+
     return SizedBox(
       width: SizeConfig.screenWidth,
       child: Padding(
@@ -14,31 +30,49 @@ class Body extends StatelessWidget {
             EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(25)),
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(bottom: 25),
-            child: Wrap(
-              alignment: WrapAlignment.spaceBetween,
-              runSpacing: 25,
-              children: [
-                ...List.generate(
-                  events.length,
-                  (index) => PlaceCard(
-                    eventSpotlight: events[index],
-                    isFullCard: true,
-                    press: () {},
-                  ),
-                ),
-                AddNewPlaceCard(),
-              ],
-            ),
-          ),
+              padding: EdgeInsets.only(bottom: 25),
+              child: FutureBuilder<List<Event>>(
+                  future: _events,
+                  builder: (BuildContext context, events) {
+                    if (events.data == null) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: getProportionateScreenHeight(600),
+                            child: SpinKitRotatingCircle(
+                              color: kTextColor,
+                              size: 50.0,
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Wrap(
+                        alignment: WrapAlignment.spaceBetween,
+                        runSpacing: 25,
+                        children: [
+                          ...List.generate(
+                            events.data.length,
+                            (index) => PlaceCard(
+                              eventSpotlight: events.data[index],
+                              isFullCard: true,
+                              press: () {},
+                            ),
+                          ),
+                          AddNewEventCard(),
+                        ],
+                      );
+                    }
+                  })),
         ),
       ),
     );
   }
 }
 
-class AddNewPlaceCard extends StatelessWidget {
-  const AddNewPlaceCard({
+class AddNewEventCard extends StatelessWidget {
+  const AddNewEventCard({
     Key key,
   }) : super(key: key);
 
@@ -77,7 +111,7 @@ class AddNewPlaceCard extends StatelessWidget {
           ),
           VerticalSpacing(of: 10),
           Text(
-            "Add New Place",
+            "Add New Event",
             style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
           ),
         ],

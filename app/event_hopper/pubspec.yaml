@@ -1,5 +1,5 @@
-name: travel
-description: A new Flutter project.
+name: EventHopper
+description: An event app
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -33,6 +33,12 @@ dependencies:
   flutter_svg: ^0.18.1
   # Date and number formatting and parsing
   intl: ^0.16.1
+  provider: ^4.3.2+2
+  url_launcher: ^5.7.2
+  font_awesome_flutter: ^8.8.1
+  http: ^0.12.2
+  permission_handler: ^5.0.1+1
+  flutter_spinkit: ^4.1.2+1
 
 dev_dependencies:
   flutter_test:
