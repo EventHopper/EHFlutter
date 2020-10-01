@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:travel/components/section_title.dart';
-import 'package:travel/models/Category.dart';
-import 'package:travel/models/User.dart';
+import 'package:EventHopper/components/section_title.dart';
+import 'package:EventHopper/models/Category.dart';
+import 'package:EventHopper/models/User.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';

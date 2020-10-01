@@ -1,0 +1,6 @@
+GET {{baseUrl}}/events?index=location&lat=39.910999&long=-75.153397
+Authorization: {{authorization}}
+
+
+GET {{baseUrl}}/events/?index=location&city=Philadelphia
+Authorization: {{authorization}}
