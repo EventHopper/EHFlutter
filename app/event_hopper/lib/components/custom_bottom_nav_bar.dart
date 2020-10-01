@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:travel/screens/events/events_screen.dart';
+import 'package:EventHopper/screens/events/events_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -23,7 +24,17 @@ class CustomBottonNavBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               NavItem(
-                icon: "assets/icons/calendar.svg",
+                icon: FaIcon(FontAwesomeIcons.search).icon,
+                title: "Explore",
+                press: () {},
+              ),
+              NavItem(
+                icon: FaIcon(FontAwesomeIcons.handPaper).icon,
+                title: "Swipe",
+                press: () {},
+              ),
+              NavItem(
+                icon: FaIcon(FontAwesomeIcons.calendar).icon,
                 title: "Events",
                 press: () {
                   Navigator.push(
@@ -32,17 +43,6 @@ class CustomBottonNavBar extends StatelessWidget {
                         builder: (context) => EventsScreen(),
                       ));
                 },
-              ),
-              NavItem(
-                icon: "assets/icons/chat.svg",
-                title: "Chat",
-                isActive: true,
-                press: () {},
-              ),
-              NavItem(
-                icon: "assets/icons/friendship.svg",
-                title: "Friends",
-                press: () {},
               ),
             ],
           ),
@@ -60,7 +60,8 @@ class NavItem extends StatelessWidget {
     @required this.press,
     this.isActive = false,
   }) : super(key: key);
-  final String icon, title;
+  final String title;
+  final IconData icon;
   final GestureTapCallback press;
   final bool isActive;
 
@@ -79,18 +80,21 @@ class NavItem extends StatelessWidget {
         ),
         child: Column(
           children: [
-            SvgPicture.asset(
+            Icon(
               icon,
+              size: 28,
               color: kTextColor,
-              height: 28,
             ),
+            // SvgPicture.asset(
+            //   icon,
+            //   color: kTextColor,
+            //   height: 28,
+            // ),
             Spacer(),
             Text(
               title,
               style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.bold,
-              ),
+                  fontSize: 11, fontWeight: FontWeight.bold, color: kTextColor),
             )
           ],
         ),

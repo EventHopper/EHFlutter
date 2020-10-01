@@ -9,6 +9,10 @@
 .history
 .svn/
 
+# EventHopper API Related
+
+settings.json
+
 # IntelliJ related
 *.iml
 *.ipr

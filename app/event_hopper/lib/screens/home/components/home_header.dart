@@ -16,11 +16,21 @@ class HomeHeader extends StatelessWidget {
         overflow: Overflow.visible,
         alignment: Alignment.center,
         children: [
-          Image.asset(
-            "assets/images/home_bg.png",
+          Image.network(
+            "https://gamespot1.cbsistatic.com/uploads/scale_super/1562/15626911/3395984-4.jpg",
             fit: BoxFit.cover,
             width: double.infinity,
             height: getProportionateScreenHeight(315),
+            filterQuality: FilterQuality.high,
+          ),
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(0.6), BlendMode.dstATop),
+            child: Container(
+              height: getProportionateScreenHeight(315),
+              width: double.infinity,
+              color: Colors.black,
+            ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
