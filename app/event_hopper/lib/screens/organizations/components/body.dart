@@ -5,6 +5,8 @@ import 'package:EventHopper/constants.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'package:EventHopper/size_config.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
@@ -16,60 +18,52 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    if (!Provider.of<SessionManager>(context, listen: false)
-        .initialStateLoaded) {
-      Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
-      Provider.of<SessionManager>(context, listen: false)
-          .updateInitialState(true);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     // Future<List<Event>> events = getEvents();
 
-    return SizedBox(
-      width: SizeConfig.screenWidth,
-      child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(25)),
-        child: SingleChildScrollView(
-          child: Padding(
-              padding: EdgeInsets.only(bottom: 25),
-              child: FutureBuilder<List<Event>>(
-                  future: Provider.of<SessionManager>(context).eventsNearMe,
-                  builder: (BuildContext context, events) {
-                    if (events.data == null) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: getProportionateScreenHeight(600),
-                            child: SpinKitRotatingCircle(
-                              color: kTextColor,
-                              size: 50.0,
-                            ),
-                          ),
-                        ],
-                      );
-                    } else {
-                      return Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        runSpacing: 25,
-                        children: [
-                          ...List.generate(
-                            events.data.length,
-                            (index) => PlaceCard(
-                              eventSpotlight: events.data[index],
-                              isFullCard: true,
-                              press: () {},
-                            ),
-                          ),
-                          AddNewEventCard(),
-                        ],
-                      );
-                    }
-                  })),
+    return Container(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'assets/images/pizza.svg',
+              height: getProportionateScreenHeight(180),
+            ),
+            VerticalSpacing(),
+            VerticalSpacing(),
+            Container(
+                width: getProportionateScreenWidth(300),
+                child: Column(
+                  children: [
+                    Text(
+                      "COMING SOON",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 23,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                )),
+            VerticalSpacing(),
+            VerticalSpacing(),
+            Text(
+              "Follow Clubs , Groups , Bands , Community Organizers and more...",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                wordSpacing: 1,
+                fontWeight: FontWeight.normal,
+                color: Colors.grey[350],
+                fontSize: 18,
+              ),
+            ),
+            VerticalSpacing(),
+            VerticalSpacing(),
+          ],
         ),
       ),
     );
@@ -110,7 +104,7 @@ class AddNewEventCard extends StatelessWidget {
               child: Icon(
                 Icons.add,
                 size: getProportionateScreenWidth(35),
-                color: Colors.white,
+                color: Colors.blue,
               ),
             ),
           ),

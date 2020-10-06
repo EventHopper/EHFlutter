@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:EventHopper/models/EventSpotlight.dart';
+import 'package:EventHopper/models/events/Event.dart';
 import 'package:http/http.dart' as http;
 import 'package:EventHopper/services/eh-server/api.dart';
 
@@ -9,7 +9,7 @@ class APIService {
   APIService(this.api);
 
   Future<List<Event>> getEvents() async {
-    final url = api.getEventsByCity('Philadelphia').toString();
+    final url = api.getEventsByCity('Philadelphia', 2).toString();
     log(url);
     final client = new http.Client();
     final response = await client
@@ -20,7 +20,7 @@ class APIService {
           data.map((dynamic item) => Event.fromJson(item)).toList();
       return events;
     } else {
-      throw ('Request ${api.getEventsByCity('Philadelphia')} failed' +
+      throw ('Request ${api.getEventsByCity('Philadelphia', 2)} failed' +
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
   }

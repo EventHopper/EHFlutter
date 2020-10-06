@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:EventHopper/models/EventSpotlight.dart';
-import 'package:EventHopper/models/User.dart';
+import 'package:EventHopper/models/events/Event.dart';
+import 'package:EventHopper/models/users/User.dart';
 
 import '../constants.dart';
 import '../size_config.dart';

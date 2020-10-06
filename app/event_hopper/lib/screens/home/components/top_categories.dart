@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/section_title.dart';
-import 'package:EventHopper/models/Category.dart';
-import 'package:EventHopper/models/User.dart';
+import 'package:EventHopper/models/events/Category.dart';
+import 'package:EventHopper/models/users/User.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -107,7 +107,7 @@ class UserCard extends StatelessWidget {
           ),
           VerticalSpacing(of: 10),
           Text(
-            user.name,
+            user.fullName,
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 11),
           ),
         ],

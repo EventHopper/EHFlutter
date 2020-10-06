@@ -1,7 +1,12 @@
+import 'package:EventHopper/screens/route_config.dart';
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:EventHopper/utils/system_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:EventHopper/screens/events/events_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:EventHopper/utils/screen_navigator.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -13,6 +18,7 @@ class CustomBottonNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int currentPage = Provider.of<SessionManager>(context).currentPage;
     SizeConfig().init(context);
     return Container(
       color: Colors.white,
@@ -26,22 +32,33 @@ class CustomBottonNavBar extends StatelessWidget {
               NavItem(
                 icon: FaIcon(FontAwesomeIcons.search).icon,
                 title: "Explore",
-                press: () {},
+                isActive: currentPage == 0,
+                press: () {
+                  Provider.of<SessionManager>(context, listen: false)
+                      .updateCurrentPage(0);
+                  // Navigator.pushReplacementNamed(context, '/');
+                  ScreenNavigator.navigate(context, RouteConfig.home);
+                },
               ),
               NavItem(
                 icon: FaIcon(FontAwesomeIcons.handPaper).icon,
                 title: "Swipe",
-                press: () {},
+                isActive: currentPage == 1,
+                press: () {
+                  Provider.of<SessionManager>(context, listen: false)
+                      .updateCurrentPage(1);
+                  ScreenNavigator.navigate(context, RouteConfig.swipe);
+                },
               ),
               NavItem(
                 icon: FaIcon(FontAwesomeIcons.calendar).icon,
                 title: "Events",
+                isActive: currentPage == 2,
                 press: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EventsScreen(),
-                      ));
+                  // Navigator.pushReplacementNamed(context, '/myevents');
+                  Provider.of<SessionManager>(context, listen: false)
+                      .updateCurrentPage(2);
+                  ScreenNavigator.navigate(context, RouteConfig.myEvents);
                 },
               ),
             ],
@@ -52,7 +69,7 @@ class CustomBottonNavBar extends StatelessWidget {
   }
 }
 
-class NavItem extends StatelessWidget {
+class NavItem extends StatefulWidget {
   const NavItem({
     Key key,
     @required this.icon,
@@ -66,9 +83,17 @@ class NavItem extends StatelessWidget {
   final bool isActive;
 
   @override
+  _NavItemState createState() => _NavItemState();
+}
+
+class _NavItemState extends State<NavItem> {
+  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: press,
+      onTap: () {
+        SystemUtils.vibrate();
+        widget.press();
+      },
       child: Container(
         padding: EdgeInsets.all(5),
         height: getProportionateScreenWidth(60),
@@ -76,25 +101,22 @@ class NavItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [if (isActive) kDefualtShadow],
+          // boxShadow: [if (isActive) kDefualtShadow],
         ),
         child: Column(
           children: [
             Icon(
-              icon,
+              widget.icon,
               size: 28,
-              color: kTextColor,
+              color: widget.isActive ? kTextColor : Colors.grey,
             ),
-            // SvgPicture.asset(
-            //   icon,
-            //   color: kTextColor,
-            //   height: 28,
-            // ),
             Spacer(),
             Text(
-              title,
+              widget.title,
               style: TextStyle(
-                  fontSize: 11, fontWeight: FontWeight.bold, color: kTextColor),
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  color: widget.isActive ? kTextColor : Colors.grey),
             )
           ],
         ),
