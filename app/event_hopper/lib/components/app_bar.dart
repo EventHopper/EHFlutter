@@ -1,19 +1,23 @@
+import 'package:EventHopper/screens/route_config.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constants.dart';
 
 AppBar buildAppBar(BuildContext context,
-    {bool isTransparent = false, String title, Color color}) {
+    {bool isTransparent = false,
+    String title,
+    Color color,
+    bool backButton = false}) {
   return AppBar(
     backgroundColor: isTransparent ? Colors.transparent : Colors.white,
     elevation: 0,
-    leading: IconButton(
-      icon: Icon(
-        Icons.menu,
-        color: color != null ? color : Colors.white,
-      ),
-      onPressed: () {},
-    ),
+    // leading: backButton ? FaIcon(FontAwesomeIcons.backward) : Icons.menu,
+    leading: backButton
+        ? BackButton(
+            color: Colors.black,
+          )
+        : null,
     title: !isTransparent
         ? Text(
             isTransparent ? "" : title,
@@ -26,8 +30,10 @@ AppBar buildAppBar(BuildContext context,
       IconButton(
         icon: ClipOval(
             child: Image.network(
-                "https://i1.rgstatic.net/ii/profile.image/773438742487040-1561413574079_Q512/Kyler_Mintah.jpg")),
-        onPressed: () {},
+                "https://instagram.fphl2-4.fna.fbcdn.net/v/t51.2885-19/s320x320/106558817_862046184321633_3669233856585083655_n.jpg?_nc_ht=instagram.fphl2-4.fna.fbcdn.net&_nc_ohc=KX0xmVyKPQYAX_tKPvM&oh=290b6fbdb50a19aea3b5679fc012376f&oe=5FA1AC4D")),
+        onPressed: () {
+          Navigator.pushNamed(context, RouteConfig.myProfile);
+        },
       )
     ],
   );

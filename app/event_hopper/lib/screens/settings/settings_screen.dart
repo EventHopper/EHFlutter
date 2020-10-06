@@ -9,21 +9,14 @@ import 'package:provider/provider.dart';
 
 import 'components/body.dart';
 
-class EventsScreen extends StatelessWidget {
+class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        Provider.of<SessionManager>(context, listen: false)
-            .updateCurrentPage(0);
-        ScreenNavigator.navigate(context, RouteConfig.home);
-      },
-      child: Scaffold(
-        drawer: buildDrawer(context),
-        appBar: buildAppBar(context, title: "My Events", color: Colors.black),
-        body: Body(),
-        bottomNavigationBar: CustomBottonNavBar(),
-      ),
+    return Scaffold(
+      drawer: buildDrawer(context),
+      appBar: buildAppBar(context,
+          title: "Settings", color: Colors.black, backButton: true),
+      body: Body(),
     );
   }
 }

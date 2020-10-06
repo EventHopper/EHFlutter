@@ -1,14 +1,18 @@
+import 'dart:async';
+
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/event_card.dart';
 import 'package:EventHopper/components/section_title.dart';
-import 'package:EventHopper/models/EventSpotlight.dart';
+import 'package:EventHopper/models/events/Event.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-Future<List<Event>> _events;
+Stream<List<Event>> _events;
 
 class EventsNearYou extends StatefulWidget {
   const EventsNearYou({
@@ -23,7 +27,14 @@ class _EventsNearYouState extends State<EventsNearYou> {
   @override
   void initState() {
     super.initState();
-    _events = getEvents();
+    _events = Provider.of<SessionManager>(context, listen: false)
+        .eventsNearMe
+        .asStream();
+  }
+
+  @override
+  void didUpdateWidget(EventsNearYou oldWidget) {
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -38,10 +49,10 @@ class _EventsNearYouState extends State<EventsNearYou> {
         SingleChildScrollView(
             clipBehavior: Clip.none,
             scrollDirection: Axis.horizontal,
-            child: FutureBuilder<List<Event>>(
-              future: _events,
+            child: StreamBuilder<List<Event>>(
+              stream: _events,
               builder: (BuildContext context, events) {
-                if (events.data == null) {
+                if (!events.hasData) {
                   return SpinKitRotatingCircle(
                     color: kTextColor,
                     size: 50.0,

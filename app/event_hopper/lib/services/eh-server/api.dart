@@ -29,12 +29,12 @@ class API {
       path: '/events',
       queryParameters: {'index': 'id', 'id': id});
 
-  Uri getEventsByCity(String city) => Uri(
+  Uri getEventsByCity(String city, int page) => Uri(
       port: port,
       scheme: scheme,
       host: host,
       path: '/events',
-      queryParameters: {'index': 'location', 'city': city, 'page': '2'});
+      queryParameters: {'index': 'location', 'city': city, 'page': '$page'});
 
   Uri getEventsByGeo(String lat, String long, int radius) => Uri(
           port: port,
