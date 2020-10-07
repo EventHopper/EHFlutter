@@ -39,7 +39,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
     super.initState();
 
     // Init cards
-    for (cardsCounter = 0; cardsCounter < 3; cardsCounter++) {
+    for (cardsCounter = 0; cardsCounter < 4; cardsCounter++) {
       cards.add(ProfileCardAlignment(cardsCounter));
     }
 
@@ -47,7 +47,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
 
     // Init the animation controller
     _controller =
-        AnimationController(duration: Duration(milliseconds: 700), vsync: this);
+        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
     _controller.addListener(() => setState(() {}));
     _controller.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) changeCardsOrder();

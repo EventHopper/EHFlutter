@@ -14,7 +14,7 @@ class ProfileCardAlignment extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.0),
               child: Image.network(
                   'https://images.unsplash.com/photo-1576083895015-17223a61998e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-                  fit: BoxFit.fitWidth),
+                  fit: BoxFit.cover),
             ),
           ),
           SizedBox.expand(
