@@ -8,7 +8,7 @@ class SwipeFeedPage extends StatefulWidget {
 }
 
 class _SwipeFeedPageState extends State<SwipeFeedPage> {
-  bool showAlignmentCards = false;
+  bool showAlignmentCards = true;
 
   @override
   Widget build(BuildContext context) {

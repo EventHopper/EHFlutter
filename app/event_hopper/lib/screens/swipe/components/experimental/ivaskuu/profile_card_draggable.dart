@@ -9,7 +9,7 @@ class ProfileCardDraggable extends StatelessWidget {
     return Card(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Image.network(

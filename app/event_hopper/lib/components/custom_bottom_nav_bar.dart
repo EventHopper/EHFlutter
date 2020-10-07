@@ -2,8 +2,6 @@ import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/utils/system_utils.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:EventHopper/screens/events/events_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:provider/provider.dart';

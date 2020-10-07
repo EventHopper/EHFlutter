@@ -12,7 +12,9 @@ class ProfileCardAlignment extends StatelessWidget {
           SizedBox.expand(
             child: Material(
               borderRadius: BorderRadius.circular(12.0),
-              child: Image.asset('res/portrait.jpeg', fit: BoxFit.cover),
+              child: Image.network(
+                  'https://images.unsplash.com/photo-1576083895015-17223a61998e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+                  fit: BoxFit.fitWidth),
             ),
           ),
           SizedBox.expand(
