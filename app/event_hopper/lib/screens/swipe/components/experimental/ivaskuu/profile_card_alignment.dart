@@ -2,22 +2,29 @@ import 'package:flutter/material.dart';
 
 class ProfileCardAlignment extends StatelessWidget {
   final int cardNum;
-  ProfileCardAlignment(this.cardNum);
+  final String image;
+  ProfileCardAlignment(this.cardNum, this.image);
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      shadowColor: Colors.transparent,
+      color: Colors.transparent,
       child: Stack(
         children: <Widget>[
           SizedBox.expand(
             child: Material(
-              borderRadius: BorderRadius.circular(12.0),
-              child: Image.asset('res/portrait.jpeg', fit: BoxFit.cover),
-            ),
+                shadowColor: Colors.transparent,
+                borderRadius: BorderRadius.circular(16.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16.0),
+                  child: Image.network(this.image, fit: BoxFit.cover),
+                )),
           ),
           SizedBox.expand(
             child: Container(
               decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
                   gradient: LinearGradient(
                       colors: [Colors.transparent, Colors.black54],
                       begin: Alignment.center,

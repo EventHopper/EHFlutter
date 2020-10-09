@@ -1,13 +1,8 @@
-import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/components/event_card.dart';
 import 'package:EventHopper/constants.dart';
-import 'package:EventHopper/models/events/Event.dart';
 import 'package:EventHopper/size_config.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
   @override
