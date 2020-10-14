@@ -34,6 +34,6 @@ User user2 = User(
 User user3 = User(
     fullName: "Kyler",
     image:
-        "https://instagram.fphl2-4.fna.fbcdn.net/v/t51.2885-19/s320x320/106558817_862046184321633_3669233856585083655_n.jpg?_nc_ht=instagram.fphl2-4.fna.fbcdn.net&_nc_ohc=KX0xmVyKPQYAX_tKPvM&oh=290b6fbdb50a19aea3b5679fc012376f&oe=5FA1AC4D",
+        "https://pbs.twimg.com/profile_images/1215038784913510400/fZAZQwmh_400x400.jpg",
     email: 'kyler@something.com',
     username: 'kyler');
