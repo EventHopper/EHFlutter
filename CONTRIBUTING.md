@@ -33,6 +33,8 @@ The following issue example is from [Issue #33](https://www.github.com/eventhopp
 
 ```
 
+In the example above notice how we link to issues in different repositories. Please do this when specifying issues in [**EHServerSide**](https://www.github.com/EventHopper/EHServerSide) or other repos.
+
 ### Why the checkboxes? (optional)
 Well, after creating an issue with checkboxes in the description, your issue may look something like this:
 
