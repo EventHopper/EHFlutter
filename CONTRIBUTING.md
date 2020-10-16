@@ -4,6 +4,8 @@
 
 Contributing is easy. If creating an issue, please refer to the template below in the **Issue** section. Please refer to Flutter best practices detailed in the **Development** section.
 
+## Contributor Types
+
 Please note there are three types of contributers:
 - **EventHopper Friends** - _Contribute as you have time!_
 - **EvnetHopper Joey** - _Looking to join team, must follow [point system requirements](https://github.com/EventHopper/EHFlutter/blob/beta/CONTRIBUTING.md#point-system)_
