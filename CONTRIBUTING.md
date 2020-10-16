@@ -32,6 +32,6 @@ Well, after creating an issue with checkboxes in the description, your issue may
 ![picture](https://user-images.githubusercontent.com/24496327/96217210-1dff4100-0f50-11eb-83e0-35ca731b4047.png)
 
 You may have noticed the progress bar underneath the issue title above labeled '1 of 3.'
-Whenever you add checkboxes to an issue the progress indicator automatically generates and fills proportionally as each box is checked off. You can use this at your own discretion but it's great to keep track of the **[three requirement information points as mentioned above]()**.
+Whenever you add checkboxes to an issue the progress indicator automatically generates and fills proportionally as each box is checked off. You can use this at your own discretion but it's great to keep track of the **[three requirement information points as mentioned above](https://github.com/EventHopper/EHFlutter/blob/beta/CONTRIBUTING.md#issues)**.
 
 <img src="https://user-images.githubusercontent.com/24496327/96217438-9403a800-0f50-11eb-81d5-40e92b256ed8.png" alt="drawing" width="500"/>
