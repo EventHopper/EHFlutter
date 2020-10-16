@@ -8,7 +8,7 @@ Contributing is easy. If creating an issue, please refer to the template below i
 
 Please note there are three types of contributers:
 - **EventHopper Friends** - _Contribute as you have time!_
-- **EvnetHopper Joey** - _Looking to join team, must follow [point system requirements](https://github.com/EventHopper/EHFlutter/blob/beta/CONTRIBUTING.md#point-system)_
+- **EventHopper Joey** - _Looking to join team, must follow [point system requirements](https://github.com/EventHopper/EHFlutter/blob/beta/CONTRIBUTING.md#point-system)_
 - **EventHopper Core** - _follow EventHopper team role requirements_
 
 ## Issues
