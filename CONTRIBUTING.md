@@ -34,4 +34,9 @@ Well, after creating an issue with checkboxes in the description, your issue may
 You may have noticed the progress bar underneath the issue title above labeled '1 of 3.'
 Whenever you add checkboxes to an issue the progress indicator automatically generates and fills proportionally as each box is checked off. You can use this at your own discretion but it's great to keep track of the **[three requirement information points as mentioned above](https://github.com/EventHopper/EHFlutter/blob/beta/CONTRIBUTING.md#issues)**.
 
+
+### Point System
+
+This is relevant only **for contributors who would like stake in EventHopper.** All other friends of EventHopper are welcome to contribute as they'd like! The EventHopper team allocates points to each issue. If you would like to be considered eligible for team and stake consideration, you must maintain a net contribution pace of at least 3 points per week for 1 month. After this requirement has been met, the point system is to be adhered to under agreed upon terms with the EventHopper team prior or after joining the core fold. 
+
 <img src="https://user-images.githubusercontent.com/24496327/96217438-9403a800-0f50-11eb-81d5-40e92b256ed8.png" alt="drawing" width="500"/>
