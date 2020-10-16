@@ -66,9 +66,9 @@ Please review and refer to [Dart Style Guide](https://dart.dev/guides/language/e
 <br>
 #### **1. Please utilize Ternary Operators wherever possible.** <br> Example: <br>
 ```diff
-+ color = selectedDay == Weather.SUNNY ? gold : blue
++ color = selectedDay.weather == Weather.SUNNY ? gold : blue
 
-- if (selectedDay == Weather.SUNNY) {
+- if (selectedDay.weather == Weather.SUNNY) {
 -   color = gold;
 - } else {
 -   color = blue;
