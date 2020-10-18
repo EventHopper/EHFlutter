@@ -16,4 +16,14 @@ class ScreenNavigator {
       ),
     );
   }
+
+  static void navigateSwipe(
+    BuildContext context,
+    String route,
+  ) {
+    Navigator.push(
+      context,
+      RouteConfig.getPage(route),
+    );
+  }
 }
