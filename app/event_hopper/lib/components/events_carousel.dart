@@ -9,31 +9,31 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
+import '../constants.dart';
+import '../size_config.dart';
 
-Stream<List<Event>> _events;
+class EventsCarousel extends StatefulWidget {
+  final String title;
+  final Stream<List<Event>> events;
 
-class EventsNearYou extends StatefulWidget {
-  const EventsNearYou({
+  const EventsCarousel({
     Key key,
+    this.title,
+    this.events,
   }) : super(key: key);
 
   @override
-  _EventsNearYouState createState() => _EventsNearYouState();
+  _EventsCarouselState createState() => _EventsCarouselState();
 }
 
-class _EventsNearYouState extends State<EventsNearYou> {
+class _EventsCarouselState extends State<EventsCarousel> {
   @override
   void initState() {
     super.initState();
-    _events = Provider.of<SessionManager>(context, listen: false)
-        .eventsNearMe
-        .asStream();
   }
 
   @override
-  void didUpdateWidget(EventsNearYou oldWidget) {
+  void didUpdateWidget(EventsCarousel oldWidget) {
     super.didUpdateWidget(oldWidget);
   }
 
@@ -42,7 +42,7 @@ class _EventsNearYouState extends State<EventsNearYou> {
     return Column(
       children: [
         SectionTitle(
-          title: "Events Near You",
+          title: widget.title,
           press: () {},
         ),
         VerticalSpacing(of: 20),
@@ -50,7 +50,7 @@ class _EventsNearYouState extends State<EventsNearYou> {
             clipBehavior: Clip.none,
             scrollDirection: Axis.horizontal,
             child: StreamBuilder<List<Event>>(
-              stream: _events,
+              stream: widget.events,
               builder: (BuildContext context, events) {
                 if (!events.hasData) {
                   return SpinKitRotatingCircle(

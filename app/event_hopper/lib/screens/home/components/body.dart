@@ -1,13 +1,11 @@
 import 'package:EventHopper/constants.dart';
-import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
-import 'package:EventHopper/utils/screen_navigator.dart';
+import 'package:EventHopper/components/events_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'home_header.dart';
-import 'events_near_you.dart';
 import 'top_categories.dart';
 
 class Body extends StatelessWidget {
@@ -42,7 +40,11 @@ class Body extends StatelessWidget {
             children: [
               HomeHeader(),
               VerticalSpacing(),
-              EventsNearYou(),
+              EventsCarousel(
+                  title: "Events Near You",
+                  events: Provider.of<SessionManager>(context, listen: false)
+                      .eventsNearMe
+                      .asStream()),
               VerticalSpacing(),
               EventCategories(),
               VerticalSpacing(),
