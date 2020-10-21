@@ -6,6 +6,7 @@ import 'package:EventHopper/screens/home/components/body.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:EventHopper/components/drawer.dart';
 import 'package:provider/provider.dart';
+import 'package:package_info/package_info.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,8 +16,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
+    initSystem();
     super.initState();
-    requestPermissions();
+
     if (!Provider.of<SessionManager>(context, listen: false)
         .initialStateLoaded) {
       Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
@@ -36,7 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void requestPermissions() async {
+  void initSystem() async {
+    Provider.of<SessionManager>(context).updatePackageInfo();
     Map<Permission, PermissionStatus> statuses = await [
       Permission.location,
       Permission.storage,

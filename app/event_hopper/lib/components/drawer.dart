@@ -1,8 +1,11 @@
 import 'package:EventHopper/screens/route_config.dart';
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:package_info/package_info.dart';
+import 'package:provider/provider.dart';
 import '../constants.dart';
 
 Drawer buildDrawer(BuildContext context) {
@@ -73,14 +76,33 @@ Drawer buildDrawer(BuildContext context) {
               width: 40,
               height: 50,
               alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                "© EventHopper 2020 \neh-version-beta",
-                style: TextStyle(
-                  color: Colors.grey,
-                ),
-              )),
+              child: StateText()),
         )
       ],
     ),
   );
+}
+
+class StateText extends StatefulWidget {
+  const StateText({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _StateTextState createState() => _StateTextState();
+}
+
+class _StateTextState extends State<StateText> {
+  @override
+  Widget build(BuildContext context) {
+    PackageInfo info =
+        Provider.of<SessionManager>(context, listen: true).packageInfo;
+
+    return Text(
+      "© EventHopper 2020 \n${info != null ? info.buildNumber : 'unknown'}",
+      style: TextStyle(
+        color: Colors.grey,
+      ),
+    );
+  }
 }
