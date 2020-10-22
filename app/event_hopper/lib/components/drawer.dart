@@ -99,7 +99,7 @@ class _StateTextState extends State<StateText> {
         Provider.of<SessionManager>(context, listen: true).packageInfo;
 
     return Text(
-      "© EventHopper 2020 \n${info != null ? info.buildNumber : 'unknown'}",
+      "© EventHopper 2020 \n${info != null ? info.appName + '-' + info.version + '-' + info.buildNumber : 'unknown'}",
       style: TextStyle(
         color: Colors.grey,
       ),
