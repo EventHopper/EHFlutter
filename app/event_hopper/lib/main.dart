@@ -5,6 +5,7 @@ import 'package:EventHopper/screens/profile/profile_screen.dart';
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/screens/settings/settings_screen.dart';
 import 'package:EventHopper/screens/swipe/swipe_screen.dart';
+import 'package:EventHopper/screens/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,8 +40,9 @@ class App extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         // home: HomeScreen(),
-        initialRoute: '/',
+        initialRoute: '/welcome',
         routes: {
+          RouteConfig.welcome: (context) => WelcomeScreen(),
           RouteConfig.home: (context) => HomeScreen(),
           RouteConfig.myProfile: (context) => ProfileScreen(),
           RouteConfig.swipe: (context) => SwipeScreen(),
