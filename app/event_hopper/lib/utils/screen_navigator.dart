@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/screens/route_config.dart';
 
@@ -23,7 +24,7 @@ class ScreenNavigator {
   ) {
     Navigator.push(
         context,
-        MaterialPageRoute(
+        CupertinoPageRoute(
             builder: (BuildContext context) => RouteConfig.getPage(route)));
   }
 }
