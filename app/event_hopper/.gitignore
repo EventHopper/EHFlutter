@@ -12,6 +12,7 @@
 # EventHopper API Related
 
 settings.json
+config.dart
 
 # IntelliJ related
 *.iml

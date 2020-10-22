@@ -15,7 +15,6 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
-    initSystem();
     super.initState();
 
     if (!Provider.of<SessionManager>(context, listen: false)
@@ -28,6 +27,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    initSystem();
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Body(),
@@ -38,7 +38,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     Provider.of<SessionManager>(context).updatePackageInfo();
     Map<Permission, PermissionStatus> statuses = await [
       Permission.location,
-      Permission.storage,
     ].request();
   }
 }

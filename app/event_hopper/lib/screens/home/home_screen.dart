@@ -16,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    initSystem();
     super.initState();
 
     if (!Provider.of<SessionManager>(context, listen: false)
@@ -36,13 +35,5 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Body(),
       bottomNavigationBar: CustomBottonNavBar(),
     );
-  }
-
-  void initSystem() async {
-    Provider.of<SessionManager>(context).updatePackageInfo();
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-      Permission.storage,
-    ].request();
   }
 }

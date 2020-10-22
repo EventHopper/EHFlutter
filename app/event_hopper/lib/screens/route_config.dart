@@ -8,8 +8,8 @@ import 'package:EventHopper/screens/home/home_screen.dart';
 import 'package:EventHopper/screens/welcome/welcome_screen.dart';
 
 class RouteConfig {
-  static const String home = '/';
   static const String welcome = '/welcome';
+  static const String home = '/home';
   static const String swipe = '/swipe';
   static const String myEvents = '/my-events';
   static const String myProfile = '/profile';
