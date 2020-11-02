@@ -1,6 +1,6 @@
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/screens/login/components/body.dart';
+import 'package:EventHopper/screens/login/components/preview_body.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +27,7 @@ class _LogInScreenState extends State<LogInScreen> {
     initSystem();
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: Body(),
+      body: PreviewBody(),
     );
   }
 

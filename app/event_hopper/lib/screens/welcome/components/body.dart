@@ -1,7 +1,7 @@
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/size_config.dart';
+import 'package:EventHopper/utils/size_config.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -87,7 +87,7 @@ class Body extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-                      ScreenNavigator.navigate(context, RouteConfig.home);
+                      ScreenNavigator.navigate(context, RouteConfig.login);
                     },
                   ),
                 )

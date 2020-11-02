@@ -1,20 +1,15 @@
-import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/components/event_card.dart';
 import 'package:EventHopper/utils/constants.dart';
-import 'package:EventHopper/models/events/Event.dart';
 import 'package:EventHopper/utils/size_config.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
-class Body extends StatefulWidget {
+class PreviewBody extends StatefulWidget {
   @override
-  _BodyState createState() => _BodyState();
+  _PreviewBodyState createState() => _PreviewBodyState();
 }
 
-class _BodyState extends State<Body> {
+class _PreviewBodyState extends State<PreviewBody> {
   @override
   void initState() {
     super.initState();
@@ -30,7 +25,7 @@ class _BodyState extends State<Body> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              'assets/images/pizza.svg',
+              'assets/images/settings.svg',
               height: getProportionateScreenHeight(180),
             ),
             VerticalSpacing(),
@@ -47,20 +42,20 @@ class _BodyState extends State<Body> {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
+                    VerticalSpacing(),
+                    VerticalSpacing(),
+                    Text(
+                      "Access and tweak your app and privacy settings...",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        wordSpacing: 1,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey[350],
+                        fontSize: 18,
+                      ),
+                    ),
                   ],
                 )),
-            VerticalSpacing(),
-            VerticalSpacing(),
-            Text(
-              "Follow Clubs , Groups , Bands , Community Organizers and more...",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                wordSpacing: 1,
-                fontWeight: FontWeight.normal,
-                color: Colors.grey[350],
-                fontSize: 18,
-              ),
-            ),
             VerticalSpacing(),
             VerticalSpacing(),
           ],

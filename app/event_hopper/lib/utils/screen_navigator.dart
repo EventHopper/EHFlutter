@@ -27,6 +27,17 @@ class ScreenNavigator {
         CupertinoPageRoute(
             builder: (BuildContext context) => RouteConfig.getPage(route)));
   }
+
+  static void navigateLogOut(
+    BuildContext context,
+  ) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        CupertinoPageRoute(
+            builder: (BuildContext context) =>
+                RouteConfig.getPage(RouteConfig.welcome)),
+        (Route<dynamic> route) => false);
+  }
 }
 
 /**Transitions */

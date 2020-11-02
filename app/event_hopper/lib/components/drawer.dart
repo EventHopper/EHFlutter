@@ -1,12 +1,12 @@
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
-import 'package:EventHopper/size_config.dart';
+import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
-import '../constants.dart';
+import '../utils/constants.dart';
 
 Drawer buildDrawer(BuildContext context) {
   return Drawer(

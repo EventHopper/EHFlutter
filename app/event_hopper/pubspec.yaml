@@ -42,6 +42,7 @@ dependencies:
   flutter_tindercard: ^0.2.0
   pull_to_refresh: ^1.6.2
   package_info: ^0.4.3
+  location: ^3.0.2
 
 dev_dependencies:
   flutter_test:
