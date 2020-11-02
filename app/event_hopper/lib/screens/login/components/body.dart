@@ -1,99 +1,88 @@
-import 'package:EventHopper/screens/route_config.dart';
-import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/utils/size_config.dart';
 
-class PreviewBody extends StatelessWidget {
+class Body extends StatefulWidget {
+  Body({Key key, this.title}) : super(key: key);
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+  final String title;
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+
   @override
   Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    return SingleChildScrollView(
-      clipBehavior: Clip.none,
-      child: SafeArea(
-        top: false,
-        child: Column(
-          children: [
-            Stack(
-              overflow: Overflow.visible,
-              alignment: Alignment.center,
-              children: [
-                Image.network(
-                  // "https://images.unsplash.com/photo-1598649975444-0e53df8f8edd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=630&q=80",
-                  // "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-                  // "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80",
-                  // "https://images.unsplash.com/photo-1541532713592-79a0317b6b77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-                  // "https://images.unsplash.com/photo-1539146395724-de109483bdd2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1115&q=80",
-                  "https://images.unsplash.com/photo-1494668257191-e237c341e7f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=686&q=80",
-                  // "https://images.unsplash.com/photo-1598450938631-cc9e7e33f28a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80",
-                  // "https://images.unsplash.com/photo-1557084672-c82bc51a4e19?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-                  // "https://images.unsplash.com/photo-1504591504549-8ce1589ea6f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height,
-                  filterQuality: FilterQuality.high,
-                ),
-                ColorFiltered(
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.6), BlendMode.dstATop),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: double.infinity,
-                    color: Colors.black,
+    final emailField = TextField(
+      obscureText: false,
+      style: style,
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: "Email",
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+    );
+    final passwordField = TextField(
+      obscureText: true,
+      style: style,
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          hintText: "Password",
+          border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+    );
+    final loginButon = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: Color(0xff01A0C7),
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {},
+        child: Text("Login",
+            textAlign: TextAlign.center,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold)),
+      ),
+    );
+
+    return Scaffold(
+      body: Center(
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.all(36.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 155.0,
+                  child: Image.asset(
+                    "assets/logo.png",
+                    fit: BoxFit.contain,
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: getProportionateScreenHeight(80)),
-                    Text(
-                      "EventHopper",
-                      style: TextStyle(
-                          fontSize: getProportionateScreenWidth(42),
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          height: 0.5),
-                    ),
-                    VerticalSpacing(),
-                    Text(
-                      "Experience more",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    VerticalSpacing(),
-                    VerticalSpacing(),
-                    VerticalSpacing(),
-                    Center(
-                      child: MaterialButton(
-                        height: 45,
-                        color: Colors.blueAccent,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24.0)),
-                        child: Text(
-                          "Create an account",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          ScreenNavigator.navigateSwipe(
-                              context, RouteConfig.home);
-                        },
-                      ),
-                    )
-                  ],
+                SizedBox(height: 45.0),
+                emailField,
+                SizedBox(height: 25.0),
+                passwordField,
+                SizedBox(
+                  height: 35.0,
                 ),
-                Positioned(
-                  bottom: getProportionateScreenWidth(50),
-                  child: MaterialButton(
-                    child: Text(
-                      "already have an account? Log in",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      ScreenNavigator.navigate(context, RouteConfig.home);
-                    },
-                  ),
-                )
+                loginButon,
+                SizedBox(
+                  height: 15.0,
+                ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
