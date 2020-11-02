@@ -87,7 +87,7 @@ class Body extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-                      ScreenNavigator.navigate(context, RouteConfig.login);
+                      ScreenNavigator.navigateSwipe(context, RouteConfig.login);
                     },
                   ),
                 )

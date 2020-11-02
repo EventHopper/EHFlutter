@@ -7,6 +7,8 @@ AppBar buildAppBar(BuildContext context,
     {bool isTransparent = false,
     String title,
     Color color,
+
+    /// default false
     bool backButton = false,
     bool rightIcon = true}) {
   return AppBar(
