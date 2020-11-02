@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:EventHopper/constants.dart';
-import 'package:EventHopper/size_config.dart';
+import 'package:EventHopper/utils/constants.dart';
+import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 

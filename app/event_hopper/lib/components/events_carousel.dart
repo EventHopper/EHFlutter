@@ -9,8 +9,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../constants.dart';
-import '../size_config.dart';
+import '../utils/constants.dart';
+import '../utils/size_config.dart';
 
 class EventsCarousel extends StatefulWidget {
   final String title;

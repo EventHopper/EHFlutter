@@ -3,8 +3,8 @@ import 'package:EventHopper/components/section_title.dart';
 import 'package:EventHopper/models/events/Category.dart';
 import 'package:EventHopper/models/users/User.dart';
 
-import '../../../constants.dart';
-import '../../../size_config.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/size_config.dart';
 
 class EventCategories extends StatelessWidget {
   const EventCategories({

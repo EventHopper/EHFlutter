@@ -1,10 +1,12 @@
-import 'package:EventHopper/constants.dart';
+import 'package:EventHopper/utils/constants.dart';
+import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/components/events_carousel.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/size_config.dart';
+import 'package:EventHopper/utils/size_config.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:EventHopper/utils/screen_navigator.dart';
 import 'home_header.dart';
 import 'top_categories.dart';
 
@@ -20,8 +22,8 @@ class Body extends StatelessWidget {
       Provider.of<SessionManager>(context, listen: false)
           .updateInitialState(false);
       Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
-      // ScreenNavigator.navigate(context, RouteConfig.home);
-      rebuildAllChildren(context);
+      ScreenNavigator.navigate(context, RouteConfig.home);
+
       _refreshController.refreshCompleted();
     }
 
