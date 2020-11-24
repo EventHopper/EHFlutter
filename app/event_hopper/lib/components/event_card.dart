@@ -113,7 +113,7 @@ class Attendees extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           ...List.generate(
-            users.length,
+            3,
             (index) {
               totalUser++;
               return Positioned(

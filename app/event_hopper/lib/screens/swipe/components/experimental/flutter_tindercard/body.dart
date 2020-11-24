@@ -5,6 +5,7 @@ import 'package:EventHopper/models/events/Event.dart';
 import 'package:EventHopper/size_config.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_tindercard/flutter_tindercard.dart';
+import 'package:EventHopper/services/eh-server/api_service.dart';
 
 Future<List<Event>> _events;
 
@@ -17,7 +18,7 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    _events = getEvents();
+    _events = apiService.getEventsByCity('Philadelphia');
   }
 
   @override
