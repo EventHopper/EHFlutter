@@ -36,7 +36,7 @@ class API {
       path: '/events',
       queryParameters: {'index': 'location', 'city': city, 'page': '$page'});
 
-  Uri getEventsByGeo(String lat, String long, int radius) => Uri(
+  Uri getEventsByGeo(String lat, String long, double radius) => Uri(
           port: port,
           scheme: scheme,
           host: host,
@@ -45,7 +45,7 @@ class API {
             'index': 'location',
             'lat': lat,
             'long': long,
-            'radius': radius
+            'radius': '$radius'
           });
 
 //**************************************************************** */

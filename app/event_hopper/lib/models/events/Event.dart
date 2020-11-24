@@ -29,11 +29,4 @@ class Event {
   }
 }
 
-Future<List<Event>> getEvents() async {
-  final apiService = APIService(API.sandbox());
-  List<Event> events = await apiService.getEvents();
-  print('getEvents Reached with events: ' + events.toString());
-  return events;
-}
-
 List<User> users = [user1, user2, user3];
