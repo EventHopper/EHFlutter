@@ -1,4 +1,4 @@
-import 'package:EventHopper/size_config.dart';
+import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'profile_card_alignment.dart';
@@ -25,6 +25,8 @@ List<String> imageUrls = [
   'https://images.unsplash.com/photo-1562490654-131366a15276?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
   'https://images.unsplash.com/photo-1563452965085-2e77e5bf2607?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
   'https://images.unsplash.com/photo-1525183995014-bd94c0750cd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80',
+  'https://images.unsplash.com/photo-1534570122623-99e8378a9aa7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
+  'https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&auto=format&fit=crop&w=581&q=80',
 ];
 
 List<Alignment> cardsAlign = [
@@ -38,11 +40,11 @@ bool cardEnd = false;
 class CardsSectionAlignment extends StatefulWidget {
   CardsSectionAlignment(BuildContext context) {
     cardsSize[0] = Size(MediaQuery.of(context).size.width * 0.8,
-        MediaQuery.of(context).size.height * 0.9);
+        MediaQuery.of(context).size.height * 1);
     cardsSize[1] = Size(MediaQuery.of(context).size.width * 0.7,
-        MediaQuery.of(context).size.height * 0.75);
+        MediaQuery.of(context).size.height * 0.65);
     cardsSize[2] = Size(MediaQuery.of(context).size.width * 0.6,
-        MediaQuery.of(context).size.height * 0.6);
+        MediaQuery.of(context).size.height * 0.64);
   }
 
   @override

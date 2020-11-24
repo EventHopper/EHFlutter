@@ -1,9 +1,9 @@
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/event_card.dart';
-import 'package:EventHopper/constants.dart';
+import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/models/events/Event.dart';
-import 'package:EventHopper/size_config.dart';
+import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 

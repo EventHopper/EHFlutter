@@ -5,9 +5,12 @@ import 'package:EventHopper/screens/organizations/organizations_screen.dart';
 import 'package:EventHopper/screens/settings/settings_screen.dart';
 import 'package:EventHopper/screens/swipe/swipe_screen.dart';
 import 'package:EventHopper/screens/home/home_screen.dart';
+import 'package:EventHopper/screens/welcome/welcome_screen.dart';
+import 'package:EventHopper/screens/login/login_screen.dart';
 
 class RouteConfig {
-  static const String home = '/';
+  static const String welcome = '/welcome';
+  static const String home = '/home';
   static const String swipe = '/swipe';
   static const String myEvents = '/my-events';
   static const String myProfile = '/profile';
@@ -15,9 +18,16 @@ class RouteConfig {
   static const String organizations = '/organizations';
   static const String calendar = '/calendar';
   static const String friends = '/friends';
+  static const String login = '/login';
 
   static getPage(String route) {
     switch (route) {
+      case RouteConfig.welcome:
+        return WelcomeScreen();
+        break;
+      case RouteConfig.login:
+        return LogInScreen();
+        break;
       case RouteConfig.home:
         return HomeScreen();
         break;

@@ -1,19 +1,15 @@
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/components/app_bar.dart';
-import 'package:EventHopper/components/custom_bottom_nav_bar.dart';
-import 'package:EventHopper/screens/home/components/body.dart';
+import 'package:EventHopper/screens/welcome/components/body.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:EventHopper/components/drawer.dart';
 import 'package:provider/provider.dart';
-import 'package:package_info/package_info.dart';
 
-class HomeScreen extends StatefulWidget {
+class WelcomeScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     super.initState();
@@ -28,12 +24,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    initSystem();
     return Scaffold(
-      drawer: buildDrawer(context),
       extendBodyBehindAppBar: true,
-      appBar: buildAppBar(context, isTransparent: true, title: 'EventHopper'),
       body: Body(),
-      bottomNavigationBar: CustomBottonNavBar(),
     );
+  }
+
+  void initSystem() async {
+    Provider.of<SessionManager>(context).updatePackageInfo();
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.location,
+    ].request();
   }
 }
