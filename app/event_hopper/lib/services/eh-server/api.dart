@@ -1,5 +1,6 @@
 import 'package:EventHopper/services/eh-server/config.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 enum Endpoint { events, eventsNearMe, users }
 
@@ -29,12 +30,51 @@ class API {
       path: '/events',
       queryParameters: {'index': 'id', 'id': id});
 
-  Uri getEventsByCity(String city, int page) => Uri(
-      port: port,
-      scheme: scheme,
-      host: host,
-      path: '/events',
-      queryParameters: {'index': 'location', 'city': city, 'page': '$page'});
+  Uri getEventsByCity(String city,
+      {int page,
+      int limit,
+      DateTime date_before,
+      DateTime date_after,
+      List<String> category,
+      List<String> tags}) {
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+    Map<String, String> queryParameters = {
+      'index': 'location',
+      'city': 'Philadelphia'
+    };
+    page != null ? queryParameters.putIfAbsent('page', () => '$page') : () {};
+    limit != null
+        ? queryParameters.putIfAbsent('limit', () => '$limit')
+        : () {};
+    date_before != null
+        ? queryParameters.putIfAbsent('date_before',
+            () => dateFormat.parse(date_before.toString()).toString())
+        : () {};
+    date_before != null
+        ? queryParameters.putIfAbsent('date_after',
+            () => dateFormat.parse(date_after.toString()).toString())
+        : () {};
+    category != null
+        ? queryParameters.putIfAbsent('category', () => category.join(','))
+        : () {};
+    tags != null
+        ? queryParameters.putIfAbsent('tags', () => tags.join(','))
+        : () {};
+    print(Uri(
+            port: port,
+            scheme: scheme,
+            host: host,
+            path: '/events',
+            queryParameters: queryParameters)
+        .toString());
+    return Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/events',
+        queryParameters: queryParameters);
+  }
 
   Uri getEventsByGeo(String lat, String long, double radius) => Uri(
           port: port,

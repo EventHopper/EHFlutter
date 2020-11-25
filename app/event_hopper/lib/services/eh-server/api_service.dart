@@ -9,9 +9,13 @@ final apiService = APIService(API.sandbox());
 class APIService {
   final API api;
   APIService(this.api);
-
   Future<List<Event>> getEventsByCity(String city) async {
-    final url = api.getEventsByCity(city, 1).toString();
+    final url = api.getEventsByCity(
+      city,
+      page: 2,
+      date_after: DateTime.parse('2021-08-10T00:00:00.000Z'),
+      category: ['Music'],
+    ).toString();
     log(url);
     final client = new http.Client();
     final response = await client
@@ -22,7 +26,7 @@ class APIService {
           data.map((dynamic item) => Event.fromJson(item)).toList();
       return events;
     } else {
-      throw ('Request ${api.getEventsByCity(city, 2)} failed' +
+      throw ('Request ${api.getEventsByCity(city, page: 2, date_before: DateTime.parse('2020-07-10T00:00:00.000Z'))} failed' +
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
   }
