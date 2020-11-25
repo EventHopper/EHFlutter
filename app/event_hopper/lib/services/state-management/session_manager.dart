@@ -39,9 +39,11 @@ class SessionManager extends ChangeNotifier {
   }
 
   void fetchEventsNearMe() async {
-    this.eventsNearMe =
-        apiService.getEventsByGeo('39.960863', '-75.6200333', 0.006);
-
+    // this.eventsNearMe =
+    //     apiService.getEventsByGeo('39.960863', '-75.6200333', 0.006);
+    this.eventsNearMe = apiService.getEventsByCity(
+      'Philadelphia',
+    );
     notifyListeners();
   }
 
