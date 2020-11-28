@@ -1,6 +1,6 @@
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:flutter/material.dart';
-
+import 'package:EventHopper/components/location_banner.dart';
 import '../utils/constants.dart';
 
 AppBar buildAppBar(BuildContext context,
@@ -10,7 +10,8 @@ AppBar buildAppBar(BuildContext context,
 
     /// default false
     bool backButton = false,
-    bool rightIcon = true}) {
+    bool rightIcon = true,
+    bool showLocationBanner = false}) {
   return AppBar(
     backgroundColor: isTransparent ? Colors.transparent : Colors.white,
     elevation: 0,
@@ -20,12 +21,14 @@ AppBar buildAppBar(BuildContext context,
             color: Colors.black,
           )
         : null,
-    title: !isTransparent
-        ? Text(
-            isTransparent ? "" : title,
-            style: TextStyle(color: kTextColor),
-          )
-        : null,
+    title: showLocationBanner
+        ? LocationBanner()
+        : !isTransparent
+            ? Text(
+                isTransparent ? "" : title,
+                style: TextStyle(color: kTextColor),
+              )
+            : null,
     centerTitle: true,
     actions: [
       //User Profile Photo

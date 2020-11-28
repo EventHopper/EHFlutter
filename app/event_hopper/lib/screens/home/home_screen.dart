@@ -31,7 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       drawer: buildDrawer(context),
       extendBodyBehindAppBar: true,
-      appBar: buildAppBar(context, isTransparent: true, title: 'EventHopper'),
+      appBar:
+          buildAppBar(context, isTransparent: true, showLocationBanner: true),
       body: Body(),
       bottomNavigationBar: CustomBottonNavBar(),
     );
