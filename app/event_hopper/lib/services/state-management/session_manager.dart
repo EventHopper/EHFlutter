@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/models/events/Event.dart';
@@ -41,9 +43,11 @@ class SessionManager extends ChangeNotifier {
   void fetchEventsNearMe() async {
     // this.eventsNearMe =
     //     apiService.getEventsByGeo('39.960863', '-75.6200333', 0.006);
-    this.eventsNearMe = apiService.getEventsByCity(
-      'Philadelphia',
-    );
+    int page = Random().nextInt(10);
+    int days = Random().nextInt(14);
+    print('page is $page');
+    this.eventsNearMe = apiService.getEventsByCity('Philadelphia',
+        page: page, dateAfter: DateTime.now().add(new Duration(days: days)));
     notifyListeners();
   }
 
