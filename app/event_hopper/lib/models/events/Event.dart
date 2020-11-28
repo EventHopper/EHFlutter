@@ -1,5 +1,3 @@
-import 'package:EventHopper/services/eh-server/api.dart';
-import 'package:EventHopper/services/eh-server/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:intl/intl.dart';

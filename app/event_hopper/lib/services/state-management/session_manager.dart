@@ -13,6 +13,15 @@ class SessionManager extends ChangeNotifier {
   Future<List<Event>> eventsNearMe;
   bool initialStateLoaded = false;
   PackageInfo packageInfo;
+  int index = 0;
+  List<String> cities = [
+    'Philadelphia',
+    'New York',
+    'Los Angeles',
+    'Boston',
+    'Dallas'
+  ];
+  var city = 'Philadelphia';
 
   void updateSessionID(String newID) {
     this.sessionID = newID;
@@ -21,6 +30,15 @@ class SessionManager extends ChangeNotifier {
 
   updatePackageInfo() async {
     this.packageInfo = await PackageInfo.fromPlatform();
+    notifyListeners();
+  }
+
+  void nextCity() {
+    index++;
+    if (index >= cities.length) {
+      index = 0;
+    }
+    city = cities[index];
     notifyListeners();
   }
 
@@ -43,10 +61,10 @@ class SessionManager extends ChangeNotifier {
   void fetchEventsNearMe() async {
     // this.eventsNearMe =
     //     apiService.getEventsByGeo('39.960863', '-75.6200333', 0.006);
-    int page = Random().nextInt(10);
+    int page = Random().nextInt(25);
     int days = Random().nextInt(14);
     print('page is $page');
-    this.eventsNearMe = apiService.getEventsByCity('Philadelphia',
+    this.eventsNearMe = apiService.getEventsByCity('$city',
         page: page, dateAfter: DateTime.now().add(new Duration(days: days)));
     notifyListeners();
   }

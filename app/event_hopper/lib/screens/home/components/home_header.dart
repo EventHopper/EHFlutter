@@ -18,7 +18,7 @@ class HomeHeader extends StatelessWidget {
         children: [
           Image.network(
             // "https://gamespot1.cbsistatic.com/uploads/scale_super/1562/15626911/3395984-4.jpg",
-            "https://i.imgur.com/LExq4Bc.gif?noredirect",
+            // "https://i.imgur.com/LExq4Bc.gif?noredirect",
             // "https://thumbs.gfycat.com/NecessaryUnawareIguanodon-size_restricted.gif",
             // "https://1.gall-gif.com/hygall/files/attach/images/82/247/028/258/4dc366115a50c84f4d777c333b5a2069.gif",
             // "https://i.pinimg.com/originals/8f/84/0b/8f840b797cb68f26db974945addabc70.gif",
@@ -26,6 +26,10 @@ class HomeHeader extends StatelessWidget {
             // "https://media2.giphy.com/media/3oFyD4xKncK6ptR7qg/200.gif",
             // "https://media0.giphy.com/media/TGLt7x4Ppau1oEj21v/giphy.gif",
             // "https://media4.giphy.com/media/1ipKDVkFDsfYf2sxHP/giphy.gif",
+            // 'https://cdn.britannica.com/31/94331-050-4B1F71C2/Skyline-Dallas-Texas.jpg', // Dallas, TX
+            // 'https://gifimage.net/wp-content/uploads/2018/11/dallas-gif-2.gif', // Dallas, TX
+            // 'https://media2.giphy.com/media/Z69UDgjfRMjsY/giphy.gif', // Los Angeles, CA
+            'https://64.media.tumblr.com/5a25c032ee8339b170e1c4995a4aba4c/tumblr_ndiq18Ovs21ql8t12o1_500.gifv', // Boston, MA
             fit: BoxFit.cover,
             width: double.infinity,
             height: getProportionateScreenHeight(315),
