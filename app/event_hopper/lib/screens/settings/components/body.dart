@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:EventHopper/constants.dart';
-import 'package:EventHopper/size_config.dart';
+import 'package:EventHopper/utils/constants.dart';
+import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:EventHopper/utils/screen_navigator.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -22,42 +23,81 @@ class _BodyState extends State<Body> {
     return Container(
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SvgPicture.asset(
-              'assets/images/settings.svg',
-              height: getProportionateScreenHeight(180),
+            VerticalSpacing(),
+            VerticalSpacing(),
+            ListTile(
+              leading: Container(
+                height: 30,
+                width: 10,
+              ),
+              title: Text(
+                'Default Location (Automatic)',
+              ),
+              onTap: () {
+                // Run log out command
+              },
             ),
-            VerticalSpacing(),
-            VerticalSpacing(),
-            Container(
-                width: getProportionateScreenWidth(300),
-                child: Column(
-                  children: [
-                    Text(
-                      "COMING SOON",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 23,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    VerticalSpacing(),
-                    VerticalSpacing(),
-                    Text(
-                      "Access and tweak your app and privacy settings...",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        wordSpacing: 1,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.grey[350],
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                )),
-            VerticalSpacing(),
-            VerticalSpacing(),
+            ListTile(
+              leading: Container(
+                height: 30,
+                width: 10,
+              ),
+              title: Text(
+                'Privacy Policy',
+              ),
+              onTap: () {
+                // Run log out command
+              },
+            ),
+            ListTile(
+              leading: Container(
+                height: 30,
+                width: 10,
+              ),
+              title: Text(
+                'Log Out',
+              ),
+              onTap: () {
+                // Run log out command
+                ScreenNavigator.navigateLogOut(context);
+              },
+            ),
+            // SvgPicture.asset(
+            //   'assets/images/settings.svg',
+            //   height: getProportionateScreenHeight(180),
+            // ),
+            // VerticalSpacing(),
+            // VerticalSpacing(),
+            // Container(
+            //     width: getProportionateScreenWidth(300),
+            //     child: Column(
+            //       children: [
+            //         Text(
+            //           "COMING SOON",
+            //           style: TextStyle(
+            //             color: Colors.grey,
+            //             fontSize: 23,
+            //             fontWeight: FontWeight.normal,
+            //           ),
+            //         ),
+            //         VerticalSpacing(),
+            //         VerticalSpacing(),
+            //         Text(
+            //           "a",
+            //           textAlign: TextAlign.center,
+            //           style: TextStyle(
+            //             wordSpacing: 1,
+            //             fontWeight: FontWeight.normal,
+            //             color: Colors.grey[350],
+            //             fontSize: 18,
+            //           ),
+            //         ),
+            //       ],
+            //     )),
+            // VerticalSpacing(),
+            // VerticalSpacing(),
           ],
         ),
       ),

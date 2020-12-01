@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'package:EventHopper/models/users/User.dart';
 
-import '../constants.dart';
-import '../size_config.dart';
+import '../utils/constants.dart';
+import '../utils/size_config.dart';
 
 class PlaceCard extends StatelessWidget {
   const PlaceCard({
@@ -113,7 +113,7 @@ class Attendees extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           ...List.generate(
-            users.length,
+            3,
             (index) {
               totalUser++;
               return Positioned(

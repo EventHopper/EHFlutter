@@ -6,8 +6,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:provider/provider.dart';
 
-import '../constants.dart';
-import '../size_config.dart';
+import '../utils/constants.dart';
+import '../utils/size_config.dart';
 
 class CustomBottonNavBar extends StatelessWidget {
   const CustomBottonNavBar({

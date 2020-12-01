@@ -34,6 +34,12 @@ User user2 = User(
 User user3 = User(
     fullName: "Kyler",
     image:
-        "https://instagram.fphl2-4.fna.fbcdn.net/v/t51.2885-19/s320x320/106558817_862046184321633_3669233856585083655_n.jpg?_nc_ht=instagram.fphl2-4.fna.fbcdn.net&_nc_ohc=KX0xmVyKPQYAX_tKPvM&oh=290b6fbdb50a19aea3b5679fc012376f&oe=5FA1AC4D",
+        "https://pbs.twimg.com/profile_images/1215038784913510400/fZAZQwmh_400x400.jpg",
     email: 'kyler@something.com',
     username: 'kyler');
+// User user4 = User(
+//     fullName: "Mo",
+//     image:
+//         "https://s.yimg.com/ny/api/res/1.2/12UU2JphAsbxTTDca.7QFQ--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9MTA4MDtoPTcxNg--/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/7b5b5330-112b-11ea-a77f-7c019be7ecae",
+//     email: 'mo@something.com',
+//     username: 'MoMoney');

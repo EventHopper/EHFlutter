@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/screens/route_config.dart';
 
@@ -22,8 +23,44 @@ class ScreenNavigator {
     String route,
   ) {
     Navigator.push(
-      context,
-      RouteConfig.getPage(route),
-    );
+        context,
+        CupertinoPageRoute(
+            builder: (BuildContext context) => RouteConfig.getPage(route)));
   }
+
+  static void navigateLogOut(
+    BuildContext context,
+  ) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        CupertinoPageRoute(
+            builder: (BuildContext context) =>
+                RouteConfig.getPage(RouteConfig.welcome)),
+        (Route<dynamic> route) => false);
+  }
+}
+
+/**Transitions */
+
+class FadeRoute extends PageRouteBuilder {
+  final Widget page;
+  FadeRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
 }
