@@ -61,7 +61,7 @@ class _EventsCarouselState extends State<EventsCarousel> {
                           padding: EdgeInsets.only(
                               left:
                                   getProportionateScreenWidth(kDefaultPadding)),
-                          child: PlaceCard(
+                          child: EventCard(
                             eventSpotlight: events.data[index],
                             press: () {
                               print(events.data[index].action);

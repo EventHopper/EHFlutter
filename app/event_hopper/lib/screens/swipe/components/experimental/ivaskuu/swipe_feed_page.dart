@@ -1,6 +1,8 @@
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'cards_section_alignment.dart';
 import 'cards_section_draggable.dart';
+import 'package:provider/provider.dart';
 
 class SwipeFeedPage extends StatefulWidget {
   @override
@@ -34,7 +36,11 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
       body: Column(
         children: <Widget>[
           showAlignmentCards
-              ? CardsSectionAlignment(context)
+              ? CardsSectionAlignment(
+                  context,
+                  Provider.of<SessionManager>(context, listen: true)
+                      .eventsFromCategory
+                      .asStream())
               : CardsSectionDraggable(),
           buttonsRow()
         ],
