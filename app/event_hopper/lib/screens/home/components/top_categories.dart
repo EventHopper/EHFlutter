@@ -1,10 +1,14 @@
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/section_title.dart';
 import 'package:EventHopper/models/events/Category.dart';
 import 'package:EventHopper/models/users/User.dart';
+import 'package:provider/provider.dart';
+import 'package:EventHopper/utils/screen_navigator.dart';
 
 import '../../../utils/constants.dart';
 import '../../../utils/size_config.dart';
+import '../../route_config.dart';
 
 class EventCategories extends StatelessWidget {
   const EventCategories({
@@ -35,7 +39,11 @@ class EventCategories extends StatelessWidget {
                 topCategories.length,
                 (index) => CategoryCard(
                   category: topCategories[index],
-                  press: () {},
+                  press: () {
+                    Provider.of<SessionManager>(context, listen: false)
+                        .fetchEventsByCategory(topCategories[index].name);
+                    ScreenNavigator.navigate(context, RouteConfig.swipe);
+                  },
                 ),
               ),
             ],

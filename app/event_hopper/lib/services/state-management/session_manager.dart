@@ -11,6 +11,7 @@ class SessionManager extends ChangeNotifier {
   User currentUser;
   int currentPage = 0;
   Future<List<Event>> eventsNearMe;
+  Future<List<Event>> eventsFromCategory;
   bool initialStateLoaded = false;
   PackageInfo packageInfo;
   int index = 0;
@@ -66,6 +67,12 @@ class SessionManager extends ChangeNotifier {
     print('page is $page');
     this.eventsNearMe = apiService.getEventsByCity('$city',
         page: page, dateAfter: DateTime.now().add(new Duration(days: days)));
+    notifyListeners();
+  }
+
+  void fetchEventsByCategory(String category) async {
+    this.eventsFromCategory =
+        apiService.getEventsByCity('$city', page: 2, categories: [category]);
     notifyListeners();
   }
 
