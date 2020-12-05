@@ -41,13 +41,15 @@ class ProfileCardAlignment extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text('Card number $cardNum',
+                    Text('${eventSpotlight.name}',
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w700)),
                     Padding(padding: EdgeInsets.only(bottom: 8.0)),
-                    Text('A short description.',
+                    Text('${eventSpotlight.date.toLocal().toString()}',
                         textAlign: TextAlign.start,
                         style: TextStyle(color: Colors.white)),
                   ],
