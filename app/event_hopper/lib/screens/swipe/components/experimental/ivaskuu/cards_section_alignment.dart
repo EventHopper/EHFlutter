@@ -2,32 +2,8 @@ import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'profile_card_alignment.dart';
+import 'package:EventHopper/models/events/Event.dart';
 import 'dart:math';
-
-List<String> imageUrls = [
-  'https://images.unsplash.com/photo-1576083895015-17223a61998e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-  'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-  'https://images.unsplash.com/photo-1496337589254-7e19d01cec44?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-  'https://images.unsplash.com/photo-1601738178459-640e986ee0d9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1057&q=80',
-  'https://images.unsplash.com/photo-1601993396003-6cbec70ce171?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  'https://images.unsplash.com/photo-1601993396046-7485bbf4ac16?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  'https://images.unsplash.com/photo-1601994972637-0ea711efa322?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=650&q=80',
-  'https://images.unsplash.com/photo-1601987932091-135cac222040?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=687&q=80',
-  'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=662&q=80',
-  'https://images.unsplash.com/photo-1579487685737-e435a87b2518?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  'https://images.unsplash.com/photo-1501116518234-f32f28802bd1?ixlib=rb-1.2.1&auto=format&fit=crop&w=948&q=80',
-  'https://images.unsplash.com/photo-1583807563351-25a3e8242a67?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  'https://images.unsplash.com/photo-1522010675502-c7b3888985f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  'https://images.unsplash.com/photo-1568042469170-e5cff7f4d64f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  'https://images.unsplash.com/photo-1589050820342-d666e6116a45?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80',
-  'https://images.unsplash.com/photo-1593642634443-44adaa06623a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=925&q=80',
-  'https://images.unsplash.com/photo-1562490654-131366a15276?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-  'https://images.unsplash.com/photo-1563452965085-2e77e5bf2607?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-  'https://images.unsplash.com/photo-1525183995014-bd94c0750cd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80',
-  'https://images.unsplash.com/photo-1534570122623-99e8378a9aa7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80',
-  'https://images.unsplash.com/photo-1504681869696-d977211a5f4c?ixlib=rb-1.2.1&auto=format&fit=crop&w=581&q=80',
-];
 
 List<Alignment> cardsAlign = [
   Alignment(0.0, 0.5),
@@ -38,7 +14,8 @@ List<Size> cardsSize = List(7);
 bool cardEnd = false;
 
 class CardsSectionAlignment extends StatefulWidget {
-  CardsSectionAlignment(BuildContext context) {
+  final Stream<List<Event>> events;
+  CardsSectionAlignment(BuildContext context, this.events) {
     cardsSize[0] = Size(MediaQuery.of(context).size.width * 0.8,
         MediaQuery.of(context).size.height * 0.7);
     cardsSize[1] = Size(MediaQuery.of(context).size.width * 0.7,
@@ -67,11 +44,12 @@ class _CardsSectionState extends State<CardsSectionAlignment>
     super.initState();
 
     // Init cards
-    for (cardsCounter = 0;
-        cardsCounter < imageUrls.length - 1;
-        cardsCounter++) {
-      cards.add(ProfileCardAlignment(cardsCounter, imageUrls[cardsCounter]));
-    }
+    widget.events.forEach((eventList) {
+      for (Event event in eventList) {
+        cards.add(ProfileCardAlignment(cardsCounter, event));
+      }
+    });
+
     cardsCounter = 3;
 
     frontCardAlign = cardsAlign[2];
@@ -205,11 +183,10 @@ class _CardsSectionState extends State<CardsSectionAlignment>
         cards[1] = cards[2];
         // cards[2] = temp;
 
-        cards[2] = ProfileCardAlignment(
-            cardsCounter, imageUrls[(cardsCounter) % imageUrls.length]);
+        cards[2] = cards[(cardsCounter) % cards.length];
         cardsCounter++;
 
-        if (cardsCounter == imageUrls.length + 3) {
+        if (cardsCounter == cards.length + 3) {
           // cardsCounter = 0;
           endCards();
           return;
@@ -318,7 +295,7 @@ class CardsAnimation {
                 beginAlign.x > 0 ? beginAlign.x + 30.0 : beginAlign.x - 30.0,
                 beginAlign.y < 0
                     ? beginAlign.y - 50
-                    : 0.0) // Has swiped to the left or right?
+                    : 0.0) // Has swiped to the left or right or up?
             )
         .animate(CurvedAnimation(
             parent: parent, curve: Interval(0.0, 0.5, curve: Curves.easeIn)));

@@ -1,7 +1,8 @@
 import 'package:EventHopper/utils/size_config.dart';
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'cards_section_alignment.dart';
-import 'cards_section_draggable.dart';
+import 'package:provider/provider.dart';
 
 class SwipeFeedPage extends StatefulWidget {
   @override
@@ -24,7 +25,11 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
             child: Column(children: [
               Container(
                   height: MediaQuery.of(context).size.height * 0.8,
-                  child: CardsSectionAlignment(context))
+                  child: CardsSectionAlignment(
+                      context,
+                      Provider.of<SessionManager>(context, listen: true)
+                          .eventsFromCategory
+                          .asStream()))
             ])),
         buttonsRow()
       ],

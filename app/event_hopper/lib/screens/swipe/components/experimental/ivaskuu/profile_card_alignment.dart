@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:EventHopper/models/events/Event.dart';
 
 class ProfileCardAlignment extends StatelessWidget {
   final int cardNum;
-  final String image;
-  ProfileCardAlignment(this.cardNum, this.image);
+  final Event eventSpotlight;
+  ProfileCardAlignment(this.cardNum, this.eventSpotlight);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,8 @@ class ProfileCardAlignment extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
-                  child: Image.network(this.image, fit: BoxFit.cover),
+                  child: Image.network(this.eventSpotlight.image,
+                      fit: BoxFit.cover),
                 )),
           ),
           SizedBox.expand(

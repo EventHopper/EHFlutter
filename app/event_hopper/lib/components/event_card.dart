@@ -6,8 +6,8 @@ import 'package:EventHopper/models/users/User.dart';
 import '../utils/constants.dart';
 import '../utils/size_config.dart';
 
-class PlaceCard extends StatelessWidget {
-  const PlaceCard({
+class EventCard extends StatelessWidget {
+  const EventCard({
     Key key,
     @required this.eventSpotlight,
     this.isFullCard = false,

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/models/events/Event.dart';
@@ -9,8 +11,18 @@ class SessionManager extends ChangeNotifier {
   User currentUser;
   int currentPage = 0;
   Future<List<Event>> eventsNearMe;
+  Future<List<Event>> eventsFromCategory;
   bool initialStateLoaded = false;
   PackageInfo packageInfo;
+  int index = 0;
+  List<String> cities = [
+    'Philadelphia',
+    'New York',
+    'Los Angeles',
+    'Boston',
+    'Dallas'
+  ];
+  var city = 'Philadelphia';
 
   void updateSessionID(String newID) {
     this.sessionID = newID;
@@ -19,6 +31,15 @@ class SessionManager extends ChangeNotifier {
 
   updatePackageInfo() async {
     this.packageInfo = await PackageInfo.fromPlatform();
+    notifyListeners();
+  }
+
+  void nextCity() {
+    index++;
+    if (index >= cities.length) {
+      index = 0;
+    }
+    city = cities[index];
     notifyListeners();
   }
 
@@ -39,9 +60,19 @@ class SessionManager extends ChangeNotifier {
   }
 
   void fetchEventsNearMe() async {
-    this.eventsNearMe =
-        apiService.getEventsByGeo('39.960863', '-75.6200333', 0.006);
+    // this.eventsNearMe =
+    //     apiService.getEventsByGeo('39.960863', '-75.6200333', 0.006);
+    int page = Random().nextInt(25);
+    int days = Random().nextInt(14);
+    print('page is $page');
+    this.eventsNearMe = apiService.getEventsByCity('$city',
+        page: page, dateAfter: DateTime.now().add(new Duration(days: days)));
+    notifyListeners();
+  }
 
+  void fetchEventsByCategory(String category) async {
+    this.eventsFromCategory =
+        apiService.getEventsByCity('$city', page: 2, categories: [category]);
     notifyListeners();
   }
 

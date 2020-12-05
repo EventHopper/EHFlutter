@@ -59,7 +59,7 @@ class _BodyState extends State<Body> {
                         children: [
                           ...List.generate(
                             events.data.length,
-                            (index) => PlaceCard(
+                            (index) => EventCard(
                               eventSpotlight: events.data[index],
                               isFullCard: true,
                               press: () {},
