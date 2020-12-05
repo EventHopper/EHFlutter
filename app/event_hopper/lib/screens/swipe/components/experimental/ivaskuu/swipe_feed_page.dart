@@ -13,6 +13,7 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
@@ -32,9 +33,24 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
       ),
       backgroundColor: Colors.white,
       body: Column(
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           showAlignmentCards
-              ? CardsSectionAlignment(context)
+              ? SingleChildScrollView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  clipBehavior: Clip.hardEdge,
+                  primary: true,
+                  child: Column(
+                      // verticalDirection: VerticalDirection.up,
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            height: MediaQuery.of(context).size.height * 0.8,
+                            child: CardsSectionAlignment(context))
+                      ]))
               : CardsSectionDraggable(),
           buttonsRow()
         ],
@@ -44,7 +60,7 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
 
   Widget buttonsRow() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 48.0),
+      margin: EdgeInsets.symmetric(vertical: 14.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
