@@ -1,5 +1,6 @@
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/screens/route_config.dart';
+import 'package:EventHopper/components/section_title.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/components/events_carousel.dart';
 import 'package:flutter/material.dart';
@@ -43,10 +44,15 @@ class Body extends StatelessWidget {
               HomeHeader(),
               VerticalSpacing(),
               EventsCarousel(
+                events: Provider.of<SessionManager>(context, listen: false)
+                    .eventsNearMe
+                    .asStream(),
+                sectionTitle: SectionTitle(
                   title: "Events Near You",
-                  events: Provider.of<SessionManager>(context, listen: false)
-                      .eventsNearMe
-                      .asStream()),
+                  press: () {},
+                  actionTitle: "See All",
+                ),
+              ),
               VerticalSpacing(),
               EventCategories(),
               VerticalSpacing(),

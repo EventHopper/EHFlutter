@@ -1,25 +1,23 @@
 import 'dart:async';
 
-import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/event_card.dart';
 import 'package:EventHopper/components/section_title.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/constants.dart';
 import '../utils/size_config.dart';
 
 class EventsCarousel extends StatefulWidget {
-  final String title;
   final Stream<List<Event>> events;
+  final SectionTitle sectionTitle;
 
   const EventsCarousel({
     Key key,
-    this.title,
     this.events,
+    @required this.sectionTitle,
   }) : super(key: key);
 
   @override
@@ -41,10 +39,7 @@ class _EventsCarouselState extends State<EventsCarousel> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SectionTitle(
-          title: widget.title,
-          press: () {},
-        ),
+        widget.sectionTitle,
         VerticalSpacing(of: 20),
         SingleChildScrollView(
             clipBehavior: Clip.none,
