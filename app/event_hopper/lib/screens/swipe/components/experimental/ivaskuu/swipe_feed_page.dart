@@ -1,3 +1,4 @@
+import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'cards_section_alignment.dart';
 import 'cards_section_draggable.dart';
@@ -12,55 +13,27 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      appBar: AppBar(
-        elevation: 0.0,
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        // leading: IconButton(
-        //     onPressed: () {}, icon: Icon(Icons.settings, color: Colors.grey)),
-        title: Switch(
-          onChanged: (bool value) => setState(() => showAlignmentCards = value),
-          value: showAlignmentCards,
-          activeColor: Colors.red,
-        ),
-        // actions: <Widget>[
-        //   IconButton(
-        //       onPressed: () {},
-        //       icon: Icon(Icons.question_answer, color: Colors.grey)),
-        // ],
-      ),
-      backgroundColor: Colors.white,
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          showAlignmentCards
-              ? SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  clipBehavior: Clip.hardEdge,
-                  primary: true,
-                  child: Column(
-                      // verticalDirection: VerticalDirection.up,
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                            height: MediaQuery.of(context).size.height * 0.8,
-                            child: CardsSectionAlignment(context))
-                      ]))
-              : CardsSectionDraggable(),
-          buttonsRow()
-        ],
-      ),
+    return Column(
+      children: [
+        VerticalSpacing(of: 45),
+        SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.hardEdge,
+            primary: true,
+            child: Column(children: [
+              Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: CardsSectionAlignment(context))
+            ])),
+        buttonsRow()
+      ],
     );
   }
 
   Widget buttonsRow() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 14.0),
+      margin: EdgeInsets.symmetric(vertical: 0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

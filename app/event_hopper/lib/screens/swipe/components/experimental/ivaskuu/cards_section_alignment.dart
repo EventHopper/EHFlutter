@@ -30,9 +30,9 @@ List<String> imageUrls = [
 ];
 
 List<Alignment> cardsAlign = [
-  Alignment(0.0, -0.2),
-  Alignment(0.0, 0.8),
-  Alignment(0.0, 2.0)
+  Alignment(0.0, 0.5),
+  Alignment(0.0, 0.3),
+  Alignment(0.0, 0.0)
 ];
 List<Size> cardsSize = List(7);
 bool cardEnd = false;
@@ -88,8 +88,8 @@ class _CardsSectionState extends State<CardsSectionAlignment>
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 550,
-      width: 350,
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
       child: Stack(
         children: <Widget>[
           backCard(),
