@@ -16,7 +16,7 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        VerticalSpacing(of: 45),
+        VerticalSpacing(of: 40),
         SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -27,7 +27,7 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
                   height: MediaQuery.of(context).size.height * 0.8,
                   child: CardsSectionAlignment(
                       context,
-                      Provider.of<SessionManager>(context, listen: true)
+                      Provider.of<SessionManager>(context, listen: false)
                           .eventsFromCategory
                           .asStream()))
             ])),
@@ -38,19 +38,10 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
 
   Widget buttonsRow() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          // FloatingActionButton(
-          //   mini: true,
-          //   heroTag: "btn1",
-          //   onPressed: () {},
-          //   backgroundColor: Colors.white,
-          //   child: Icon(Icons.loop, color: Colors.yellow),
-          // ),
-          // Padding(padding: EdgeInsets.only(right: 8.0)),
           FloatingActionButton(
             heroTag: "btn2",
             onPressed: () {},

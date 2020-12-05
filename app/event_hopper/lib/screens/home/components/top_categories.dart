@@ -41,6 +41,8 @@ class EventCategories extends StatelessWidget {
                   category: topCategories[index],
                   press: () {
                     Provider.of<SessionManager>(context, listen: false)
+                        .updateCurrentPage(1);
+                    Provider.of<SessionManager>(context, listen: false)
                         .fetchEventsByCategory(topCategories[index].name);
                     ScreenNavigator.navigate(context, RouteConfig.swipe);
                   },
