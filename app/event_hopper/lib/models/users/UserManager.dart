@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:EventHopper/models/events/Event.dart';
-import 'package:flutter/material.dart';
 import 'package:EventHopper/models/users/User.dart';
 
 class UserManager {

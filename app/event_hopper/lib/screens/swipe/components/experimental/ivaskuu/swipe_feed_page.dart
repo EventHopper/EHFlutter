@@ -1,7 +1,7 @@
+import 'package:EventHopper/utils/size_config.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'cards_section_alignment.dart';
-import 'cards_section_draggable.dart';
 import 'package:provider/provider.dart';
 
 class SwipeFeedPage extends StatefulWidget {
@@ -14,55 +14,34 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        // leading: IconButton(
-        //     onPressed: () {}, icon: Icon(Icons.settings, color: Colors.grey)),
-        title: Switch(
-          onChanged: (bool value) => setState(() => showAlignmentCards = value),
-          value: showAlignmentCards,
-          activeColor: Colors.red,
-        ),
-        // actions: <Widget>[
-        //   IconButton(
-        //       onPressed: () {},
-        //       icon: Icon(Icons.question_answer, color: Colors.grey)),
-        // ],
-      ),
-      backgroundColor: Colors.white,
-      body: Column(
-        children: <Widget>[
-          showAlignmentCards
-              ? CardsSectionAlignment(
-                  context,
-                  Provider.of<SessionManager>(context, listen: true)
-                      .eventsFromCategory
-                      .asStream())
-              : CardsSectionDraggable(),
-          buttonsRow()
-        ],
-      ),
+    return Column(
+      children: [
+        VerticalSpacing(of: 40),
+        SingleChildScrollView(
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.hardEdge,
+            primary: true,
+            child: Column(children: [
+              Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  child: CardsSectionAlignment(
+                      context,
+                      Provider.of<SessionManager>(context, listen: false)
+                          .eventsFromCategory
+                          .asStream()))
+            ])),
+        buttonsRow()
+      ],
     );
   }
 
   Widget buttonsRow() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 48.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          // FloatingActionButton(
-          //   mini: true,
-          //   heroTag: "btn1",
-          //   onPressed: () {},
-          //   backgroundColor: Colors.white,
-          //   child: Icon(Icons.loop, color: Colors.yellow),
-          // ),
-          // Padding(padding: EdgeInsets.only(right: 8.0)),
           FloatingActionButton(
             heroTag: "btn2",
             onPressed: () {},

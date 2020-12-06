@@ -1,9 +1,6 @@
-import 'package:EventHopper/components/section_title.dart';
-// import 'package:EventHopper/constants.dart';
-
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/screens/route_config.dart';
-
+import 'package:EventHopper/components/section_title.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/components/events_carousel.dart';
 import 'package:flutter/material.dart';
