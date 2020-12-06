@@ -174,13 +174,20 @@ class API {
         ? map.putIfAbsent('date_after', () => dateAfter.toString())
         : () {};
     category != null
-        ? map.putIfAbsent('category', () => category.join(','))
+        ? map.putIfAbsent('category', () => category.join(',').toString())
         : () {};
     tags != null ? map.putIfAbsent('tags', () => tags.join(',')) : () {};
     return map;
   }
 
   Uri _buildUri(Map<String, String> queryParameters) {
+    print(Uri(
+            port: port,
+            scheme: scheme,
+            host: host,
+            path: '/events',
+            queryParameters: queryParameters)
+        .toString());
     return Uri(
         port: port,
         scheme: scheme,

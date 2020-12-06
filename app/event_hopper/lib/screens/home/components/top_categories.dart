@@ -19,8 +19,8 @@ class EventCategories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SectionTitle(title: "What are you feeling like?", press: () {}),
-        VerticalSpacing(of: 20),
+        SectionTitle(title: "", press: () {}),
+        VerticalSpacing(of: 5),
         Container(
           margin: EdgeInsets.symmetric(
             horizontal: getProportionateScreenWidth(kDefaultPadding),
@@ -40,10 +40,11 @@ class EventCategories extends StatelessWidget {
                 (index) => CategoryCard(
                   category: topCategories[index],
                   press: () {
+                    print(topCategories[index].apiName);
                     Provider.of<SessionManager>(context, listen: false)
                         .updateCurrentPage(1);
                     Provider.of<SessionManager>(context, listen: false)
-                        .fetchEventsByCategory(topCategories[index].name);
+                        .fetchEventsByCategory(topCategories[index].apiName);
                     ScreenNavigator.navigate(context, RouteConfig.swipe);
                   },
                 ),

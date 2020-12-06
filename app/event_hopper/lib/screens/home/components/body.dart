@@ -3,6 +3,7 @@ import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/components/section_title.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/components/events_carousel.dart';
+import 'package:EventHopper/utils/system_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/utils/size_config.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'home_header.dart';
 import 'top_categories.dart';
+import 'package:EventHopper/components/ad_banner.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -53,22 +55,23 @@ class Body extends StatelessWidget {
                   actionTitle: "See All",
                 ),
               ),
-              VerticalSpacing(),
+              // VerticalSpacing(of: 5),
               EventCategories(),
+              VerticalSpacing(),
+              SectionTitle(
+                title: "Featured",
+                press: () {
+                  launchURL('https://www.playstation.com/en-us/ps5/');
+                },
+                actionTitle: "Learn More",
+              ),
+              VerticalSpacing(),
+              AdBanner(),
               VerticalSpacing(),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void rebuildAllChildren(BuildContext context) {
-    void rebuild(Element el) {
-      el.markNeedsBuild();
-      el.visitChildren(rebuild);
-    }
-
-    (context as Element).visitChildren(rebuild);
   }
 }

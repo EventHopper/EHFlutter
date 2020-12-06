@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:EventHopper/models/events/Event.dart';
+import 'package:intl/intl.dart';
 
 class ProfileCardAlignment extends StatelessWidget {
   final int cardNum;
@@ -16,11 +17,17 @@ class ProfileCardAlignment extends StatelessWidget {
           SizedBox.expand(
             child: Material(
                 shadowColor: Colors.transparent,
+                elevation: 3,
+                clipBehavior: Clip.hardEdge,
                 borderRadius: BorderRadius.circular(16.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16.0),
-                  child: Image.network(this.eventSpotlight.image,
-                      fit: BoxFit.cover),
+                child: Ink.image(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    this.eventSpotlight.image,
+                  ),
+                  child: InkWell(
+                    onTap: () {},
+                  ),
                 )),
           ),
           SizedBox.expand(
@@ -49,7 +56,8 @@ class ProfileCardAlignment extends StatelessWidget {
                             fontSize: 20.0,
                             fontWeight: FontWeight.w700)),
                     Padding(padding: EdgeInsets.only(bottom: 8.0)),
-                    Text('${eventSpotlight.date.toLocal().toString()}',
+                    Text(
+                        '${eventSpotlight.date.day.toString() + " " + DateFormat.MMMM().format(eventSpotlight.date) + " " + eventSpotlight.date.year.toString()}',
                         textAlign: TextAlign.start,
                         style: TextStyle(color: Colors.white)),
                   ],

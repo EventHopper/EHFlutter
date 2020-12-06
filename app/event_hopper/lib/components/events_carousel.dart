@@ -5,7 +5,7 @@ import 'package:EventHopper/components/event_card.dart';
 import 'package:EventHopper/components/section_title.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:EventHopper/utils/system_utils.dart';
 
 import '../utils/constants.dart';
 import '../utils/size_config.dart';
@@ -65,7 +65,7 @@ class _EventsCarouselState extends State<EventsCarousel> {
                             eventSpotlight: events.data[index],
                             press: () {
                               print(events.data[index].action);
-                              _launchURL(events.data[index].action);
+                              launchURL(events.data[index].action);
                             },
                           ),
                         ),
@@ -80,13 +80,5 @@ class _EventsCarouselState extends State<EventsCarousel> {
             ))
       ],
     );
-  }
-}
-
-_launchURL(String url) async {
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
   }
 }

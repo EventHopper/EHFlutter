@@ -15,6 +15,7 @@ class PreviewBody extends StatelessWidget {
           children: [
             Stack(
               overflow: Overflow.visible,
+              clipBehavior: Clip.none,
               alignment: Alignment.center,
               children: [
                 Image.network(

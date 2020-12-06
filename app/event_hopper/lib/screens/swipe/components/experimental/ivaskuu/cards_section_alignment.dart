@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'profile_card_alignment.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'dart:math';
+import 'package:EventHopper/utils/system_utils.dart';
 
 List<Alignment> cardsAlign = [
   Alignment(0.0, 0.5),
@@ -127,10 +128,10 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                                         details.delta.dy /
                                         MediaQuery.of(context).size.height);
 
-                            print(frontCardAlign);
+                            // print(frontCardAlign);
 
                             frontCardRot =
-                                frontCardAlign.x; // * rotation speed;
+                                frontCardAlign.x * 3; // * rotation speed;
                           });
                         },
                         onPanStart: (_) {
@@ -139,10 +140,26 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                         // When releasing the first card
                         onPanEnd: (_) {
                           // If the front card was swiped far enough to count as swiped
-                          if ((frontCardAlign.x > 3.0 ||
-                                  frontCardAlign.x < -3.0 &&
-                                      frontCardAlign.y > -3) ||
-                              frontCardAlign.y < -3) {
+                          if ((frontCardAlign.x > 5.0 ||
+                                  frontCardAlign.x < -5.0 &&
+                                      frontCardAlign.y > -5) ||
+                              frontCardAlign.y < -5) {
+                            //Right Swipe
+                            if (frontCardAlign.x > 5 && frontCardAlign.y > -5) {
+                              print('RIGHT SWIPE');
+                            }
+
+                            //Left Swipe
+                            if (frontCardAlign.x < -5 &&
+                                frontCardAlign.y > -5) {
+                              print('LEFT SWIPE');
+                            }
+
+                            //Up Swipe
+                            if (frontCardAlign.y < -5) {
+                              print('UP SWIPE');
+                            }
+                            SystemUtils.vibrate();
                             animateCards();
                           } else {
                             // Return to the initial rotation and alignment
@@ -328,9 +345,13 @@ class CardsAnimation {
     return AlignmentTween(
             begin: beginAlign,
             end: Alignment(
-                beginAlign.x > 0 ? beginAlign.x + 30.0 : beginAlign.x - 30.0,
+                beginAlign.x > 3 && beginAlign.y > -3
+                    ? beginAlign.x + 20.0
+                    : beginAlign.x < -3 && beginAlign.y > -3
+                        ? beginAlign.x - 20.0
+                        : 0.0,
                 beginAlign.y < 0
-                    ? beginAlign.y - 50
+                    ? beginAlign.y - 30
                     : 0.0) // Has swiped to the left or right or up?
             )
         .animate(CurvedAnimation(

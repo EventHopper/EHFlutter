@@ -22,73 +22,78 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: getProportionateScreenWidth(isFullCard ? 158 : 137),
-      child: GestureDetector(
-        onTap: () {
-          press();
-        },
-        child: Column(
-          children: [
-            AspectRatio(
-              aspectRatio: isFullCard ? 1.09 : 1.29,
-              child: Container(
-                decoration: BoxDecoration(
+      child: Material(
+        child: GestureDetector(
+          onTap: () {
+            press();
+          },
+          child: Column(
+            children: [
+              AspectRatio(
+                aspectRatio: isFullCard ? 1.09 : 1.29,
+                child: Material(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                  image: DecorationImage(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
+                  clipBehavior: Clip.hardEdge,
+                  child: Ink.image(
+                      child: InkWell(
+                        onTap: () {
+                          press();
+                        },
+                      ),
                       image: NetworkImage(eventSpotlight.image),
                       fit: BoxFit.cover),
                 ),
               ),
-            ),
-            Container(
-              width: getProportionateScreenWidth(isFullCard ? 158 : 137),
-              padding: EdgeInsets.all(
-                getProportionateScreenWidth(kDefaultPadding),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [kDefualtShadow],
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+              Container(
+                width: getProportionateScreenWidth(isFullCard ? 158 : 137),
+                padding: EdgeInsets.all(
+                  getProportionateScreenWidth(kDefaultPadding),
                 ),
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    eventSpotlight.name,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: isFullCard ? 17 : 12,
-                    ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [kDefualtShadow],
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
                   ),
-                  if (isFullCard)
+                ),
+                child: Column(
+                  children: [
                     Text(
-                      eventSpotlight.date.day.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4
-                          .copyWith(fontWeight: FontWeight.bold),
+                      eventSpotlight.name,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: isFullCard ? 17 : 12,
+                      ),
                     ),
-                  if (isFullCard)
-                    Text(
-                      DateFormat.MMMM().format(eventSpotlight.date) +
-                          " " +
-                          eventSpotlight.date.year.toString(),
+                    if (isFullCard)
+                      Text(
+                        eventSpotlight.date.day.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    if (isFullCard)
+                      Text(
+                        DateFormat.MMMM().format(eventSpotlight.date) +
+                            " " +
+                            eventSpotlight.date.year.toString(),
+                      ),
+                    VerticalSpacing(of: 10),
+                    Attendees(
+                      users: eventSpotlight.attendees,
                     ),
-                  VerticalSpacing(of: 10),
-                  Attendees(
-                    users: eventSpotlight.attendees,
-                  ),
-                ],
-              ),
-            )
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

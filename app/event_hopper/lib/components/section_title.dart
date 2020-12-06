@@ -31,7 +31,11 @@ class SectionTitle extends StatelessWidget {
             ),
           ),
           Spacer(),
-          GestureDetector(
+          InkWell(
+            highlightColor: Colors.lightBlueAccent,
+            splashColor: Colors.blueAccent,
+            focusColor: Colors.blueAccent,
+            borderRadius: BorderRadius.circular(40),
             onTap: press,
             child: actionTitle != null ? Text(actionTitle) : Container(),
           ),
