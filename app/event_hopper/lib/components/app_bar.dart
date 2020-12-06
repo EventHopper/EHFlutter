@@ -1,12 +1,15 @@
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/location_banner.dart';
+import 'package:flutter_svg/svg.dart';
 import '../utils/constants.dart';
 
 AppBar buildAppBar(BuildContext context,
     {bool isTransparent = false,
     String title,
     Color color,
+    SvgPicture leftIcon,
+    GlobalKey<ScaffoldState> key,
 
     /// default false
     bool backButton = false,
@@ -15,12 +18,14 @@ AppBar buildAppBar(BuildContext context,
   return AppBar(
     backgroundColor: isTransparent ? Colors.transparent : Colors.white,
     elevation: 0,
-    // leading: backButton ? FaIcon(FontAwesomeIcons.backward) : Icons.menu,
     leading: backButton
         ? BackButton(
             color: Colors.black,
           )
-        : null,
+        : leftIcon != null
+            ? new FlatButton(
+                onPressed: () => key.currentState.openDrawer(), child: leftIcon)
+            : null,
     title: showLocationBanner
         ? LocationBanner()
         : !isTransparent

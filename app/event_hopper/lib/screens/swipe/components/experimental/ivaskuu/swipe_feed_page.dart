@@ -43,7 +43,7 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           FloatingActionButton(
-            heroTag: "btn2",
+            heroTag: "swipe-discard",
             onPressed: () {},
             mini: true,
             backgroundColor: Colors.white,
@@ -51,14 +51,14 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
           ),
           Padding(padding: EdgeInsets.only(right: 12.0)),
           FloatingActionButton(
-            heroTag: "btn3",
+            heroTag: "swipe-accept",
             onPressed: () {},
             backgroundColor: Colors.white,
             child: Icon(Icons.favorite, color: Colors.green),
           ),
           Padding(padding: EdgeInsets.only(right: 12.0)),
           FloatingActionButton(
-            heroTag: "btn4",
+            heroTag: "swipe-bookmark",
             mini: true,
             onPressed: () {},
             backgroundColor: Colors.white,
