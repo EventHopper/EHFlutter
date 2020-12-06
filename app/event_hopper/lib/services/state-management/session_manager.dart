@@ -71,8 +71,9 @@ class SessionManager extends ChangeNotifier {
   }
 
   void fetchEventsByCategory(String category) async {
+    int page = Random().nextInt(9);
     this.eventsFromCategory =
-        apiService.getEventsByCity('$city', page: 2, categories: [category]);
+        apiService.getEventsByCity('$city', page: page, categories: [category]);
     notifyListeners();
   }
 

@@ -19,6 +19,7 @@ class APIService {
           city,
           page: page != null ? page : 0,
           dateAfter: dateAfter != null ? dateAfter : DateTime.now(),
+          category: categories != null ? categories : null,
           //Change to user  default category preference(s)
         )
         .toString();
