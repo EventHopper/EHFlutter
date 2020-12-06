@@ -1,17 +1,13 @@
-import 'package:EventHopper/components/drawer.dart';
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/screens/swipe/components/experimental/ivaskuu/swipe_feed_page.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
-import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/app_bar.dart';
 import 'package:EventHopper/components/custom_bottom_nav_bar.dart';
-import 'package:EventHopper/screens/swipe/components/experimental/flutter_tindercard/body.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class SwipeScreen extends StatefulWidget {
@@ -67,13 +63,13 @@ Drawer buildSwipeDrawer(BuildContext context) {
             child: SizedBox(
               height: 40,
               width: 40,
-              // child: Text(
-              //   'EventHopper',
-              //   style: TextStyle(
-              //     color: Colors.black,
-              //     fontSize: 24,
-              //   ),
-              // ),
+              child: Text(
+                'Swipe',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                ),
+              ),
             ),
           ),
         ),
@@ -85,7 +81,7 @@ Drawer buildSwipeDrawer(BuildContext context) {
           ),
           onTap: () {
             Navigator.pop(context);
-            Navigator.pushNamed(context, RouteConfig.myProfile);
+            // Navigator.pushNamed(context, RouteConfig.myProfile);
           },
         ),
         ListTile(
@@ -96,7 +92,7 @@ Drawer buildSwipeDrawer(BuildContext context) {
           ),
           onTap: () {
             Navigator.pop(context);
-            Navigator.pushNamed(context, RouteConfig.friends);
+            // Navigator.pushNamed(context, RouteConfig.friends);
           },
         ),
         ListTile(
@@ -107,7 +103,7 @@ Drawer buildSwipeDrawer(BuildContext context) {
           ),
           onTap: () {
             Navigator.pop(context);
-            Navigator.pushNamed(context, RouteConfig.calendar);
+            // Navigator.pushNamed(context, RouteConfig.calendar);
           },
         ),
       ],
