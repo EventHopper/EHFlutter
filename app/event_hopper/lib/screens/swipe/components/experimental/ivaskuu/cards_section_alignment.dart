@@ -18,7 +18,10 @@ bool cardEnd = false;
 
 class CardsSectionAlignment extends StatefulWidget {
   final Stream<List<Event>> events;
-  CardsSectionAlignment(BuildContext context, this.events) {
+
+  AnimationController controller;
+  CardsSectionAlignment(BuildContext context, this.events,
+      {AnimationController controller}) {
     cardsSize[0] = Size(MediaQuery.of(context).size.width * 0.8,
         MediaQuery.of(context).size.height * 0.7);
     cardsSize[1] = Size(MediaQuery.of(context).size.width * 0.7,
@@ -65,6 +68,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
     _controller.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) changeCardsOrder();
     });
+    widget.controller = _controller;
     loadingCards = true;
     parseEventStream(widget.events);
 
