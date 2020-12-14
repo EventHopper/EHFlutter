@@ -3,6 +3,7 @@ import 'package:EventHopper/screens/friends/friends_screen.dart';
 import 'package:EventHopper/screens/login/login_screen.dart';
 import 'package:EventHopper/screens/organizations/organizations_screen.dart';
 import 'package:EventHopper/screens/profile/profile_screen.dart';
+import 'package:EventHopper/screens/registration/registration_screen.dart';
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/screens/settings/settings_screen.dart';
 import 'package:EventHopper/screens/swipe/swipe_screen.dart';
@@ -91,6 +92,7 @@ class App extends StatelessWidget {
         routes: {
           RouteConfig.welcome: (context) => WelcomeScreen(),
           RouteConfig.login: (context) => LogInScreen(),
+          RouteConfig.registration: (context) => RegistrationScreen(),
           RouteConfig.home: (context) => HomeScreen(),
           RouteConfig.myProfile: (context) => ProfileScreen(),
           RouteConfig.swipe: (context) => SwipeScreen(),

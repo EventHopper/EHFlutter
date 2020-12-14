@@ -9,6 +9,7 @@ final apiService = APIService(API.sandbox());
 class APIService {
   final API api;
   APIService(this.api);
+
   Future<List<Event>> getEventsByCity(String city,
       {List<String> categories,
       DateTime dateAfter,
@@ -58,24 +59,21 @@ class APIService {
     }
   }
 
-  // Future<int> getEndpointData(
-  //     {@required String accessToken, @required Endpoint endpoint}) async {
-  //   final uri = api.endpintUri(endpoint);
-  //   final response = await http
-  //       .get(uri.toString(), headers: {'Authorization': '${api.apiKey}'});
-
-  //   if (response.statusCode == 200) {
-  //     final List<dynamic> data = json.decode(response.body);
-  //     if (data.isNotEmpty) {
-  //       final Map<String, dynamic> endpointData = data[0];
-  //       final String responseJsonKey = _responseJsonKeys[endpoint];
-  //       final int result = endpointData[responseJsonKey];
-  //       if (result != null) {
-  //         return result;
-  //       }
-  //     }
-  //   }
-  // }
-
-  static Map<Endpoint, String> _responseJsonKeys = {Endpoint.events: 'name'};
+  Future<int> registerUser(
+      String username, String password, String email, String fullName) async {
+    final url = api.registerUser().toString();
+    log(url);
+    final client = new http.Client();
+    final response = await client.post(Uri.parse(url), headers: {
+      'Authorization': '${api.apiKey}'
+    }, body: {
+      {
+        "username": username,
+        "password": password,
+        "email": email,
+        "full_name": fullName
+      }
+    });
+    return response.statusCode;
+  }
 }

@@ -1,16 +1,16 @@
 import 'package:EventHopper/components/app_bar.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/screens/login/components/body.dart';
+import 'package:EventHopper/screens/registration/components/body.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
-class LogInScreen extends StatefulWidget {
+class RegistrationScreen extends StatefulWidget {
   @override
-  _LogInScreenState createState() => _LogInScreenState();
+  _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class _LogInScreenState extends State<LogInScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   void initState() {
     super.initState();
