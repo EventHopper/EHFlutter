@@ -25,7 +25,6 @@ class _LogInScreenState extends State<LogInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    initSystem();
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: buildAppBar(
@@ -36,12 +35,5 @@ class _LogInScreenState extends State<LogInScreen> {
       ),
       body: Body(),
     );
-  }
-
-  void initSystem() async {
-    Provider.of<SessionManager>(context).updatePackageInfo();
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-    ].request();
   }
 }

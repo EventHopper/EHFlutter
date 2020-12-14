@@ -25,7 +25,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    initSystem();
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: buildAppBar(
@@ -36,12 +35,5 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
       body: Body(),
     );
-  }
-
-  void initSystem() async {
-    Provider.of<SessionManager>(context).updatePackageInfo();
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-    ].request();
   }
 }

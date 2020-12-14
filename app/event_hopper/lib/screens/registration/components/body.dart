@@ -16,75 +16,89 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final emailField = TextField(
-      obscureText: false,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-    final passwordField = TextField(
-      obscureText: true,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Password",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-    final loginButon = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
-        child: Text("Register",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-
     return Scaffold(
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 155.0,
-                  child: Image.asset(
-                    "assets/logo.png",
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                SizedBox(height: 45.0),
-                emailField,
-                SizedBox(height: 25.0),
-                passwordField,
-                SizedBox(
-                  height: 35.0,
-                ),
-                loginButon,
-                SizedBox(
-                  height: 15.0,
-                ),
-              ],
+      body: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextFormField(
+              obscureText: true,
+              style: style,
+              decoration: buildInputDecoration("Name"),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter name';
+                }
+                return null;
+              },
             ),
-          ),
+            SizedBox(height: 25.0),
+            TextFormField(
+              obscureText: true,
+              style: style,
+              decoration: buildInputDecoration("username"),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter username';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 45.0),
+            TextFormField(
+              obscureText: true,
+              style: style,
+              decoration: buildInputDecoration("email"),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter email';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 45.0),
+            TextFormField(
+              obscureText: true,
+              style: style,
+              decoration: buildInputDecoration("Password"),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter password';
+                }
+                return null;
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Validate returns true if the form is valid, or false
+                  // otherwise.
+                  if (_formKey.currentState.validate()) {
+                    // If the form is valid, display a Snackbar.
+                    Scaffold.of(context).showSnackBar(
+                        SnackBar(content: Text('Processing Data')));
+                  }
+                },
+                child: Text('Submit'),
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  InputDecoration buildInputDecoration(String hinttext) {
+    return InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: hinttext,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)));
   }
 }
