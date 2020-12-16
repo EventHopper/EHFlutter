@@ -24,7 +24,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    initSystem();
+    //initSystem();
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Body(),

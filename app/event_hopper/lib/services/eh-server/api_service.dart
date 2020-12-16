@@ -59,21 +59,25 @@ class APIService {
     }
   }
 
-  Future<int> registerUser(
-      String username, String password, String email, String fullName) async {
+  Future<dynamic> registerUser(
+      {String username, String password, String email, String fullName}) async {
     final url = api.registerUser().toString();
-    log(url);
+    print(url);
     final client = new http.Client();
     final response = await client.post(Uri.parse(url), headers: {
       'Authorization': '${api.apiKey}'
     }, body: {
-      {
-        "username": username,
-        "password": password,
-        "email": email,
-        "full_name": fullName
-      }
+      "username": username,
+      "password": password,
+      "email": email,
+      "full_name": fullName
     });
-    return response.statusCode;
+    if (response.statusCode == 200) {
+      jsonDecode(response.body);
+      return jsonDecode(response.body);
+    } else {
+      throw ('Request ${api.registerUser()} failed' +
+          '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
+    }
   }
 }
