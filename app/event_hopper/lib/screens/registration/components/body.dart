@@ -108,11 +108,21 @@ class _BodyState extends State<Body> {
                   // otherwise.
                   if (_formKey.currentState.validate()) {
                     // If the form is valid, send post request to firebase.
-                    dynamic responseBody = await apiService.registerUser(
-                        email: emailFieldController.text,
-                        fullName: nameFieldController.text,
-                        password: passwordFieldController.text,
-                        username: usernameFieldController.text);
+                    dynamic responseBody;
+                    try {
+                      responseBody = await apiService.registerUser(
+                          email: emailFieldController.text,
+                          fullName: nameFieldController.text,
+                          password: passwordFieldController.text,
+                          username: usernameFieldController.text);
+                    } catch (e) {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              'Something went wrong, please check your network connection'),
+                        ),
+                      );
+                    }
 
                     if (responseBody['code'] == 10) {
                       //TODO: login the user
