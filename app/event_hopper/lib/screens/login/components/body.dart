@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:EventHopper/utils/screen_navigator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../../route_config.dart';
 
 class Body extends StatefulWidget {
   Body({Key key, this.title}) : super(key: key);
@@ -16,75 +19,118 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  final _formKey = GlobalKey<FormState>();
+
+  final emailFieldController = TextEditingController();
+  final passwordFieldController = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the widget tree.
+    emailFieldController.dispose();
+    passwordFieldController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final emailField = TextField(
-      obscureText: false,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-    final passwordField = TextField(
-      obscureText: true,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Password",
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-    final loginButon = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
-        child: Text("Login",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-
     return Scaffold(
-      body: Center(
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 155.0,
-                  child: Image.asset(
-                    "assets/logo.png",
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                SizedBox(height: 45.0),
-                emailField,
-                SizedBox(height: 25.0),
-                passwordField,
-                SizedBox(
-                  height: 35.0,
-                ),
-                loginButon,
-                SizedBox(
-                  height: 15.0,
-                ),
-              ],
+      body: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextFormField(
+              style: style,
+              decoration: buildInputDecoration("email"),
+              controller: emailFieldController,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter email';
+                }
+                if (!isValidEmail(value)) {
+                  return 'Please enter a valid email';
+                }
+                return null;
+              },
             ),
-          ),
+            SizedBox(
+              height: 15.0,
+            ),
+            TextFormField(
+              obscureText: true,
+              style: style,
+              decoration: buildInputDecoration("Password"),
+              controller: passwordFieldController,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter password';
+                }
+                if (value.length < 6) {
+                  return 'Invalid login. Password must be at least 6 characters';
+                }
+                return null;
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (_formKey.currentState.validate()) {
+                    // If the form is valid, send post request to firebase.
+                    try {
+                      UserCredential userCredential = await FirebaseAuth
+                          .instance
+                          .signInWithEmailAndPassword(
+                              email: emailFieldController.text,
+                              password: passwordFieldController.text);
+
+                      if (userCredential.user != null) {
+                        //successfully logged in
+                        ScreenNavigator.navigateSwipe(
+                            context, RouteConfig.home);
+                      } else {
+                        Scaffold.of(context).showSnackBar(buildSnackbar(
+                            'An error occurred. Please check your internet connection'));
+                      }
+                    } on FirebaseAuthException catch (e) {
+                      if (e.code == 'user-not-found') {
+                        Scaffold.of(context).showSnackBar(
+                            buildSnackbar('No user found for that email.'));
+                      } else if (e.code == 'wrong-password') {
+                        Scaffold.of(context).showSnackBar(buildSnackbar(
+                            'Wrong password provided for that user.'));
+                      }
+                    }
+                  }
+                },
+                child: Text('Submit'),
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  InputDecoration buildInputDecoration(String hinttext) {
+    return InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: hinttext,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)));
+  }
+
+  SnackBar buildSnackbar(String text) {
+    return SnackBar(
+      content: Text(text),
+    );
+  }
+
+  bool isValidEmail(String email) {
+    return RegExp(
+            r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+        .hasMatch(email);
   }
 }
