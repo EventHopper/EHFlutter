@@ -18,6 +18,7 @@ import 'package:EventHopper/screens/home/home_screen.dart';
 import 'package:EventHopper/screens/events/events_screen.dart';
 import 'package:provider/provider.dart';
 import 'services/state-management/session_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() {
@@ -74,6 +75,10 @@ class App extends StatelessWidget {
     );
   }
 
+  String getHomeRoute() {
+    return FirebaseAuth.instance.currentUser != null ? '/home' : '/welcome';
+  }
+
   Widget mainApp() {
     return ChangeNotifierProvider<SessionManager>(
       create: (context) => SessionManager(),
@@ -88,7 +93,7 @@ class App extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         // home: HomeScreen(),
-        initialRoute: '/welcome',
+        initialRoute: getHomeRoute(),
         routes: {
           RouteConfig.welcome: (context) => WelcomeScreen(),
           RouteConfig.login: (context) => LogInScreen(),
