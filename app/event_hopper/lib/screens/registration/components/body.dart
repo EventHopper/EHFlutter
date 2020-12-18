@@ -1,6 +1,7 @@
 import 'package:EventHopper/services/eh-server/api_service.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../route_config.dart';
 
@@ -26,6 +27,7 @@ class _BodyState extends State<Body> {
   final passwordFieldController = TextEditingController();
   final nameFieldController = TextEditingController();
   final usernameFieldController = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void dispose() {
@@ -125,7 +127,7 @@ class _BodyState extends State<Body> {
                     }
 
                     if (responseBody['code'] == 10) {
-                      //TODO: login the user
+                      loginUser();
                       ScreenNavigator.navigateSwipe(context, RouteConfig.home);
                     } else {
                       Scaffold.of(context).showSnackBar(
@@ -139,6 +141,37 @@ class _BodyState extends State<Body> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> loginUser() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: emailFieldController.text,
+              password: passwordFieldController.text);
+
+      if (userCredential.user != null) {
+        //successfully logged in
+        ScreenNavigator.navigateSwipe(context, RouteConfig.home);
+      } else {
+        Scaffold.of(context).showSnackBar(buildSnackbar(
+            'An error occurred. Please check your internet connection'));
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        Scaffold.of(context)
+            .showSnackBar(buildSnackbar('No user found for that email.'));
+      } else if (e.code == 'wrong-password') {
+        Scaffold.of(context).showSnackBar(
+            buildSnackbar('Wrong password provided for that user.'));
+      }
+    }
+  }
+
+  SnackBar buildSnackbar(String text) {
+    return SnackBar(
+      content: Text(text),
     );
   }
 

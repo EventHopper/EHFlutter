@@ -80,30 +80,7 @@ class _BodyState extends State<Body> {
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     // If the form is valid, send post request to firebase.
-                    try {
-                      UserCredential userCredential = await FirebaseAuth
-                          .instance
-                          .signInWithEmailAndPassword(
-                              email: emailFieldController.text,
-                              password: passwordFieldController.text);
-
-                      if (userCredential.user != null) {
-                        //successfully logged in
-                        ScreenNavigator.navigateSwipe(
-                            context, RouteConfig.home);
-                      } else {
-                        Scaffold.of(context).showSnackBar(buildSnackbar(
-                            'An error occurred. Please check your internet connection'));
-                      }
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == 'user-not-found') {
-                        Scaffold.of(context).showSnackBar(
-                            buildSnackbar('No user found for that email.'));
-                      } else if (e.code == 'wrong-password') {
-                        Scaffold.of(context).showSnackBar(buildSnackbar(
-                            'Wrong password provided for that user.'));
-                      }
-                    }
+                    loginUser();
                   }
                 },
                 child: Text('Submit'),
@@ -126,6 +103,31 @@ class _BodyState extends State<Body> {
     return SnackBar(
       content: Text(text),
     );
+  }
+
+  Future<void> loginUser() async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: emailFieldController.text,
+              password: passwordFieldController.text);
+
+      if (userCredential.user != null) {
+        //successfully logged in
+        ScreenNavigator.navigateSwipe(context, RouteConfig.home);
+      } else {
+        Scaffold.of(context).showSnackBar(buildSnackbar(
+            'An error occurred. Please check your internet connection'));
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        Scaffold.of(context)
+            .showSnackBar(buildSnackbar('No user found for that email.'));
+      } else if (e.code == 'wrong-password') {
+        Scaffold.of(context).showSnackBar(
+            buildSnackbar('Wrong password provided for that user.'));
+      }
+    }
   }
 
   bool isValidEmail(String email) {
