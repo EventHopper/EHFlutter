@@ -8,7 +8,6 @@ import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/screens/settings/settings_screen.dart';
 import 'package:EventHopper/screens/swipe/swipe_screen.dart';
 import 'package:EventHopper/screens/welcome/welcome_screen.dart';
-import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
