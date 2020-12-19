@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:EventHopper/models/events/Event.dart';
 import 'package:http/http.dart' as http;
 import 'package:EventHopper/services/eh-server/api.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 final apiService = APIService(API.sandbox());
 
@@ -71,6 +72,28 @@ class APIService {
       "password": password,
       "email": email,
       "full_name": fullName
+    });
+    if (response.statusCode == 200) {
+      jsonDecode(response.body);
+      return jsonDecode(response.body);
+    } else {
+      throw ('Request ${api.registerUser()} failed' +
+          '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
+    }
+  }
+
+  Future<dynamic> swipeEntry({
+    String direction,
+    String eventId,
+  }) async {
+    String userId = FirebaseAuth.instance.currentUser.uid;
+    final url = api.swipeEntry(userId).toString();
+    print(url);
+    final client = new http.Client();
+    final response = await client.post(Uri.parse(url), headers: {
+      'Authorization': '${api.apiKey}'
+    }, body: {
+      "$direction": "$eventId",
     });
     if (response.statusCode == 200) {
       jsonDecode(response.body);
