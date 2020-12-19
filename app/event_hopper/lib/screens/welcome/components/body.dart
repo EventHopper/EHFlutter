@@ -100,7 +100,8 @@ class Body extends StatelessWidget {
                         ),
                         onPressed: () {
                           ScreenNavigator.navigateSwipe(
-                              context, RouteConfig.home);
+                              context, RouteConfig.home,
+                              replace: true);
                         },
                       ),
                     ],
