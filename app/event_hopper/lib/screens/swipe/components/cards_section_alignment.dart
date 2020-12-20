@@ -214,18 +214,6 @@ class _CardsSectionState extends State<CardsSectionAlignment>
 
   Widget frontCard() {
     if (!cardEnd) {
-<<<<<<< Updated upstream:app/event_hopper/lib/screens/swipe/components/experimental/ivaskuu/cards_section_alignment.dart
-      return Align(
-          alignment: _controller.status == AnimationStatus.forward
-              ? CardsAnimation.frontCardDisappearAlignmentAnim(
-                      _controller, frontCardAlign)
-                  .value
-              : frontCardAlign,
-          child: Transform.rotate(
-            angle: (pi / 180.0) * frontCardRot,
-            child: SizedBox.fromSize(size: cardsSize[0], child: cards[0]),
-          ));
-=======
       return InkWell(
         onTap: () {
           cards[cardIndex].getEvent();
@@ -242,7 +230,6 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                   size: cardsSize[0], child: cards[cardIndex]),
             )),
       );
->>>>>>> Stashed changes:app/event_hopper/lib/screens/swipe/components/cards_section_alignment.dart
     } else {
       return Container();
     }
