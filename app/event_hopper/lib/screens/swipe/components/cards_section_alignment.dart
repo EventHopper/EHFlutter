@@ -58,7 +58,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
 
     // Init the animation controller
     _controller =
-        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+        AnimationController(duration: Duration(milliseconds: 100), vsync: this);
     _controller.addListener(() => setState(() {}));
     _controller.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) changeCardsOrder();
@@ -167,7 +167,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                                   direction: "event_up",
                                   eventId: "event_id_up_2");
                             }
-                            SystemUtils.vibrate();
+
                             animateCards();
                           } else {
                             // Return to the initial rotation and alignment
@@ -179,6 +179,10 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                         },
                       ))
                     : Container(),
+                Positioned.fill(
+                  child: Align(
+                      child: buttonsRow(), alignment: Alignment.bottomCenter),
+                )
               ],
             ),
           );
@@ -216,12 +220,15 @@ class _CardsSectionState extends State<CardsSectionAlignment>
 
   Widget swipeIndicator() {
     return !cardEnd
-        ? Opacity(
-            opacity: 0.9,
-            child: CustomPaint(
-              size: MediaQuery.of(context).size,
-              painter:
-                  SwipeIndicatorPainter(frontCardAlign.x, frontCardAlign.y),
+        ? GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            child: Opacity(
+              opacity: 0.9,
+              child: CustomPaint(
+                size: MediaQuery.of(context).size,
+                painter:
+                    SwipeIndicatorPainter(frontCardAlign.x, frontCardAlign.y),
+              ),
             ),
           )
         : Container();
@@ -271,9 +278,58 @@ class _CardsSectionState extends State<CardsSectionAlignment>
   }
 
   void animateCards() {
+    SystemUtils.vibrate();
     _controller.stop();
     _controller.value = 0.0;
     _controller.forward();
+  }
+
+  Widget buttonsRow() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          FloatingActionButton(
+            heroTag: "swipe-discard",
+            onPressed: () {
+              print('RIGHT SWIPE');
+              apiService.swipeEntry(
+                  direction: "event_right", eventId: "event_id_right_1");
+              animateCards();
+            },
+            mini: true,
+            backgroundColor: Colors.white,
+            child: Icon(Icons.close, color: Colors.red),
+          ),
+          Padding(padding: EdgeInsets.only(right: 12.0)),
+          FloatingActionButton(
+            heroTag: "swipe-accept",
+            onPressed: () {
+              print('LEFT SWIPE');
+              apiService.swipeEntry(
+                  direction: "event_left", eventId: "event_id_left_1");
+              animateCards();
+            },
+            backgroundColor: Colors.white,
+            child: Icon(Icons.favorite, color: Colors.blue),
+          ),
+          Padding(padding: EdgeInsets.only(right: 12.0)),
+          FloatingActionButton(
+            heroTag: "swipe-maybe",
+            mini: true,
+            onPressed: () {
+              print('UP SWIPE');
+              apiService.swipeEntry(
+                  direction: "event_up", eventId: "event_id_up_2");
+              animateCards();
+            },
+            backgroundColor: Colors.white,
+            child: Icon(Icons.star, color: Colors.green),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -429,7 +485,7 @@ class SwipeIndicatorPainter extends CustomPainter {
           255,
           max(min(this.xDirection.abs() / opacityFactor, 1),
               min(this.yDirection.abs() / opacityFactor, 1))),
-      fontSize: 75,
+      fontSize: 60,
     );
     final paragraphStyle = ui.ParagraphStyle(
       textDirection: TextDirection.ltr,

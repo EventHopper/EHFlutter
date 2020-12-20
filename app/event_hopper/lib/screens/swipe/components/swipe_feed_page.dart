@@ -16,56 +16,23 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        VerticalSpacing(of: 40),
+        VerticalSpacing(of: 20),
         SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.hardEdge,
             primary: true,
-            child: Column(children: [
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               Container(
-                  height: MediaQuery.of(context).size.height * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.88,
                   child: CardsSectionAlignment(
                       context,
                       Provider.of<SessionManager>(context, listen: false)
                           .eventsFromCategory
                           .asStream()))
             ])),
-        buttonsRow()
       ],
-    );
-  }
-
-  Widget buttonsRow() {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          FloatingActionButton(
-            heroTag: "swipe-discard",
-            onPressed: () {},
-            mini: true,
-            backgroundColor: Colors.white,
-            child: Icon(Icons.close, color: Colors.red),
-          ),
-          Padding(padding: EdgeInsets.only(right: 12.0)),
-          FloatingActionButton(
-            heroTag: "swipe-accept",
-            onPressed: () {},
-            backgroundColor: Colors.white,
-            child: Icon(Icons.favorite, color: Colors.blue),
-          ),
-          Padding(padding: EdgeInsets.only(right: 12.0)),
-          FloatingActionButton(
-            heroTag: "swipe-bookmark",
-            mini: true,
-            onPressed: () {},
-            backgroundColor: Colors.white,
-            child: Icon(Icons.star, color: Colors.green),
-          ),
-        ],
-      ),
     );
   }
 }
