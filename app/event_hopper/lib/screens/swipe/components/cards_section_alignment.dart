@@ -7,6 +7,7 @@ import 'profile_card_alignment.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'dart:math';
 import 'package:EventHopper/utils/system_utils.dart';
+import 'package:EventHopper/services/eh-server/api_service.dart';
 
 List<Alignment> cardsAlign = [
   Alignment(0.0, 0.5),
@@ -15,6 +16,7 @@ List<Alignment> cardsAlign = [
 ];
 List<Size> cardsSize = List(7);
 bool cardEnd = false;
+int cardIndex = 0;
 
 class CardsSectionAlignment extends StatefulWidget {
   final Stream<List<Event>> events;
@@ -46,14 +48,8 @@ class _CardsSectionState extends State<CardsSectionAlignment>
   @override
   void initState() {
     super.initState();
-
-    // Init cards
-    // widget.events.forEach((eventList) async {
-    //   for (Event event in eventList) {
-    //     cards.add(ProfileCardAlignment(cardsCounter, event));
-    //   }
-    // });
-
+    cardIndex = 0;
+    cardEnd = false;
     cardsCounter = 3;
 
     frontCardAlign = cardsAlign[2];
@@ -147,17 +143,26 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                             //Right Swipe
                             if (frontCardAlign.x > 5 && frontCardAlign.y > -5) {
                               print('RIGHT SWIPE');
+                              apiService.swipeEntry(
+                                  direction: "event_right",
+                                  eventId: "event_id_right_1");
                             }
 
                             //Left Swipe
                             if (frontCardAlign.x < -5 &&
                                 frontCardAlign.y > -5) {
                               print('LEFT SWIPE');
+                              apiService.swipeEntry(
+                                  direction: "event_left",
+                                  eventId: "event_id_left_1");
                             }
 
                             //Up Swipe
                             if (frontCardAlign.y < -5) {
                               print('UP SWIPE');
+                              apiService.swipeEntry(
+                                  direction: "event_up",
+                                  eventId: "event_id_up_2");
                             }
                             SystemUtils.vibrate();
                             animateCards();
@@ -177,37 +182,33 @@ class _CardsSectionState extends State<CardsSectionAlignment>
   }
 
   Widget backCard() {
-    if (!cardEnd) {
-      return Align(
-        alignment: _controller.status == AnimationStatus.forward
-            ? CardsAnimation.backCardAlignmentAnim(_controller).value
-            : cardsAlign[0],
-        child: SizedBox.fromSize(
-            size: _controller.status == AnimationStatus.forward
-                ? CardsAnimation.backCardSizeAnim(_controller).value
-                : cardsSize[2],
-            child: cards[2]),
-      );
-    } else {
-      return SwipeEndMessage();
-    }
+    return Align(
+      alignment: _controller.status == AnimationStatus.forward
+          ? CardsAnimation.backCardAlignmentAnim(_controller).value
+          : cardsAlign[0],
+      child: SizedBox.fromSize(
+          size: _controller.status == AnimationStatus.forward
+              ? CardsAnimation.backCardSizeAnim(_controller).value
+              : cardsSize[2],
+          child: cardIndex < cards.length - 2
+              ? cards[cardIndex + 2]
+              : Container()),
+    );
   }
 
   Widget middleCard() {
-    if (!cardEnd) {
-      return Align(
-        alignment: _controller.status == AnimationStatus.forward
-            ? CardsAnimation.middleCardAlignmentAnim(_controller).value
-            : cardsAlign[1],
-        child: SizedBox.fromSize(
-            size: _controller.status == AnimationStatus.forward
-                ? CardsAnimation.middleCardSizeAnim(_controller).value
-                : cardsSize[1],
-            child: cards[1]),
-      );
-    } else {
-      return SwipeEndMessage();
-    }
+    return Align(
+      alignment: _controller.status == AnimationStatus.forward
+          ? CardsAnimation.middleCardAlignmentAnim(_controller).value
+          : cardsAlign[1],
+      child: SizedBox.fromSize(
+          size: _controller.status == AnimationStatus.forward
+              ? CardsAnimation.middleCardSizeAnim(_controller).value
+              : cardsSize[1],
+          child: cardIndex < cards.length - 1
+              ? cards[cardIndex + 1]
+              : Container()),
+    );
   }
 
   Widget swipeIndicator() {}
@@ -231,7 +232,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
             )),
       );
     } else {
-      return Container();
+      return SwipeEndMessage();
     }
   }
 
@@ -240,14 +241,16 @@ class _CardsSectionState extends State<CardsSectionAlignment>
       // Swap cards (back card becomes the middle card; middle card becomes the front card, front card becomes a  bottom card)
       // var temp = cards[0];
       if (!cardEnd) {
-        cards[0] = cards[1];
-        cards[1] = cards[2];
-        // cards[2] = temp;
+        // cards[0] = cards[1];
+        // cards[1] = cards[2];
+        // // cards[2] = temp;
 
-        cards[2] = cards[(cardsCounter) % cards.length];
-        cardsCounter++;
+        // cards[2] = cards[(cardsCounter) % cards.length];
+        // cardsCounter++;
 
-        if (cardsCounter == cards.length + 3) {
+        cardIndex++;
+
+        if (cardIndex == cards.length) {
           // cardsCounter = 0;
           endCards();
           return;

@@ -114,7 +114,8 @@ class _BodyState extends State<Body> {
 
       if (userCredential.user != null) {
         //successfully logged in
-        ScreenNavigator.navigateSwipe(context, RouteConfig.home);
+        ScreenNavigator.navigateSwipe(context, RouteConfig.home,
+            replaceAll: true);
       } else {
         Scaffold.of(context).showSnackBar(buildSnackbar(
             'An error occurred. Please check your internet connection'));
