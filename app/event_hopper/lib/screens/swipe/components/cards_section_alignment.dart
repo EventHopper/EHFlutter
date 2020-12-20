@@ -18,10 +18,7 @@ bool cardEnd = false;
 
 class CardsSectionAlignment extends StatefulWidget {
   final Stream<List<Event>> events;
-
-  AnimationController controller;
-  CardsSectionAlignment(BuildContext context, this.events,
-      {AnimationController controller}) {
+  CardsSectionAlignment(BuildContext context, this.events) {
     cardsSize[0] = Size(MediaQuery.of(context).size.width * 0.8,
         MediaQuery.of(context).size.height * 0.7);
     cardsSize[1] = Size(MediaQuery.of(context).size.width * 0.7,
@@ -68,7 +65,6 @@ class _CardsSectionState extends State<CardsSectionAlignment>
     _controller.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.completed) changeCardsOrder();
     });
-    widget.controller = _controller;
     loadingCards = true;
     parseEventStream(widget.events);
 
@@ -214,8 +210,11 @@ class _CardsSectionState extends State<CardsSectionAlignment>
     }
   }
 
+  Widget swipeIndicator() {}
+
   Widget frontCard() {
     if (!cardEnd) {
+<<<<<<< Updated upstream:app/event_hopper/lib/screens/swipe/components/experimental/ivaskuu/cards_section_alignment.dart
       return Align(
           alignment: _controller.status == AnimationStatus.forward
               ? CardsAnimation.frontCardDisappearAlignmentAnim(
@@ -226,6 +225,24 @@ class _CardsSectionState extends State<CardsSectionAlignment>
             angle: (pi / 180.0) * frontCardRot,
             child: SizedBox.fromSize(size: cardsSize[0], child: cards[0]),
           ));
+=======
+      return InkWell(
+        onTap: () {
+          cards[cardIndex].getEvent();
+        },
+        child: Align(
+            alignment: _controller.status == AnimationStatus.forward
+                ? CardsAnimation.frontCardDisappearAlignmentAnim(
+                        _controller, frontCardAlign)
+                    .value
+                : frontCardAlign,
+            child: Transform.rotate(
+              angle: (pi / 180.0) * frontCardRot,
+              child: SizedBox.fromSize(
+                  size: cardsSize[0], child: cards[cardIndex]),
+            )),
+      );
+>>>>>>> Stashed changes:app/event_hopper/lib/screens/swipe/components/cards_section_alignment.dart
     } else {
       return Container();
     }

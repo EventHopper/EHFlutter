@@ -1,5 +1,5 @@
 import 'package:EventHopper/screens/route_config.dart';
-import 'package:EventHopper/screens/swipe/components/experimental/ivaskuu/swipe_feed_page.dart';
+import 'package:EventHopper/screens/swipe/components/swipe_feed_page.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
