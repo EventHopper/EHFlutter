@@ -54,7 +54,7 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
             heroTag: "swipe-accept",
             onPressed: () {},
             backgroundColor: Colors.white,
-            child: Icon(Icons.favorite, color: Colors.green),
+            child: Icon(Icons.favorite, color: Colors.blue),
           ),
           Padding(padding: EdgeInsets.only(right: 12.0)),
           FloatingActionButton(
@@ -62,7 +62,7 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
             mini: true,
             onPressed: () {},
             backgroundColor: Colors.white,
-            child: Icon(Icons.star, color: Colors.blue),
+            child: Icon(Icons.star, color: Colors.green),
           ),
         ],
       ),

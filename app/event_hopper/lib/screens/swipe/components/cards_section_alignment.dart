@@ -3,11 +3,13 @@ import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'profile_card_alignment.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'dart:math';
 import 'package:EventHopper/utils/system_utils.dart';
 import 'package:EventHopper/services/eh-server/api_service.dart';
+import 'dart:ui' as ui;
 
 List<Alignment> cardsAlign = [
   Alignment(0.0, 0.5),
@@ -215,13 +217,11 @@ class _CardsSectionState extends State<CardsSectionAlignment>
   Widget swipeIndicator() {
     return !cardEnd
         ? Opacity(
-            opacity: 0.8,
-            child: Expanded(
-              child: CustomPaint(
-                size: MediaQuery.of(context).size,
-                painter:
-                    SwipeIndicatorPainter(frontCardAlign.x, frontCardAlign.y),
-              ),
+            opacity: 0.9,
+            child: CustomPaint(
+              size: MediaQuery.of(context).size,
+              painter:
+                  SwipeIndicatorPainter(frontCardAlign.x, frontCardAlign.y),
             ),
           )
         : Container();
@@ -385,16 +385,22 @@ class SwipeIndicatorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     //  print('($xDirection,$yDirection)');
-    this.color = this.xDirection < -2 && this.yDirection > -3
+    /// Circle indicator
+
+    bool isLeft = this.xDirection < -2 && this.yDirection > -3;
+    bool isRight = this.xDirection > 2 && this.yDirection > -3;
+    bool isUp = this.yDirection < -3;
+
+    this.color = isLeft
         ? Color.fromRGBO(Colors.red.red, Colors.red.green, Colors.red.blue,
             min(this.xDirection.abs() / opacityFactor, 1))
-        : this.xDirection > 2 && this.yDirection > -3
+        : isRight
             ? Color.fromRGBO(
                 Colors.green.red,
                 Colors.green.green,
                 Colors.green.blue,
                 min(this.xDirection.abs() / opacityFactor, 1))
-            : this.yDirection < -3
+            : isUp
                 ? Color.fromRGBO(
                     Colors.blue.red,
                     Colors.blue.green,
@@ -414,6 +420,47 @@ class SwipeIndicatorPainter extends CustomPainter {
       radius: max(xDirection.abs() * 80, yDirection.abs() * 80),
     ));
     canvas.drawPath(path, paint);
+
+    /// Text prompt
+    final textStyle = ui.TextStyle(
+      color: Color.fromRGBO(
+          255,
+          255,
+          255,
+          max(min(this.xDirection.abs() / opacityFactor, 1),
+              min(this.yDirection.abs() / opacityFactor, 1))),
+      fontSize: 75,
+    );
+    final paragraphStyle = ui.ParagraphStyle(
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.start,
+      fontFamily: 'Arial',
+      // fontWeight: FontWeight
+    );
+    final paragraphBuilder = ui.ParagraphBuilder(paragraphStyle)
+      ..pushStyle(textStyle)
+      ..addText(isLeft
+          ? 'nah'
+          : isRight
+              ? 'maybe'
+              : isUp
+                  ? 'go!'
+                  : '');
+    final constraints = ui.ParagraphConstraints(width: 300);
+    final paragraph = paragraphBuilder.build();
+    paragraph.layout(constraints);
+    final offset = Offset(
+      size.width / 2 -
+          (isLeft
+              ? 0
+              : isRight
+                  ? size.width / 2.5
+                  : isUp
+                      ? size.width / 9
+                      : 0),
+      size.height / 2 + (isUp ? size.width / 5 : 0),
+    );
+    canvas.drawParagraph(paragraph, offset);
   }
 
   @override
