@@ -50,7 +50,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
     super.initState();
     cardIndex = 0;
     cardEnd = false;
-    cardsCounter = 3;
+    cardsCounter = 0;
 
     frontCardAlign = cardsAlign[2];
 
@@ -103,6 +103,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
               children: <Widget>[
                 backCard(),
                 middleCard(),
+                swipeIndicator(),
                 frontCard(),
 
                 // Prevent swiping if the cards are animating
@@ -211,7 +212,20 @@ class _CardsSectionState extends State<CardsSectionAlignment>
     );
   }
 
-  Widget swipeIndicator() {}
+  Widget swipeIndicator() {
+    return !cardEnd
+        ? Opacity(
+            opacity: 0.8,
+            child: Expanded(
+              child: CustomPaint(
+                size: MediaQuery.of(context).size,
+                painter:
+                    SwipeIndicatorPainter(frontCardAlign.x, frontCardAlign.y),
+              ),
+            ),
+          )
+        : Container();
+  }
 
   Widget frontCard() {
     if (!cardEnd) {
@@ -238,20 +252,10 @@ class _CardsSectionState extends State<CardsSectionAlignment>
 
   void changeCardsOrder() {
     setState(() {
-      // Swap cards (back card becomes the middle card; middle card becomes the front card, front card becomes a  bottom card)
-      // var temp = cards[0];
       if (!cardEnd) {
-        // cards[0] = cards[1];
-        // cards[1] = cards[2];
-        // // cards[2] = temp;
-
-        // cards[2] = cards[(cardsCounter) % cards.length];
-        // cardsCounter++;
-
         cardIndex++;
 
         if (cardIndex == cards.length) {
-          // cardsCounter = 0;
           endCards();
           return;
         }
@@ -367,5 +371,53 @@ class CardsAnimation {
             )
         .animate(CurvedAnimation(
             parent: parent, curve: Interval(0.0, 0.5, curve: Curves.easeIn)));
+  }
+}
+
+class SwipeIndicatorPainter extends CustomPainter {
+  final double xDirection;
+  final double yDirection;
+
+  Color color;
+  int opacityFactor = 10;
+  SwipeIndicatorPainter(this.xDirection, this.yDirection);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    //  print('($xDirection,$yDirection)');
+    this.color = this.xDirection < -2 && this.yDirection > -3
+        ? Color.fromRGBO(Colors.red.red, Colors.red.green, Colors.red.blue,
+            min(this.xDirection.abs() / opacityFactor, 1))
+        : this.xDirection > 2 && this.yDirection > -3
+            ? Color.fromRGBO(
+                Colors.green.red,
+                Colors.green.green,
+                Colors.green.blue,
+                min(this.xDirection.abs() / opacityFactor, 1))
+            : this.yDirection < -3
+                ? Color.fromRGBO(
+                    Colors.blue.red,
+                    Colors.blue.green,
+                    Colors.blue.blue,
+                    min(this.yDirection.abs() / opacityFactor, 1))
+                : Colors.transparent;
+
+    var paint = Paint()
+      ..color = color
+      ..strokeWidth = 3
+      ..style = PaintingStyle.fill
+      ..strokeCap = StrokeCap.round;
+
+    var path = Path();
+    path.addOval(Rect.fromCircle(
+      center: Offset(size.width / 2, size.height / 2),
+      radius: max(xDirection.abs() * 80, yDirection.abs() * 80),
+    ));
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
   }
 }
