@@ -7,6 +7,10 @@ class ProfileCardAlignment extends StatelessWidget {
   final Event eventSpotlight;
   ProfileCardAlignment(this.cardNum, this.eventSpotlight);
 
+  Event getEvent() {
+    return eventSpotlight;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -25,9 +29,9 @@ class ProfileCardAlignment extends StatelessWidget {
                   image: NetworkImage(
                     this.eventSpotlight.image,
                   ),
-                  child: InkWell(
-                    onTap: () {},
-                  ),
+                  // child: InkWell(
+                  //   onTap: () {},
+                  // ),
                 )),
           ),
           SizedBox.expand(
