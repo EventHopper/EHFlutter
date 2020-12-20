@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "500810512979",
+    "project_id": "hopperclient-3194b",
+    "storage_bucket": "hopperclient-3194b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500810512979:android:35298d35ff5e3aaf58e4a6",
+        "android_client_info": {
+          "package_name": "com.eventhopper.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500810512979-15dhf9bu54e993s18utn24606grjui54.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eventhopper.app",
+            "certificate_hash": "8b7ae00842e817f845a13b37063d2d9a07fd575e"
+          }
+        },
+        {
+          "client_id": "500810512979-i48elii1l3dr2sloa89d997glojfb0vl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB52spZO26kPZPrNc1VsHfysw7YQhovBlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500810512979-i48elii1l3dr2sloa89d997glojfb0vl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

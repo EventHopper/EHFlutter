@@ -1,15 +1,16 @@
+import 'package:EventHopper/components/app_bar.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/screens/welcome/components/body.dart';
+import 'package:EventHopper/screens/registration/components/body.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
-class WelcomeScreen extends StatefulWidget {
+class RegistrationScreen extends StatefulWidget {
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   void initState() {
     super.initState();
@@ -24,17 +25,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //initSystem();
     return Scaffold(
       extendBodyBehindAppBar: true,
+      appBar: buildAppBar(
+        context,
+        backButton: true,
+        isTransparent: true,
+        rightIcon: false,
+      ),
       body: Body(),
     );
-  }
-
-  void initSystem() async {
-    Provider.of<SessionManager>(context).updatePackageInfo();
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-    ].request();
   }
 }

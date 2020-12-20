@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/size_config.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 
 class Body extends StatefulWidget {
@@ -35,9 +34,7 @@ class _BodyState extends State<Body> {
               title: Text(
                 'Default Location (Automatic)',
               ),
-              onTap: () {
-                // Run log out command
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Container(
@@ -47,9 +44,7 @@ class _BodyState extends State<Body> {
               title: Text(
                 'Privacy Policy',
               ),
-              onTap: () {
-                // Run log out command
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Container(
@@ -59,8 +54,8 @@ class _BodyState extends State<Body> {
               title: Text(
                 'Log Out',
               ),
-              onTap: () {
-                // Run log out command
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
                 ScreenNavigator.navigateLogOut(context);
               },
             ),

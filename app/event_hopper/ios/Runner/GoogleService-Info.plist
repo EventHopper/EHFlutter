@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>500810512979-6e7c9g4h8co6416i0bbfihokptksl05o.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.500810512979-6e7c9g4h8co6416i0bbfihokptksl05o</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>500810512979-15dhf9bu54e993s18utn24606grjui54.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAY38vJhjRYMUGexYihtABMMDkcKvLIRkY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>500810512979</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.eventhopper.app</string>
+	<key>PROJECT_ID</key>
+	<string>hopperclient-3194b</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hopperclient-3194b.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:500810512979:ios:7e3258003de485a858e4a6</string>
+</dict>
+</plist>

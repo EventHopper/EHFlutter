@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:EventHopper/services/eh-server/api_service.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../route_config.dart';
 
 class Body extends StatefulWidget {
@@ -23,6 +25,8 @@ class _BodyState extends State<Body> {
 
   final emailFieldController = TextEditingController();
   final passwordFieldController = TextEditingController();
+  final nameFieldController = TextEditingController();
+  final usernameFieldController = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
@@ -30,6 +34,8 @@ class _BodyState extends State<Body> {
     // Clean up the controller when the widget is removed from the widget tree.
     emailFieldController.dispose();
     passwordFieldController.dispose();
+    nameFieldController.dispose();
+    usernameFieldController.dispose();
     super.dispose();
   }
 
@@ -44,6 +50,30 @@ class _BodyState extends State<Body> {
           children: <Widget>[
             TextFormField(
               style: style,
+              controller: nameFieldController,
+              decoration: buildInputDecoration("Name (Optional)"),
+              validator: (value) {
+                return null;
+              },
+            ),
+            SizedBox(height: 25.0),
+            TextFormField(
+              style: style,
+              decoration: buildInputDecoration("username"),
+              controller: usernameFieldController,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter username';
+                }
+                if (!isValidUsername(value)) {
+                  return 'Username cannot contain special characters';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 45.0),
+            TextFormField(
+              style: style,
               decoration: buildInputDecoration("email"),
               controller: emailFieldController,
               validator: (value) {
@@ -56,9 +86,7 @@ class _BodyState extends State<Body> {
                 return null;
               },
             ),
-            SizedBox(
-              height: 15.0,
-            ),
+            SizedBox(height: 45.0),
             TextFormField(
               obscureText: true,
               style: style,
@@ -69,7 +97,7 @@ class _BodyState extends State<Body> {
                   return 'Please enter password';
                 }
                 if (value.length < 6) {
-                  return 'Invalid login. Password must be at least 6 characters';
+                  return 'Password must be at least 6 characters';
                 }
                 return null;
               },
@@ -78,9 +106,33 @@ class _BodyState extends State<Body> {
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
                 onPressed: () async {
+                  // Validate returns true if the form is valid, or false
+                  // otherwise.
                   if (_formKey.currentState.validate()) {
                     // If the form is valid, send post request to firebase.
-                    loginUser();
+                    dynamic responseBody;
+                    try {
+                      responseBody = await apiService.registerUser(
+                          email: emailFieldController.text,
+                          fullName: nameFieldController.text,
+                          password: passwordFieldController.text,
+                          username: usernameFieldController.text);
+                    } catch (e) {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              'Something went wrong, please check your network connection'),
+                        ),
+                      );
+                    }
+
+                    if (responseBody['code'] == 10) {
+                      loginUser();
+                      ScreenNavigator.navigateSwipe(context, RouteConfig.home);
+                    } else {
+                      Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text(responseBody['message'])));
+                    }
                   }
                 },
                 child: Text('Submit'),
@@ -89,19 +141,6 @@ class _BodyState extends State<Body> {
           ],
         ),
       ),
-    );
-  }
-
-  InputDecoration buildInputDecoration(String hinttext) {
-    return InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        hintText: hinttext,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)));
-  }
-
-  SnackBar buildSnackbar(String text) {
-    return SnackBar(
-      content: Text(text),
     );
   }
 
@@ -130,9 +169,26 @@ class _BodyState extends State<Body> {
     }
   }
 
+  SnackBar buildSnackbar(String text) {
+    return SnackBar(
+      content: Text(text),
+    );
+  }
+
+  InputDecoration buildInputDecoration(String hinttext) {
+    return InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: hinttext,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)));
+  }
+
   bool isValidEmail(String email) {
     return RegExp(
             r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
         .hasMatch(email);
+  }
+
+  bool isValidUsername(String username) {
+    return RegExp(r"^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$").hasMatch(username);
   }
 }

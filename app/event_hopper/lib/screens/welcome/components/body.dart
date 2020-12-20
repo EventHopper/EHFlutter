@@ -73,7 +73,7 @@ class Body extends StatelessWidget {
                         ),
                         onPressed: () {
                           ScreenNavigator.navigateSwipe(
-                              context, RouteConfig.home);
+                              context, RouteConfig.registration);
                         },
                       ),
                     )
@@ -81,14 +81,29 @@ class Body extends StatelessWidget {
                 ),
                 Positioned(
                   bottom: getProportionateScreenWidth(50),
-                  child: MaterialButton(
-                    child: Text(
-                      "already have an account? Log in",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onPressed: () {
-                      ScreenNavigator.navigateSwipe(context, RouteConfig.login);
-                    },
+                  child: Column(
+                    children: [
+                      MaterialButton(
+                        child: Text(
+                          "already have an account? Log in",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          ScreenNavigator.navigateSwipe(
+                              context, RouteConfig.login);
+                        },
+                      ),
+                      MaterialButton(
+                        child: Text(
+                          "Skip (Testing purposes only)",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          ScreenNavigator.navigateSwipe(
+                              context, RouteConfig.home);
+                        },
+                      ),
+                    ],
                   ),
                 )
               ],
