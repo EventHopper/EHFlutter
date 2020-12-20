@@ -87,7 +87,8 @@ class _CardsSectionState extends State<CardsSectionAlignment>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: getProportionateScreenHeight(600),
+                height: getProportionateScreenHeight(700),
+                width: MediaQuery.of(context).size.width,
                 child: SpinKitRotatingCircle(
                   // itemBuilder: (BuildContext context, int index){
                   //   loadingCards ?
@@ -148,7 +149,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                               print('RIGHT SWIPE');
                               apiService.swipeEntry(
                                   direction: "event_right",
-                                  eventId: "event_id_right_1");
+                                  eventId: "${cards[cardIndex].getEvent().id}");
                             }
 
                             //Left Swipe
@@ -157,7 +158,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                               print('LEFT SWIPE');
                               apiService.swipeEntry(
                                   direction: "event_left",
-                                  eventId: "event_id_left_1");
+                                  eventId: "${cards[cardIndex].getEvent().id}");
                             }
 
                             //Up Swipe
@@ -165,7 +166,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                               print('UP SWIPE');
                               apiService.swipeEntry(
                                   direction: "event_up",
-                                  eventId: "event_id_up_2");
+                                  eventId: "${cards[cardIndex].getEvent().id}");
                             }
 
                             animateCards();
@@ -293,9 +294,11 @@ class _CardsSectionState extends State<CardsSectionAlignment>
           FloatingActionButton(
             heroTag: "swipe-discard",
             onPressed: () {
-              print('RIGHT SWIPE');
+              print('LEFT SWIPE');
               apiService.swipeEntry(
-                  direction: "event_right", eventId: "event_id_right_1");
+                  direction: "event_left",
+                  eventId: "${cards[cardIndex].getEvent().id}");
+
               animateCards();
             },
             mini: true,
@@ -306,9 +309,11 @@ class _CardsSectionState extends State<CardsSectionAlignment>
           FloatingActionButton(
             heroTag: "swipe-accept",
             onPressed: () {
-              print('LEFT SWIPE');
+              print('UP SWIPE');
               apiService.swipeEntry(
-                  direction: "event_left", eventId: "event_id_left_1");
+                  direction: "event_up",
+                  eventId: "${cards[cardIndex].getEvent().id}");
+
               animateCards();
             },
             backgroundColor: Colors.white,
@@ -319,9 +324,10 @@ class _CardsSectionState extends State<CardsSectionAlignment>
             heroTag: "swipe-maybe",
             mini: true,
             onPressed: () {
-              print('UP SWIPE');
+              print('RIGHT SWIPE');
               apiService.swipeEntry(
-                  direction: "event_up", eventId: "event_id_up_2");
+                  direction: "event_right",
+                  eventId: "${cards[cardIndex].getEvent().id}");
               animateCards();
             },
             backgroundColor: Colors.white,

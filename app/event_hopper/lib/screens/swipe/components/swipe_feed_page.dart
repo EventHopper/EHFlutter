@@ -22,8 +22,7 @@ class _SwipeFeedPageState extends State<SwipeFeedPage> {
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.hardEdge,
             primary: true,
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+            child: Column(children: [
               Container(
                   height: MediaQuery.of(context).size.height * 0.88,
                   child: CardsSectionAlignment(
