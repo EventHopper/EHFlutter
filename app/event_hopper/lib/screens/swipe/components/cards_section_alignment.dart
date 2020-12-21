@@ -20,6 +20,9 @@ List<Size> cardsSize = List(7);
 bool cardEnd = false;
 int cardIndex = 0;
 
+Alignment endAlignmentPuppet;
+double frontCardRot = 0.0;
+
 class CardsSectionAlignment extends StatefulWidget {
   final Stream<List<Event>> events;
   CardsSectionAlignment(BuildContext context, this.events) {
@@ -44,7 +47,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
 
   final Alignment defaultFrontCardAlign = Alignment(0.0, 0.0);
   Alignment frontCardAlign;
-  double frontCardRot = 0.0;
+
   bool loadingCards = false;
 
   @override
@@ -61,7 +64,11 @@ class _CardsSectionState extends State<CardsSectionAlignment>
         AnimationController(duration: Duration(milliseconds: 100), vsync: this);
     _controller.addListener(() => setState(() {}));
     _controller.addStatusListener((AnimationStatus status) {
-      if (status == AnimationStatus.completed) changeCardsOrder();
+      if (status == AnimationStatus.completed) {
+        changeCardsOrder();
+        endAlignmentPuppet = null;
+        frontCardRot = 0;
+      }
     });
     loadingCards = true;
     parseEventStream(widget.events);
@@ -244,7 +251,8 @@ class _CardsSectionState extends State<CardsSectionAlignment>
         child: Align(
             alignment: _controller.status == AnimationStatus.forward
                 ? CardsAnimation.frontCardDisappearAlignmentAnim(
-                        _controller, frontCardAlign)
+                        _controller, frontCardAlign,
+                        endAlign: endAlignmentPuppet)
                     .value
                 : frontCardAlign,
             child: Transform.rotate(
@@ -295,10 +303,11 @@ class _CardsSectionState extends State<CardsSectionAlignment>
             heroTag: "swipe-discard",
             onPressed: () {
               print('LEFT SWIPE');
+              endAlignmentPuppet = new Alignment(-4.0, 0.0);
+              frontCardRot = -20;
               apiService.swipeEntry(
                   direction: "event_left",
                   eventId: "${cards[cardIndex].getEvent().id}");
-
               animateCards();
             },
             mini: true,
@@ -310,6 +319,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
             heroTag: "swipe-accept",
             onPressed: () {
               print('UP SWIPE');
+              endAlignmentPuppet = new Alignment(0.0, -5.0);
               apiService.swipeEntry(
                   direction: "event_up",
                   eventId: "${cards[cardIndex].getEvent().id}");
@@ -325,6 +335,8 @@ class _CardsSectionState extends State<CardsSectionAlignment>
             mini: true,
             onPressed: () {
               print('RIGHT SWIPE');
+              endAlignmentPuppet = new Alignment(4.0, 0.0);
+              frontCardRot = 20;
               apiService.swipeEntry(
                   direction: "event_right",
                   eventId: "${cards[cardIndex].getEvent().id}");
@@ -418,18 +430,21 @@ class CardsAnimation {
   }
 
   static Animation<Alignment> frontCardDisappearAlignmentAnim(
-      AnimationController parent, Alignment beginAlign) {
+      AnimationController parent, Alignment beginAlign,
+      {Alignment endAlign}) {
     return AlignmentTween(
             begin: beginAlign,
-            end: Alignment(
-                beginAlign.x > 3 && beginAlign.y > -3
-                    ? beginAlign.x + 20.0
-                    : beginAlign.x < -3 && beginAlign.y > -3
-                        ? beginAlign.x - 20.0
-                        : 0.0,
-                beginAlign.y < 0
-                    ? beginAlign.y - 30
-                    : 0.0) // Has swiped to the left or right or up?
+            end: endAlign != null
+                ? endAlign
+                : Alignment(
+                    beginAlign.x > 3 && beginAlign.y > -3
+                        ? beginAlign.x + 20.0
+                        : beginAlign.x < -3 && beginAlign.y > -3
+                            ? beginAlign.x - 20.0
+                            : 0.0,
+                    beginAlign.y < 0
+                        ? beginAlign.y - 30
+                        : 0.0) // Has swiped to the left or right or up?
             )
         .animate(CurvedAnimation(
             parent: parent, curve: Interval(0.0, 0.5, curve: Curves.easeIn)));
