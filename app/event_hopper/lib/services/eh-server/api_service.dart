@@ -86,7 +86,12 @@ class APIService {
     String direction,
     String eventId,
   }) async {
-    String userId = FirebaseAuth.instance.currentUser.uid;
+    User currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      return;
+    }
+
+    String userId = currentUser.uid;
     final url = api.swipeEntry(userId).toString();
     print(url);
     final client = new http.Client();

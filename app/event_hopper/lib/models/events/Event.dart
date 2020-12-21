@@ -3,14 +3,15 @@ import 'package:EventHopper/models/users/User.dart';
 import 'package:intl/intl.dart';
 
 class Event {
-  final String name, image, action;
+  final String id, name, image, action;
   final DateTime date;
   final List<User> attendees;
   static const String defaultImage =
       'https://conceptdraw.com/a155c4/p149/preview/640/pict--schedule-cloud-round-icons-vector-stencils-library';
 
   Event({
-    @required this.attendees,
+    @required this.id,
+    this.attendees,
     @required this.name,
     this.image = defaultImage,
     @required this.date,
@@ -24,6 +25,7 @@ class Event {
     url = url != null ? url : eventSchema['imageURL'] as String;
 
     return Event(
+      id: eventSchema['vendor_id'] as String,
       name: eventSchema['name'] as String,
       image: url != null ? url : defaultImage,
       date: dateFormat.parse(eventSchema['start_date_local']),

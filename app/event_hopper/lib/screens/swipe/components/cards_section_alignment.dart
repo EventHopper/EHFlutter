@@ -20,6 +20,9 @@ List<Size> cardsSize = List(7);
 bool cardEnd = false;
 int cardIndex = 0;
 
+Alignment endAlignmentPuppet;
+double frontCardRot = 0.0;
+
 class CardsSectionAlignment extends StatefulWidget {
   final Stream<List<Event>> events;
   CardsSectionAlignment(BuildContext context, this.events) {
@@ -44,7 +47,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
 
   final Alignment defaultFrontCardAlign = Alignment(0.0, 0.0);
   Alignment frontCardAlign;
-  double frontCardRot = 0.0;
+
   bool loadingCards = false;
 
   @override
@@ -58,10 +61,14 @@ class _CardsSectionState extends State<CardsSectionAlignment>
 
     // Init the animation controller
     _controller =
-        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+        AnimationController(duration: Duration(milliseconds: 100), vsync: this);
     _controller.addListener(() => setState(() {}));
     _controller.addStatusListener((AnimationStatus status) {
-      if (status == AnimationStatus.completed) changeCardsOrder();
+      if (status == AnimationStatus.completed) {
+        changeCardsOrder();
+        endAlignmentPuppet = null;
+        frontCardRot = 0;
+      }
     });
     loadingCards = true;
     parseEventStream(widget.events);
@@ -87,7 +94,8 @@ class _CardsSectionState extends State<CardsSectionAlignment>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                height: getProportionateScreenHeight(600),
+                height: getProportionateScreenHeight(700),
+                width: MediaQuery.of(context).size.width,
                 child: SpinKitRotatingCircle(
                   // itemBuilder: (BuildContext context, int index){
                   //   loadingCards ?
@@ -148,7 +156,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                               print('RIGHT SWIPE');
                               apiService.swipeEntry(
                                   direction: "event_right",
-                                  eventId: "event_id_right_1");
+                                  eventId: "${cards[cardIndex].getEvent().id}");
                             }
 
                             //Left Swipe
@@ -157,7 +165,7 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                               print('LEFT SWIPE');
                               apiService.swipeEntry(
                                   direction: "event_left",
-                                  eventId: "event_id_left_1");
+                                  eventId: "${cards[cardIndex].getEvent().id}");
                             }
 
                             //Up Swipe
@@ -165,9 +173,9 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                               print('UP SWIPE');
                               apiService.swipeEntry(
                                   direction: "event_up",
-                                  eventId: "event_id_up_2");
+                                  eventId: "${cards[cardIndex].getEvent().id}");
                             }
-                            SystemUtils.vibrate();
+
                             animateCards();
                           } else {
                             // Return to the initial rotation and alignment
@@ -179,6 +187,10 @@ class _CardsSectionState extends State<CardsSectionAlignment>
                         },
                       ))
                     : Container(),
+                Positioned.fill(
+                  child: Align(
+                      child: buttonsRow(), alignment: Alignment.bottomCenter),
+                )
               ],
             ),
           );
@@ -216,12 +228,15 @@ class _CardsSectionState extends State<CardsSectionAlignment>
 
   Widget swipeIndicator() {
     return !cardEnd
-        ? Opacity(
-            opacity: 0.9,
-            child: CustomPaint(
-              size: MediaQuery.of(context).size,
-              painter:
-                  SwipeIndicatorPainter(frontCardAlign.x, frontCardAlign.y),
+        ? GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            child: Opacity(
+              opacity: 0.9,
+              child: CustomPaint(
+                size: MediaQuery.of(context).size,
+                painter:
+                    SwipeIndicatorPainter(frontCardAlign.x, frontCardAlign.y),
+              ),
             ),
           )
         : Container();
@@ -236,7 +251,8 @@ class _CardsSectionState extends State<CardsSectionAlignment>
         child: Align(
             alignment: _controller.status == AnimationStatus.forward
                 ? CardsAnimation.frontCardDisappearAlignmentAnim(
-                        _controller, frontCardAlign)
+                        _controller, frontCardAlign,
+                        endAlign: endAlignmentPuppet)
                     .value
                 : frontCardAlign,
             child: Transform.rotate(
@@ -271,9 +287,67 @@ class _CardsSectionState extends State<CardsSectionAlignment>
   }
 
   void animateCards() {
+    SystemUtils.vibrate();
     _controller.stop();
     _controller.value = 0.0;
     _controller.forward();
+  }
+
+  Widget buttonsRow() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          FloatingActionButton(
+            heroTag: "swipe-discard",
+            onPressed: () {
+              print('LEFT SWIPE');
+              endAlignmentPuppet = new Alignment(-4.0, 0.0);
+              frontCardRot = -20;
+              apiService.swipeEntry(
+                  direction: "event_left",
+                  eventId: "${cards[cardIndex].getEvent().id}");
+              animateCards();
+            },
+            mini: true,
+            backgroundColor: Colors.white,
+            child: Icon(Icons.close, color: Colors.red),
+          ),
+          Padding(padding: EdgeInsets.only(right: 12.0)),
+          FloatingActionButton(
+            heroTag: "swipe-accept",
+            onPressed: () {
+              print('UP SWIPE');
+              endAlignmentPuppet = new Alignment(0.0, -5.0);
+              apiService.swipeEntry(
+                  direction: "event_up",
+                  eventId: "${cards[cardIndex].getEvent().id}");
+
+              animateCards();
+            },
+            backgroundColor: Colors.white,
+            child: Icon(Icons.favorite, color: Colors.blue),
+          ),
+          Padding(padding: EdgeInsets.only(right: 12.0)),
+          FloatingActionButton(
+            heroTag: "swipe-maybe",
+            mini: true,
+            onPressed: () {
+              print('RIGHT SWIPE');
+              endAlignmentPuppet = new Alignment(4.0, 0.0);
+              frontCardRot = 20;
+              apiService.swipeEntry(
+                  direction: "event_right",
+                  eventId: "${cards[cardIndex].getEvent().id}");
+              animateCards();
+            },
+            backgroundColor: Colors.white,
+            child: Icon(Icons.star, color: Colors.green),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -356,18 +430,21 @@ class CardsAnimation {
   }
 
   static Animation<Alignment> frontCardDisappearAlignmentAnim(
-      AnimationController parent, Alignment beginAlign) {
+      AnimationController parent, Alignment beginAlign,
+      {Alignment endAlign}) {
     return AlignmentTween(
             begin: beginAlign,
-            end: Alignment(
-                beginAlign.x > 3 && beginAlign.y > -3
-                    ? beginAlign.x + 20.0
-                    : beginAlign.x < -3 && beginAlign.y > -3
-                        ? beginAlign.x - 20.0
-                        : 0.0,
-                beginAlign.y < 0
-                    ? beginAlign.y - 30
-                    : 0.0) // Has swiped to the left or right or up?
+            end: endAlign != null
+                ? endAlign
+                : Alignment(
+                    beginAlign.x > 3 && beginAlign.y > -3
+                        ? beginAlign.x + 20.0
+                        : beginAlign.x < -3 && beginAlign.y > -3
+                            ? beginAlign.x - 20.0
+                            : 0.0,
+                    beginAlign.y < 0
+                        ? beginAlign.y - 30
+                        : 0.0) // Has swiped to the left or right or up?
             )
         .animate(CurvedAnimation(
             parent: parent, curve: Interval(0.0, 0.5, curve: Curves.easeIn)));
@@ -429,7 +506,7 @@ class SwipeIndicatorPainter extends CustomPainter {
           255,
           max(min(this.xDirection.abs() / opacityFactor, 1),
               min(this.yDirection.abs() / opacityFactor, 1))),
-      fontSize: 75,
+      fontSize: 60,
     );
     final paragraphStyle = ui.ParagraphStyle(
       textDirection: TextDirection.ltr,
