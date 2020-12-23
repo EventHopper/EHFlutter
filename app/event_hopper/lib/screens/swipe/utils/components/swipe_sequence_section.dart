@@ -1,4 +1,4 @@
-import 'package:EventHopper/screens/event/event_screen.dart';
+import 'package:EventHopper/screens/event_page/event_page.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:EventHopper/utils/size_config.dart';
@@ -90,6 +90,8 @@ class _CardsSectionState extends State<SwipeSequenceSection>
       }
     }
     loadingCards = false;
+    cards[cardIndex]
+      ..heroTag = kEventPageHeroTag; // Adds hero tag to first card
     setState(() {});
   }
 
@@ -124,6 +126,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                     ? SizedBox(
                         child: GestureDetector(
                         // While dragging the first card
+
                         onPanUpdate: (DragUpdateDetails details) {
                           // Add what the user swiped in the last frame to the alignment of the card
                           setState(() {
@@ -263,9 +266,8 @@ class _CardsSectionState extends State<SwipeSequenceSection>
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  cards[cardIndex]..heroTag = 'event-image';
                   ScreenNavigator.widget(
-                      context, EventScreen(event: cards[cardIndex].getEvent()));
+                      context, EventPage(event: cards[cardIndex].getEvent()));
                 },
                 child: cards[cardIndex],
               ),
@@ -282,16 +284,21 @@ class _CardsSectionState extends State<SwipeSequenceSection>
     setState(() {
       if (!cardEnd) {
         cardIndex++;
+
         frontCardAlign = kDefaultFrontCardAlign;
         frontCardRot = kInitialFrontCardRotation;
         if (cardIndex >= cards.length) {
           endCards();
+        } else {
+          cards[cardIndex]
+            ..heroTag = kEventPageHeroTag; // Adds hero tag to subsequent cards
         }
       }
     });
   }
 
   void endCards() {
+    frontCardRot = kInitialFrontCardRotation;
     cardEnd = true;
   }
 

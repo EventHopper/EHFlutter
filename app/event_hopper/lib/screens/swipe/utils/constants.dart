@@ -40,18 +40,20 @@ const double kIndicatorRadiusSpeed = 80;
 
 /// Animations
 
+const String kEventPageHeroTag = 'event-card';
+
 const double kControllerInitialValue = 0.0;
 const double kCardMovementSpeed = 20;
 const double kCardRotationSpeed = 3;
 
-const double kLeftSwipeThreshold = -5.0;
-const double kRightSwipeThreshold = 5.0;
-const double kUpSwipeThreshold = -5.0;
+const double kLeftSwipeThreshold = -3.5;
+const double kRightSwipeThreshold = 3.5;
+const double kUpSwipeThreshold = -3.5;
 const double kCardOpacity = 0.9;
 
-const double kIndicatorLeftThreshold = -2.0;
-const double kIndicatorRightThreshold = 2.0;
-const double kIndicatorUpThreshold = -3.0;
+const double kIndicatorLeftThreshold = -1.0;
+const double kIndicatorRightThreshold = 1.0;
+const double kIndicatorUpThreshold = -1.0;
 const double kIndicatorOpacityFactor = 10;
 
 const double kLeftSwipeIncrement = 20.0;
@@ -75,6 +77,6 @@ const Curve kFrontCardDisappearCurve = Interval(0.0, 0.5, curve: Curves.easeIn);
 /// Colors
 
 const Color kIndicatorLeftColor = Colors.red;
-const Color kIndicatorRightColor = Colors.blue;
-const Color kIndicatorUpColor = Colors.green;
+const Color kIndicatorRightColor = Colors.green;
+const Color kIndicatorUpColor = Colors.blue;
 const Color kIndicatorTextColor = Colors.white;
