@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:EventHopper/screens/event_page/event_page.dart';
+import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/event_card.dart';
 import 'package:EventHopper/components/section_title.dart';
@@ -65,7 +67,11 @@ class _EventsCarouselState extends State<EventsCarousel> {
                             eventSpotlight: events.data[index],
                             press: () {
                               print(events.data[index].action);
-                              launchURL(events.data[index].action);
+                              ScreenNavigator.widget(
+                                  context,
+                                  EventPage(
+                                    event: events.data[index],
+                                  ));
                             },
                           ),
                         ),
