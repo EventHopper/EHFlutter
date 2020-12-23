@@ -46,6 +46,7 @@ dependencies:
   adobe_xd: ^1.0.0+1
   firebase_core: ^0.5.3
   firebase_auth: ^0.18.4+1
+  timezone: ^0.5.9
 
 dev_dependencies:
   flutter_test:

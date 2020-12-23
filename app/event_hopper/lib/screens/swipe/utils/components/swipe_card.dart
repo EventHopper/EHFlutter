@@ -14,6 +14,22 @@ class SwipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return heroTag != null
+        ? Hero(tag: heroTag, child: EventCard(eventSpotlight: eventSpotlight))
+        : EventCard(eventSpotlight: eventSpotlight);
+  }
+}
+
+class EventCard extends StatelessWidget {
+  const EventCard({
+    Key key,
+    @required this.eventSpotlight,
+  }) : super(key: key);
+
+  final Event eventSpotlight;
+
+  @override
+  Widget build(BuildContext context) {
     return Card(
       shadowColor: Colors.transparent,
       color: Colors.transparent,
@@ -21,27 +37,14 @@ class SwipeCard extends StatelessWidget {
         children: <Widget>[
           SizedBox.expand(
             child: Material(
-              shadowColor: Colors.transparent,
-              elevation: 3,
-              clipBehavior: Clip.hardEdge,
-              borderRadius: BorderRadius.circular(16.0),
-              child: heroTag != null
-                  ? Hero(
-                      tag: heroTag,
-                      child: Ink.image(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          this.eventSpotlight.image,
-                        ),
-                      ),
-                    )
-                  : Ink.image(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                        this.eventSpotlight.image,
-                      ),
-                    ),
-            ),
+                shadowColor: Colors.transparent,
+                elevation: 3,
+                clipBehavior: Clip.hardEdge,
+                borderRadius: BorderRadius.circular(16.0),
+                child: Image.network(
+                  this.eventSpotlight.image,
+                  fit: BoxFit.cover,
+                )),
           ),
           SizedBox.expand(
             child: Container(

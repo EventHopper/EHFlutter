@@ -13,7 +13,7 @@ class Venue {
   final double latitude, longitude;
 
   static const String defaultImage =
-      'https://conceptdraw.com/a155c4/p149/preview/640/pict--schedule-cloud-round-icons-vector-stencils-library';
+      'https://www.thesslstore.com/blog/wp-content/uploads/2017/05/circle-with-i-1.png';
 
   Venue({
     this.id,
@@ -31,11 +31,10 @@ class Venue {
 
   @override
   String toString() {
-    String result = '$name\n $street\n $city, $state, $zip';
+    String result = '$name\n$street\n$city, $state, $zip';
     return result;
   }
 
-  @override
   String toQueryString() {
     String result = '$name, $street, $city, $state, $zip';
     return result;
@@ -43,6 +42,7 @@ class Venue {
 
   @override
   factory Venue.fromJson(Map<String, dynamic> venueSchema) {
+    bool hasImage = venueSchema['imageURL'] != null;
     return Venue(
       id: venueSchema['_id'] as String,
       name: venueSchema['name'] as String,
@@ -54,7 +54,7 @@ class Venue {
       latitude: venueSchema['location']['latitude'] as double,
       longitude: venueSchema['location']['longitude'] as double,
       timezone: venueSchema['location']['timezone'] as String,
-      imageURL: venueSchema['imageURL'] as String,
+      imageURL: hasImage ? venueSchema['imageURL'] as String : defaultImage,
     );
   }
 }

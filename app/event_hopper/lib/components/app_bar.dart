@@ -10,6 +10,7 @@ AppBar buildAppBar(BuildContext context,
     Color color,
     SvgPicture leftIcon,
     GlobalKey<ScaffoldState> key,
+    Color backButtonColor,
 
     /// default false
     bool backButton = false,
@@ -20,7 +21,7 @@ AppBar buildAppBar(BuildContext context,
     elevation: 0,
     leading: backButton
         ? BackButton(
-            color: Colors.black,
+            color: backButtonColor == null ? Colors.black : backButtonColor,
           )
         : leftIcon != null
             ? new FlatButton(
