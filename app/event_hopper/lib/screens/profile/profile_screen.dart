@@ -10,7 +10,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       drawer: buildDrawer(context),
       appBar: buildAppBar(context,
-          title: "", color: Colors.black, backButton: true, rightIcon: false),
+          title: "", color: Colors.black, backButton: true, profileIcon: false),
       body: Body(),
     );
   }

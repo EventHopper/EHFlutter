@@ -14,9 +14,7 @@ class EventsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        Provider.of<SessionManager>(context, listen: false)
-            .updateCurrentPage(0);
-        ScreenNavigator.navigate(context, RouteConfig.home);
+        ScreenNavigator.navigate(context, RouteConfig.home, replace: true);
       },
       child: Scaffold(
         drawer: buildDrawer(context),

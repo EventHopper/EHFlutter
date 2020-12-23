@@ -75,7 +75,9 @@ class App extends StatelessWidget {
   }
 
   String getHomeRoute() {
-    return FirebaseAuth.instance.currentUser != null ? '/home' : '/welcome';
+    return FirebaseAuth.instance.currentUser != null
+        ? RouteConfig.home
+        : RouteConfig.welcome;
   }
 
   Widget mainApp() {
