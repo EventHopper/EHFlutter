@@ -31,7 +31,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         context,
         backButton: true,
         isTransparent: true,
-        rightIcon: false,
+        profileIcon: false,
       ),
       body: Body(),
     );

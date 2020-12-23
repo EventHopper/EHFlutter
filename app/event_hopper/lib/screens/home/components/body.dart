@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'home_header.dart';
-import 'top_categories.dart';
+import '../../../components/top_categories.dart';
 import 'package:EventHopper/components/ad_banner.dart';
 
 class Body extends StatelessWidget {

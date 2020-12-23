@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'package:intl/intl.dart';
 
-class ProfileCardAlignment extends StatelessWidget {
+class SwipeCard extends StatelessWidget {
   final int cardNum;
   final Event eventSpotlight;
-  ProfileCardAlignment(this.cardNum, this.eventSpotlight);
+  String heroTag;
+  SwipeCard(this.cardNum, this.eventSpotlight, {this.heroTag});
 
   Event getEvent() {
     return eventSpotlight;
@@ -20,19 +21,27 @@ class ProfileCardAlignment extends StatelessWidget {
         children: <Widget>[
           SizedBox.expand(
             child: Material(
-                shadowColor: Colors.transparent,
-                elevation: 3,
-                clipBehavior: Clip.hardEdge,
-                borderRadius: BorderRadius.circular(16.0),
-                child: Ink.image(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                    this.eventSpotlight.image,
-                  ),
-                  // child: InkWell(
-                  //   onTap: () {},
-                  // ),
-                )),
+              shadowColor: Colors.transparent,
+              elevation: 3,
+              clipBehavior: Clip.hardEdge,
+              borderRadius: BorderRadius.circular(16.0),
+              child: heroTag != null
+                  ? Hero(
+                      tag: heroTag,
+                      child: Ink.image(
+                        fit: BoxFit.cover,
+                        image: NetworkImage(
+                          this.eventSpotlight.image,
+                        ),
+                      ),
+                    )
+                  : Ink.image(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(
+                        this.eventSpotlight.image,
+                      ),
+                    ),
+            ),
           ),
           SizedBox.expand(
             child: Container(

@@ -32,9 +32,6 @@ class CustomBottonNavBar extends StatelessWidget {
                 title: "Explore",
                 isActive: currentPage == 0,
                 press: () {
-                  Provider.of<SessionManager>(context, listen: false)
-                      .updateCurrentPage(0);
-                  // Navigator.pushReplacementNamed(context, '/');
                   ScreenNavigator.navigate(context, RouteConfig.home);
                 },
               ),
@@ -43,8 +40,6 @@ class CustomBottonNavBar extends StatelessWidget {
                 title: "Swipe",
                 isActive: currentPage == 1,
                 press: () {
-                  Provider.of<SessionManager>(context, listen: false)
-                      .updateCurrentPage(1);
                   ScreenNavigator.navigate(context, RouteConfig.swipe);
                 },
               ),
@@ -53,9 +48,6 @@ class CustomBottonNavBar extends StatelessWidget {
                 title: "Events",
                 isActive: currentPage == 2,
                 press: () {
-                  // Navigator.pushReplacementNamed(context, '/myevents');
-                  Provider.of<SessionManager>(context, listen: false)
-                      .updateCurrentPage(2);
                   ScreenNavigator.navigate(context, RouteConfig.myEvents);
                 },
               ),

@@ -13,7 +13,7 @@ AppBar buildAppBar(BuildContext context,
 
     /// default false
     bool backButton = false,
-    bool rightIcon = true,
+    bool profileIcon = true,
     bool showLocationBanner = false}) {
   return AppBar(
     backgroundColor: isTransparent ? Colors.transparent : Colors.white,
@@ -37,16 +37,15 @@ AppBar buildAppBar(BuildContext context,
     centerTitle: true,
     actions: [
       //User Profile Photo
-      rightIcon
-          ? IconButton(
-              icon: ClipOval(
-                  child: Image.network(
-                      "https://pbs.twimg.com/profile_images/1215038784913510400/fZAZQwmh_400x400.jpg")),
-              onPressed: () {
-                Navigator.pushNamed(context, RouteConfig.myProfile);
-              },
-            )
-          : Container()
+      if (profileIcon)
+        IconButton(
+          icon: ClipOval(
+              child: Image.network(
+                  "https://pbs.twimg.com/profile_images/1215038784913510400/fZAZQwmh_400x400.jpg")),
+          onPressed: () {
+            Navigator.pushNamed(context, RouteConfig.myProfile);
+          },
+        )
     ],
   );
 }

@@ -30,7 +30,7 @@ class _LogInScreenState extends State<LogInScreen> {
         context,
         backButton: true,
         isTransparent: true,
-        rightIcon: false,
+        profileIcon: false,
       ),
       body: Body(),
     );

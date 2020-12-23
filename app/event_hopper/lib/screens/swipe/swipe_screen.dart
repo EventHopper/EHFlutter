@@ -1,5 +1,5 @@
 import 'package:EventHopper/screens/route_config.dart';
-import 'package:EventHopper/screens/swipe/components/swipe_feed_page.dart';
+import 'package:EventHopper/screens/swipe/utils/components/swipe_feed_page.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
@@ -12,10 +12,10 @@ import 'package:provider/provider.dart';
 
 class SwipeScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _SwipeScreenState createState() => _SwipeScreenState();
 }
 
-class _HomeScreenState extends State<SwipeScreen> {
+class _SwipeScreenState extends State<SwipeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState() {
@@ -26,9 +26,7 @@ class _HomeScreenState extends State<SwipeScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        Provider.of<SessionManager>(context, listen: false)
-            .updateCurrentPage(0);
-        ScreenNavigator.navigate(context, RouteConfig.home);
+        ScreenNavigator.navigate(context, RouteConfig.home, replace: true);
       },
       child: Scaffold(
         key: _scaffoldKey,

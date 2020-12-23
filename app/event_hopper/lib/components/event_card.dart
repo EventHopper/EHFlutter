@@ -53,7 +53,7 @@ class EventCard extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  boxShadow: [kDefualtShadow],
+                  boxShadow: [kDefaultShadow],
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20),

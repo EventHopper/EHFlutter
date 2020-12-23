@@ -6,9 +6,9 @@ import 'package:EventHopper/models/users/User.dart';
 import 'package:provider/provider.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 
-import '../../../utils/constants.dart';
-import '../../../utils/size_config.dart';
-import '../../route_config.dart';
+import '../utils/constants.dart';
+import '../utils/size_config.dart';
+import '../screens/route_config.dart';
 
 class EventCategories extends StatelessWidget {
   const EventCategories({
@@ -30,7 +30,7 @@ class EventCategories extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: Colors.white,
-            boxShadow: [kDefualtShadow],
+            boxShadow: [kDefaultShadow],
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,7 +42,40 @@ class EventCategories extends StatelessWidget {
                   press: () {
                     print(topCategories[index].apiName);
                     Provider.of<SessionManager>(context, listen: false)
-                        .updateCurrentPage(1);
+                        .fetchEventsByCategory(topCategories[index].apiName);
+                    ScreenNavigator.navigate(context, RouteConfig.swipe);
+                  },
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class SwipeCategories extends StatelessWidget {
+  const SwipeCategories({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SectionTitle(title: "", press: () {}),
+        VerticalSpacing(of: 5),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ...List.generate(
+                topCategories.length,
+                (index) => CategoryCard(
+                  category: topCategories[index],
+                  press: () {
+                    print(topCategories[index].apiName);
                     Provider.of<SessionManager>(context, listen: false)
                         .fetchEventsByCategory(topCategories[index].apiName);
                     ScreenNavigator.navigate(context, RouteConfig.swipe);

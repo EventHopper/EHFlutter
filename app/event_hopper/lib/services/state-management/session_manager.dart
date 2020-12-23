@@ -77,6 +77,11 @@ class SessionManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearEventsByCategory() async {
+    this.eventsFromCategory = null;
+    notifyListeners();
+  }
+
   void updateInitialState(bool isLoaded) {
     this.initialStateLoaded = isLoaded;
     notifyListeners();
