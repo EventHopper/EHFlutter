@@ -74,7 +74,6 @@ class APIService {
       "full_name": fullName
     });
     if (response.statusCode == 200) {
-      jsonDecode(response.body);
       return jsonDecode(response.body);
     } else {
       throw ('Request ${api.registerUser()} failed' +
@@ -101,10 +100,37 @@ class APIService {
       "$direction": "$eventId",
     });
     if (response.statusCode == 200) {
-      jsonDecode(response.body);
       return jsonDecode(response.body);
     } else {
-      throw ('Request ${api.registerUser()} failed' +
+      throw ('Request ${api.swipeEntry(userId)} failed' +
+          '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
+    }
+  }
+
+  Future<Map<dynamic, dynamic>> getUserEventList(
+    String listType,
+  ) async {
+    User currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      return {};
+    }
+
+    String userId = currentUser.uid;
+    final url = api.getUserEventList(listType, userId).toString();
+    print(url);
+    final client = new http.Client();
+    final response = await client.get(
+      Uri.parse(url),
+      headers: {'Authorization': '${api.apiKey}'},
+    );
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body)['events'];
+      return {
+        'events': data.map((dynamic item) => Event.fromJson(item)).toList(),
+        'count': jsonDecode(response.body)['count'] as int,
+      };
+    } else {
+      throw ('Request ${api.getUserEventList(listType, userId)} failed' +
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
   }

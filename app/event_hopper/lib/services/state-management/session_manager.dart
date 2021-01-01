@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -15,6 +16,18 @@ class SessionManager extends ChangeNotifier {
   bool initialStateLoaded = false;
   PackageInfo packageInfo;
   int index = 0;
+
+  List<Event> eventLeft;
+  int eventLeftCount;
+
+  List<Event> eventUp;
+  int eventUpCount;
+
+  List<Event> eventRight;
+  int eventRightCount;
+
+  int eventTotalCount;
+
   List<String> cities = [
     'Philadelphia',
     'New York',
@@ -59,6 +72,11 @@ class SessionManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateUserListss(int page) {
+    this.currentPage = page;
+    notifyListeners();
+  }
+
   void fetchEventsNearMe() async {
     // this.eventsNearMe =
     //     apiService.getEventsByGeo('39.960863', '-75.6200333', 0.006);
@@ -67,6 +85,26 @@ class SessionManager extends ChangeNotifier {
     print('page is $page');
     this.eventsNearMe = apiService.getEventsByCity('$city',
         page: page, dateAfter: DateTime.now().add(new Duration(days: days)));
+    notifyListeners();
+  }
+
+  void fetchUserEventLists() async {
+    var eventLeftMap = await apiService.getUserEventList('event_left');
+    this.eventLeft = eventLeftMap['events'] as List<Event>;
+    this.eventLeftCount = eventLeftMap['count'];
+    print(eventLeftMap);
+
+    var eventUpMap = await apiService.getUserEventList('event_up');
+    this.eventUp = eventUpMap['events'] as List<Event>;
+    this.eventUpCount = eventUpMap['count'];
+
+    var eventRightMap = await apiService.getUserEventList('event_right');
+    this.eventRight = eventRightMap['events'] as List<Event>;
+    this.eventRightCount = eventRightMap['count'];
+
+    this.eventTotalCount =
+        this.eventLeftCount + this.eventRightCount + this.eventLeftCount;
+
     notifyListeners();
   }
 

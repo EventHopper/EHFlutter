@@ -24,17 +24,29 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //initSystem();
+    initSystem();
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: Body(),
     );
   }
 
+  void getPermissionStatus() async {
+    PermissionStatus permission = await Permission.location.status;
+    if (permission == PermissionStatus.granted) {
+    } // ideally you should specify another condition if permissions is denied
+    else if (permission == PermissionStatus.denied ||
+        permission == PermissionStatus.permanentlyDenied ||
+        permission == PermissionStatus.restricted ||
+        permission == PermissionStatus.undetermined) {
+      try {
+        await [Permission.location].request();
+      } catch (e) {}
+    }
+  }
+
   void initSystem() async {
     Provider.of<SessionManager>(context).updatePackageInfo();
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.location,
-    ].request();
+    getPermissionStatus();
   }
 }

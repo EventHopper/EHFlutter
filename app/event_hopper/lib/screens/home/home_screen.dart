@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
       Provider.of<SessionManager>(context, listen: false)
           .updateInitialState(true);
+      Provider.of<SessionManager>(context, listen: false).fetchUserEventLists();
     }
   }
 

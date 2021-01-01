@@ -106,20 +106,6 @@ class API {
         path: '/users/register',
       );
 
-  Uri initializeSession() => Uri(
-        port: port,
-        scheme: scheme,
-        host: host,
-        path: '/users/login',
-      );
-
-  Uri terminateSession() => Uri(
-        port: port,
-        scheme: scheme,
-        host: host,
-        path: '/users/logout',
-      );
-
   Uri getUsers() => Uri(
         port: port,
         scheme: scheme,
@@ -139,6 +125,13 @@ class API {
         scheme: scheme,
         host: host,
         path: '/users/$username',
+      );
+
+  Uri getUserEventList(String listType, String userID) => Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/users/manager/$userID/$listType',
       );
 
 //**************************************************************** */
