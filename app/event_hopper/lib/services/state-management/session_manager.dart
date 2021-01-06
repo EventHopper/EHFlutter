@@ -17,16 +17,18 @@ class SessionManager extends ChangeNotifier {
   PackageInfo packageInfo;
   int index = 0;
 
-  List<Event> eventLeft;
+  List<Event> eventLeft = new List<Event>();
   int eventLeftCount;
 
-  List<Event> eventUp;
+  List<Event> eventUp = new List<Event>();
   int eventUpCount;
 
-  List<Event> eventRight;
+  List<Event> eventRight = new List<Event>();
   int eventRightCount;
 
-  int eventTotalCount;
+  int eventTotalCount = 0;
+
+  var city = 'Philadelphia';
 
   List<String> cities = [
     'Philadelphia',
@@ -35,7 +37,6 @@ class SessionManager extends ChangeNotifier {
     'Boston',
     'Dallas'
   ];
-  var city = 'Philadelphia';
 
   void updateSessionID(String newID) {
     this.sessionID = newID;
@@ -72,7 +73,7 @@ class SessionManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateUserListss(int page) {
+  void updateUserLists(int page) {
     this.currentPage = page;
     notifyListeners();
   }
@@ -88,24 +89,91 @@ class SessionManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void fetchUserEventLists() async {
+  void fetchUserEventLists() {
+    print('running');
+    eventTotalCount = 0;
+    getLeftMap();
+    getUpMap();
+    getRightMap();
+
+    notifyListeners();
+    print('notified');
+  }
+
+  void getLeftMap() async {
     var eventLeftMap = await apiService.getUserEventList('event_left');
     this.eventLeft = eventLeftMap['events'] as List<Event>;
     this.eventLeftCount = eventLeftMap['count'];
-    print(eventLeftMap);
+    print('done left');
+    notifyListeners();
+    print('notified');
+  }
 
+  void getUpMap() async {
     var eventUpMap = await apiService.getUserEventList('event_up');
     this.eventUp = eventUpMap['events'] as List<Event>;
+    this.eventTotalCount += eventUpMap['count'];
     this.eventUpCount = eventUpMap['count'];
+    print('done up');
+    notifyListeners();
+    print('notified');
+  }
 
+  void getRightMap() async {
     var eventRightMap = await apiService.getUserEventList('event_right');
     this.eventRight = eventRightMap['events'] as List<Event>;
+    this.eventTotalCount += eventRightMap['count'];
     this.eventRightCount = eventRightMap['count'];
-
-    this.eventTotalCount =
-        this.eventLeftCount + this.eventRightCount + this.eventLeftCount;
-
+    print('done right');
     notifyListeners();
+    print('notified');
+  }
+
+  void incrementEventTotalCount() async {
+    eventTotalCount++;
+    notifyListeners();
+  }
+
+  void incrementEventLeftCount() async {
+    eventLeftCount++;
+    notifyListeners();
+  }
+
+  void incrementEventRightCount() async {
+    eventRightCount++;
+    notifyListeners();
+  }
+
+  void incrementEventUpCount() async {
+    eventUpCount++;
+    notifyListeners();
+  }
+
+  bool addEventUp(Event event) {
+    if (!eventUp.contains(event)) {
+      eventUp.add(event);
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  bool addEventRight(Event event) {
+    if (!eventRight.contains(event)) {
+      eventRight.add(event);
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  bool addEventLeft(Event event) {
+    if (!eventLeft.contains(event)) {
+      eventLeft.add(event);
+      notifyListeners();
+      return true;
+    }
+    return false;
   }
 
   void fetchEventsByCategory(String category) async {
@@ -122,6 +190,28 @@ class SessionManager extends ChangeNotifier {
 
   void updateInitialState(bool isLoaded) {
     this.initialStateLoaded = isLoaded;
+    notifyListeners();
+  }
+
+  void wipeState() {
+    this.sessionID = null; //May be replaced by sessionToken or JWT or something
+    this.currentUser = null;
+    this.currentPage = 0;
+    this.eventsNearMe = null;
+    this.eventsFromCategory = null;
+    this.initialStateLoaded = false;
+    this.index = 0;
+
+    this.eventLeft = new List<Event>();
+    this.eventLeftCount = 0;
+
+    this.eventUp = new List<Event>();
+    this.eventUpCount = 0;
+
+    this.eventRight = new List<Event>();
+    this.eventRightCount = 0;
+
+    this.eventTotalCount = 0;
     notifyListeners();
   }
 }

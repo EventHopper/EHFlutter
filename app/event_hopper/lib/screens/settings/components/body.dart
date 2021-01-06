@@ -1,8 +1,10 @@
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -56,6 +58,7 @@ class _BodyState extends State<Body> {
               ),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
+                Provider.of<SessionManager>(context, listen: false).wipeState();
                 ScreenNavigator.navigateLogOut(context);
               },
             ),

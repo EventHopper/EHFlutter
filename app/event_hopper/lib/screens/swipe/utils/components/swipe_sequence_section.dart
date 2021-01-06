@@ -1,4 +1,5 @@
 import 'package:EventHopper/screens/event_page/event_page.dart';
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:EventHopper/utils/size_config.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:EventHopper/screens/swipe/utils/components/swipe_end_message.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'swipe_indicator_painter.dart';
 import 'swipe_card.dart';
 import 'package:EventHopper/models/events/Event.dart';
@@ -164,6 +166,10 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                               apiService.swipeEntry(
                                   direction: "event_right",
                                   eventId: "${cards[cardIndex].getEvent().id}");
+                              addEventToLocalList(
+                                  context,
+                                  kRightSwipeDirectionLabel,
+                                  cards[cardIndex].getEvent());
                             }
 
                             //Left Swipe
@@ -173,6 +179,10 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                               apiService.swipeEntry(
                                   direction: "event_left",
                                   eventId: "${cards[cardIndex].getEvent().id}");
+                              addEventToLocalList(
+                                  context,
+                                  kLeftSwipeDirectionLabel,
+                                  cards[cardIndex].getEvent());
                             }
 
                             //Up Swipe
@@ -181,6 +191,10 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                               apiService.swipeEntry(
                                   direction: "event_up",
                                   eventId: "${cards[cardIndex].getEvent().id}");
+                              addEventToLocalList(
+                                  context,
+                                  kUpSwipeDirectionLabel,
+                                  cards[cardIndex].getEvent());
                             }
 
                             animateCards();
@@ -276,6 +290,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
         ),
       );
     } else {
+      frontCardAlign = kDefaultFrontCardAlign;
       return SwipeEndMessage();
     }
   }
@@ -284,7 +299,6 @@ class _CardsSectionState extends State<SwipeSequenceSection>
     setState(() {
       if (!cardEnd) {
         cardIndex++;
-
         frontCardAlign = kDefaultFrontCardAlign;
         frontCardRot = kInitialFrontCardRotation;
         if (cardIndex >= cards.length) {
@@ -304,6 +318,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
 
   void animateCards() {
     SystemUtils.vibrate();
+
     _controller.stop();
     _controller.value = kControllerInitialValue;
     _controller.forward();
@@ -317,14 +332,16 @@ class _CardsSectionState extends State<SwipeSequenceSection>
         children: <Widget>[
           FloatingActionButton(
             heroTag: "swipe-discard",
-            onPressed: () {
+            onPressed: () async {
               if (cardEnd) return;
               print('LEFT SWIPE');
               endAlignmentPuppet = kLeftSwipeAlign;
               frontCardRot = kLeftSwipeRotation;
               apiService.swipeEntry(
-                  direction: "event_left",
+                  direction: kLeftSwipeDirectionLabel,
                   eventId: "${cards[cardIndex].getEvent().id}");
+              addEventToLocalList(context, kLeftSwipeDirectionLabel,
+                  cards[cardIndex].getEvent());
               animateCards();
             },
             mini: true,
@@ -334,14 +351,16 @@ class _CardsSectionState extends State<SwipeSequenceSection>
           Padding(padding: EdgeInsets.only(right: kDefaultSwipePadding)),
           FloatingActionButton(
             heroTag: "swipe-accept",
-            onPressed: () {
+            onPressed: () async {
               if (cardEnd) return;
               print('UP SWIPE');
               endAlignmentPuppet = kUpSwipeAlign;
               frontCardRot = kUpSwipeRotation;
               apiService.swipeEntry(
-                  direction: "event_up",
+                  direction: kUpSwipeDirectionLabel,
                   eventId: "${cards[cardIndex].getEvent().id}");
+              addEventToLocalList(
+                  context, kUpSwipeDirectionLabel, cards[cardIndex].getEvent());
               animateCards();
             },
             backgroundColor: Colors.white,
@@ -351,14 +370,16 @@ class _CardsSectionState extends State<SwipeSequenceSection>
           FloatingActionButton(
             heroTag: "swipe-maybe",
             mini: true,
-            onPressed: () {
+            onPressed: () async {
               if (cardEnd) return;
               print('RIGHT SWIPE');
               endAlignmentPuppet = kRightSwipeAlign;
               frontCardRot = kRightSwipeRotation;
               apiService.swipeEntry(
-                  direction: "event_right",
+                  direction: kRightSwipeDirectionLabel,
                   eventId: "${cards[cardIndex].getEvent().id}");
+              addEventToLocalList(context, kRightSwipeDirectionLabel,
+                  cards[cardIndex].getEvent());
               animateCards();
             },
             backgroundColor: Colors.white,
@@ -416,5 +437,38 @@ class CardsAnimation {
             )
         .animate(
             CurvedAnimation(parent: parent, curve: kFrontCardDisappearCurve));
+  }
+}
+
+void addEventToLocalList(
+    BuildContext context, String direction, Event event) async {
+  switch (direction) {
+    case kLeftSwipeDirectionLabel:
+      if (Provider.of<SessionManager>(context, listen: false)
+          .addEventLeft(event)) {
+        Provider.of<SessionManager>(context, listen: false)
+            .incrementEventLeftCount();
+        Provider.of<SessionManager>(context, listen: false)
+            .incrementEventTotalCount();
+      }
+      break;
+    case kRightSwipeDirectionLabel:
+      if (Provider.of<SessionManager>(context, listen: false)
+          .addEventRight(event)) {
+        Provider.of<SessionManager>(context, listen: false)
+            .incrementEventRightCount();
+        Provider.of<SessionManager>(context, listen: false)
+            .incrementEventTotalCount();
+      }
+      break;
+    case kUpSwipeDirectionLabel:
+      if (Provider.of<SessionManager>(context, listen: false)
+          .addEventUp(event)) {
+        Provider.of<SessionManager>(context, listen: false)
+            .incrementEventUpCount();
+        Provider.of<SessionManager>(context, listen: false)
+            .incrementEventTotalCount();
+        break;
+      }
   }
 }

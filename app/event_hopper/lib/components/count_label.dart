@@ -2,8 +2,8 @@ import 'package:EventHopper/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class CountLabel extends StatefulWidget {
-  int counter;
-  Color color;
+  final int counter;
+  final Color color;
 
   CountLabel(this.counter, {this.color});
 

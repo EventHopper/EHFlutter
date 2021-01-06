@@ -80,7 +80,7 @@ class _BodyState extends State<Body> {
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     // If the form is valid, send post request to firebase.
-                    loginUser();
+                    logInUser();
                   }
                 },
                 child: Text('Submit'),
@@ -105,7 +105,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Future<void> loginUser() async {
+  Future<void> logInUser() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
