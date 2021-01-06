@@ -1,9 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:EventHopper/models/events/Event.dart';
+import 'package:EventHopper/services/state-management/session_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:EventHopper/services/eh-server/api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 final apiService = APIService(API.sandbox());
 
@@ -74,7 +77,6 @@ class APIService {
       "full_name": fullName
     });
     if (response.statusCode == 200) {
-      jsonDecode(response.body);
       return jsonDecode(response.body);
     } else {
       throw ('Request ${api.registerUser()} failed' +
@@ -92,19 +94,59 @@ class APIService {
     }
 
     String userId = currentUser.uid;
-    final url = api.swipeEntry(userId).toString();
+    final url = api.swipeEntry(eventId).toString();
     print(url);
-    final client = new http.Client();
-    final response = await client.post(Uri.parse(url), headers: {
-      'Authorization': '${api.apiKey}'
-    }, body: {
-      "$direction": "$eventId",
+    print(direction);
+    String encoded = json.encode({
+      "user_id": "$userId",
+      "direction": "$direction",
+      "event_manager_update": {"${direction}_swipe": "$userId"},
+      "user_manager_update": {"$direction": "$eventId"},
     });
+
+    print(encoded);
+
+    final client = new http.Client();
+    final response = await client.post(
+      Uri.parse(url),
+      headers: {
+        'Authorization': '${api.apiKey}',
+        'Content-type': 'application/json',
+      },
+      body: encoded,
+    );
     if (response.statusCode == 200) {
-      jsonDecode(response.body);
       return jsonDecode(response.body);
     } else {
-      throw ('Request ${api.registerUser()} failed' +
+      throw ('Request ${api.swipeEntry(userId)} failed' +
+          '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
+    }
+  }
+
+  Future<Map<dynamic, dynamic>> getUserEventList(
+    String listType,
+  ) async {
+    User currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      return {};
+    }
+
+    String userId = currentUser.uid;
+    final url = api.getUserEventList(listType, userId).toString();
+    print(url);
+    final client = new http.Client();
+    final response = await client.get(
+      Uri.parse(url),
+      headers: {'Authorization': '${api.apiKey}'},
+    );
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body)['events'];
+      return {
+        'events': data.map((dynamic item) => Event.fromJson(item)).toList(),
+        'count': jsonDecode(response.body)['count'] as int,
+      };
+    } else {
+      throw ('Request ${api.getUserEventList(listType, userId)} failed' +
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
   }

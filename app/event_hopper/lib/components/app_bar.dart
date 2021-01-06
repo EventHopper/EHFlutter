@@ -6,9 +6,9 @@ import '../utils/constants.dart';
 
 AppBar buildAppBar(BuildContext context,
     {bool isTransparent = false,
-    String title,
+    String title = '',
     Color color,
-    SvgPicture leftIcon,
+    Widget leftIcon,
     GlobalKey<ScaffoldState> key,
     Color backButtonColor,
 

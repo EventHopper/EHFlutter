@@ -41,6 +41,9 @@ const double kIndicatorRadiusSpeed = 80;
 /// Animations
 
 const String kEventPageHeroTag = 'event-card';
+const String kLeftSwipeDirectionLabel = 'event_left';
+const String kRightSwipeDirectionLabel = 'event_right';
+const String kUpSwipeDirectionLabel = 'event_up';
 
 const double kControllerInitialValue = 0.0;
 const double kCardMovementSpeed = 20;

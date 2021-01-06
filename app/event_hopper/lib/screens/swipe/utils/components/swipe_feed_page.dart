@@ -12,8 +12,6 @@ class SwipeFeedPage extends StatefulWidget {
 }
 
 class _SwipeFeedPageState extends State<SwipeFeedPage> {
-  bool showAlignmentCards = true;
-
   @override
   Widget build(BuildContext context) {
     Future<List<Event>> eventsFromCategory =

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:intl/intl.dart';
 
-class Event {
+class Event extends Comparable<Event> {
   final String id, name, image, action, description;
   final Venue venue;
   final DateTime date;
@@ -38,6 +38,23 @@ class Event {
         action: eventSchema['public_action'] as String,
         venue: Venue.fromJson(eventSchema['venue']));
   }
+
+  @override
+  bool operator ==(other) {
+    return (other is Event) && other.id == this.id;
+  }
+
+  @override
+  int compareTo(other) {
+    if (this.id == other.id) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
+
+  @override
+  int get hashCode => super.hashCode;
 }
 
 List<User> users = [user1, user2, user3];
