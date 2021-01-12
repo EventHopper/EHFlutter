@@ -341,6 +341,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
         textAlign: TextAlign.center,
       ),
       onOkButtonPressed: () {
+        Navigator.of(context).pop();
         //TODO: Add to calendar
       },
     );
