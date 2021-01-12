@@ -83,3 +83,16 @@ const Color kIndicatorLeftColor = Colors.red;
 const Color kIndicatorRightColor = Colors.green;
 const Color kIndicatorUpColor = Colors.blue;
 const Color kIndicatorTextColor = Colors.white;
+
+/// Strings
+
+const String kAddToCalendar = "Add To Calendar";
+const String kAddToCalendarDescription =
+    "Would you like to add this event to your calendar ? ";
+
+/// Text
+const TextStyle kTextStyle =
+    TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600);
+
+const Text kTitleText =
+    Text(kAddToCalendar, textAlign: TextAlign.center, style: kTextStyle);

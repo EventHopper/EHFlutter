@@ -15,6 +15,7 @@ import 'dart:math';
 import 'package:EventHopper/utils/system_utils.dart';
 import 'package:EventHopper/services/eh-server/api_service.dart';
 import 'package:EventHopper/screens/swipe/utils/constants.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 
 List<Size> cardsSize = List(kNumberOfCards);
 
@@ -188,6 +189,9 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                             //Up Swipe
                             if (frontCardAlign.y < kUpSwipeThreshold) {
                               print('UP SWIPE');
+                              showDialog(
+                                  context: context,
+                                  builder: (_) => getCalendarDialog());
                               apiService.swipeEntry(
                                   direction: "event_up",
                                   eventId: "${cards[cardIndex].getEvent().id}");
@@ -324,6 +328,24 @@ class _CardsSectionState extends State<SwipeSequenceSection>
     _controller.forward();
   }
 
+  NetworkGiffyDialog getCalendarDialog() {
+    return NetworkGiffyDialog(
+      image: Image.network(
+        cards[cardIndex].getEvent().image,
+        fit: BoxFit.cover,
+      ),
+      entryAnimation: EntryAnimation.BOTTOM,
+      title: kTitleText,
+      description: Text(
+        kAddToCalendarDescription,
+        textAlign: TextAlign.center,
+      ),
+      onOkButtonPressed: () {
+        //TODO: Add to calendar
+      },
+    );
+  }
+
   Widget buttonsRow() {
     return Container(
       child: Row(
@@ -362,6 +384,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
               addEventToLocalList(
                   context, kUpSwipeDirectionLabel, cards[cardIndex].getEvent());
               animateCards();
+              showDialog(context: context, builder: (_) => getCalendarDialog());
             },
             backgroundColor: Colors.white,
             child: Icon(Icons.favorite, color: kIndicatorUpColor),
