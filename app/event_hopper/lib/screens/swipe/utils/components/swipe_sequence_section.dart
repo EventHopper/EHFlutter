@@ -472,8 +472,6 @@ void addEventToLocalList(
           .addEventLeft(event)) {
         Provider.of<SessionManager>(context, listen: false)
             .incrementEventLeftCount();
-        Provider.of<SessionManager>(context, listen: false)
-            .incrementEventTotalCount();
       }
       break;
     case kRightSwipeDirectionLabel:
