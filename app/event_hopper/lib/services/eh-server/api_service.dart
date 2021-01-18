@@ -150,4 +150,11 @@ class APIService {
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
   }
+
+  Future<Map<dynamic, dynamic>> sendUserOAuthDetails(
+    String refreshToken,
+    String accessToken,
+  ) async {
+    
+  }
 }
