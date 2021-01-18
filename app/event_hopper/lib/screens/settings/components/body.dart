@@ -5,6 +5,7 @@ import 'package:EventHopper/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:provider/provider.dart';
+import 'package:EventHopper/services/google-oauth/google_oauth.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -12,6 +13,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  String oAuthText = 'Run OAuth (Debug)';
+
   @override
   void initState() {
     super.initState();
@@ -37,6 +40,20 @@ class _BodyState extends State<Body> {
                 'Default Location (Automatic)',
               ),
               onTap: () {},
+            ),
+            ListTile(
+              leading: Container(
+                height: 30,
+                width: 10,
+              ),
+              title: Text(
+                oAuthText,
+              ),
+              onTap: () async {
+                oAuthText +=
+                    '\n' + await new GoogleOAuth().configureOAuthAccess();
+                setState(() {});
+              },
             ),
             ListTile(
               leading: Container(
