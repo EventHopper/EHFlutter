@@ -45,6 +45,9 @@ android {
         multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders = [
+            'appAuthRedirectScheme': 'com.eventhopper.app'
+            ]
     }
 
     buildTypes {

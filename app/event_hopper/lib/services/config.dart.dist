@@ -1,0 +1,29 @@
+class APIConfig {
+//KEYS
+  static String ehKeySandbox = **SANDBOX KEY**;
+  static String ehKeyProduction = **PRODUCTION KEY**;
+
+//HOSTNAMES
+  static String sandboxHost = **SANDBOX HOST**;
+  static String prodHost = **PROD HOST**;
+
+  //PORTS
+  static int sandboxPort = **SANDBOX PORT**;
+  static int prodPort = **HOST PORT (LEAVE UNSET)**;
+}
+
+class GoogleOAuthConfig {
+  static String clientIdAndroid = ** ANDROID CLIENT ID **;
+  static String clientIdIOS = ** IOS CLIENT ID **;
+  static String clientIdWeb = ** WEB CLIENT ID **;
+  static String authorizationEndpoint = ** AUTHORIZATION ENDPOINT **;
+  static String tokenEndpoint = ** TOKEN ENDPOINT **;
+}
+
+class SpotifyOAuthConfig {
+  static String clientIdAndroid = ** ANDROID CLIENT ID **;
+  static String clientIdIOS = ** IOS CLIENT ID **;
+  static String clientIdWeb = ** WEB CLIENT ID **;
+  static String authorizationEndpoint = ** AUTHORIZATION ENDPOINT **;
+  static String tokenEndpoint = ** TOKEN ENDPOINT **;
+}

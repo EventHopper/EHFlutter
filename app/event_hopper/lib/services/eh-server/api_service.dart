@@ -1,12 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:EventHopper/models/events/Event.dart';
-import 'package:EventHopper/services/state-management/session_manager.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:EventHopper/services/eh-server/api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:provider/provider.dart';
 
 final apiService = APIService(API.sandbox());
 
@@ -149,5 +146,13 @@ class APIService {
       throw ('Request ${api.getUserEventList(listType, userId)} failed' +
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
+  }
+
+  /// Requires a [Service Provider Name], [clientID] and [refreshToken]
+  /// current service provider names include: `google | spotify`,
+  Future<Map<dynamic, dynamic>> storeUserOAuthData(
+      String providerName, String clientID, String refreshToken,
+      [String accessToken]) async {
+    throw new UnimplementedError();
   }
 }
