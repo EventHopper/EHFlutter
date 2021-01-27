@@ -148,14 +148,11 @@ class APIService {
     }
   }
 
-  Future<Map<dynamic, dynamic>> sendUserOAuthDetails(
-    String refreshToken,
-    String accessToken,
-<<<<<<< HEAD
-  ) async {
-    
+  /// Requires a [Service Provider Name], [clientID] and [refreshToken]
+  /// current service provider names include: `google | spotify`,
+  Future<Map<dynamic, dynamic>> storeUserOAuthData(
+      String providerName, String clientID, String refreshToken,
+      [String accessToken]) async {
+    throw new UnimplementedError();
   }
-=======
-  ) async {}
->>>>>>> kyler/safe
 }

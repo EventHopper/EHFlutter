@@ -5,7 +5,7 @@ import 'package:EventHopper/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:provider/provider.dart';
-import 'package:EventHopper/services/google-oauth/google_oauth.dart';
+import 'package:EventHopper/services/oauth/google/google_oauth.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -79,40 +79,6 @@ class _BodyState extends State<Body> {
                 ScreenNavigator.navigateLogOut(context);
               },
             ),
-            // SvgPicture.asset(
-            //   'assets/images/settings.svg',
-            //   height: getProportionateScreenHeight(180),
-            // ),
-            // VerticalSpacing(),
-            // VerticalSpacing(),
-            // Container(
-            //     width: getProportionateScreenWidth(300),
-            //     child: Column(
-            //       children: [
-            //         Text(
-            //           "COMING SOON",
-            //           style: TextStyle(
-            //             color: Colors.grey,
-            //             fontSize: 23,
-            //             fontWeight: FontWeight.normal,
-            //           ),
-            //         ),
-            //         VerticalSpacing(),
-            //         VerticalSpacing(),
-            //         Text(
-            //           "a",
-            //           textAlign: TextAlign.center,
-            //           style: TextStyle(
-            //             wordSpacing: 1,
-            //             fontWeight: FontWeight.normal,
-            //             color: Colors.grey[350],
-            //             fontSize: 18,
-            //           ),
-            //         ),
-            //       ],
-            //     )),
-            // VerticalSpacing(),
-            // VerticalSpacing(),
           ],
         ),
       ),
