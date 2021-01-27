@@ -1,6 +1,5 @@
-import 'package:EventHopper/services/eh-server/config.dart';
+import 'package:EventHopper/services/config.dart';
 import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 
 enum Endpoint { events, eventsNearMe, users }
 
