@@ -1,31 +1,34 @@
 import 'dart:io';
 
-import 'package:EventHopper/services/config.dart';
+import 'package:EventHopper/services/services-config.dart';
 import 'package:EventHopper/services/eh-server/api_service.dart';
-import 'package:EventHopper/services/oauth/oauth_services.dart';
+import 'package:EventHopper/services/oauth/oauth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
-import 'package:googleapis/calendar/v3.dart';
 
 class GoogleOAuth {
-  var _scopes = const [
-    CalendarApi.CalendarScope,
-    CalendarApi.CalendarEventsScope,
-  ];
-
+  var config = new GoogleOAuthConfig();
   Future<String> configureOAuthAccess() async {
-    var _clientID;
-    var _authorizationEndpoint = GoogleOAuthConfig.authorizationEndpoint;
-    var _tokenEndpoint = GoogleOAuthConfig.tokenEndpoint;
+    SupportedOAuthProvider _providerName = config.providerName;
+    String _clientID;
+    String _authorizationEndpoint = config.authorizationEndpoint;
+    String _tokenEndpoint = config.tokenEndpoint;
+    String _redirectURL = config.redirectURL;
+    List<String> _scopes = config.scopes;
     if (Platform.isAndroid) {
-      _clientID = _clientID = GoogleOAuthConfig.clientIdAndroid;
+      _clientID = _clientID = config.clientIdAndroid;
     } else if (Platform.isIOS) {
-      _clientID = GoogleOAuthConfig.clientIdIOS;
+      _clientID = config.clientIdIOS;
     }
 
-    AuthorizationTokenResponse auth = await runOAuth(
-        _clientID, _authorizationEndpoint, _tokenEndpoint, _scopes);
-    apiService.storeUserOAuthData(
-        GoogleOAuthConfig.providerName, _clientID, auth.refreshToken);
-    return auth.refreshToken;
+    AuthorizationTokenResponse auth = await runOAuth(_clientID,
+        _authorizationEndpoint, _tokenEndpoint, _redirectURL, _scopes);
+    eventHopperApiService.grantUserOAuthData(
+        FirebaseAuth.instance.currentUser.uid,
+        _providerName.toString().split('.').last,
+        _clientID,
+        auth.refreshToken);
+
+    return 'You have successfully granted EventHopper OAuth Access to your Google account';
   }
 }

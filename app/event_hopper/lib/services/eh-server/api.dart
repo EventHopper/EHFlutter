@@ -1,21 +1,27 @@
-import 'package:EventHopper/services/config.dart';
+import 'package:EventHopper/services/services-config.dart';
 import 'package:flutter/foundation.dart';
-
-enum Endpoint { events, eventsNearMe, users }
 
 class API {
 //**************************************************************** */
 //API Configuration Setup
 //**************************************************************** */
-  final String apiKey;
-  API({@required this.apiKey});
-  factory API.sandbox() => API(apiKey: APIConfig.ehKeySandbox);
-  factory API.production() => API(apiKey: APIConfig.ehKeyProduction);
+  final APIEnvironmentConfig environment;
+  String scheme;
+  String host;
+  int port;
+  API({@required this.environment}) {
+    scheme = this.environment.name != Environment.PRODUCTION ? 'http' : 'https';
+    host = this.environment.host;
+    port = this.environment.name != Environment.PRODUCTION
+        ? this.environment.port
+        : null;
+  }
+  factory API.local() => API(environment: new LocalEnvironment());
+  factory API.sandbox() => API(environment: new SandboxEnvironment());
+  factory API.production() => API(environment: new ProductionEnvironment());
 
-  static final bool dev = false;
-  static final String scheme = dev ? 'http' : 'https';
-  static final String host = dev ? APIConfig.sandboxHost : APIConfig.prodHost;
-  static final int port = dev ? APIConfig.sandboxPort : APIConfig.prodPort;
+  String get apiKey => this.environment.key;
+
 //**************************************************************** */
 
 //**************************************************************** */
@@ -133,6 +139,20 @@ class API {
         path: '/users/manager/$userID/$listType',
       );
 
+  Uri grantOAuth(String userID) => Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/users/$userID/oauth/grant',
+      );
+
+  Uri revokeOAuth(String userID) => Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/users/$userID/oauth/revoke',
+      );
+
 //**************************************************************** */
 // EventHopper Swipe Management API
 //**************************************************************** */
@@ -147,17 +167,6 @@ class API {
 //**************************************************************** */
 // WORK IN PROGRESS BELOW
 //**************************************************************** */
-
-  Uri endpintUri(Endpoint endpoint) => Uri(
-        scheme: dev ? 'http' : 'https',
-        host: dev ? APIConfig.sandboxHost : APIConfig.prodHost,
-        path: '${_paths[endpoint]}',
-      );
-
-  static Map<Endpoint, String> _paths = {
-    Endpoint.events: '/events',
-    Endpoint.eventsNearMe: '/events/?index=location&city=Philadelphia',
-  };
 
   Map<String, String> _createEventQueryParameters(
       {int page,

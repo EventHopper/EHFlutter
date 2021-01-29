@@ -112,7 +112,7 @@ class _BodyState extends State<Body> {
                     // If the form is valid, send post request to firebase.
                     dynamic responseBody;
                     try {
-                      responseBody = await apiService.registerUser(
+                      responseBody = await eventHopperApiService.registerUser(
                           email: emailFieldController.text,
                           fullName: nameFieldController.text,
                           password: passwordFieldController.text,

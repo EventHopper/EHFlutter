@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:EventHopper/models/events/Event.dart';
+import 'package:EventHopper/services/services-config.dart';
 import 'package:http/http.dart' as http;
 import 'package:EventHopper/services/eh-server/api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-final apiService = APIService(API.sandbox());
+final eventHopperApiService = APIService(API.sandbox());
 
 class APIService {
   final API api;
@@ -149,10 +150,26 @@ class APIService {
   }
 
   /// Requires a [Service Provider Name], [clientID] and [refreshToken]
-  /// current service provider names include: `google | spotify`,
-  Future<Map<dynamic, dynamic>> storeUserOAuthData(
-      String providerName, String clientID, String refreshToken,
+  /// current service provider names enumarted by the [SupportedOAuthProvider] enum,
+  Future<Map<dynamic, dynamic>> grantUserOAuthData(
+      String userID, String providerName, String clientID, String refreshToken,
       [String accessToken]) async {
-    throw new UnimplementedError();
+    final url = api.grantOAuth(userID).toString();
+    print(url);
+    final client = new http.Client();
+    final response = await client.post(Uri.parse(url), headers: {
+      'Authorization': '${api.apiKey}'
+    }, body: {
+      "provider_name": providerName,
+      "client_id": clientID,
+      "refresh_token": refreshToken,
+    });
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      print(providerName);
+      throw ('Request ${grantUserOAuthData(userID, providerName, clientID, refreshToken)} failed' +
+          '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
+    }
   }
 }

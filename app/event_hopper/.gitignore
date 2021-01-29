@@ -1,4 +1,5 @@
 # Miscellaneous
+.env
 *.class
 *.log
 *.pyc
@@ -12,7 +13,6 @@
 # EventHopper API Related
 
 settings.json
-config.dart
 
 # IntelliJ related
 *.iml

@@ -5,13 +5,8 @@ import 'package:crypto/crypto.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uni_links/uni_links.dart';
 
-Uri oauth() => Uri(
-      host: 'oauth2.googleapis.com',
-      path: '/users/register',
-    );
-
 Future<dynamic> runOAuth(String clientId, String authorizationEndpoint,
-    String tokenEndpoint, List<String> scopes) async {
+    String tokenEndpoint, String redirectURL, List<String> scopes) async {
   FlutterAppAuth appAuth = FlutterAppAuth();
 
   String code = getRandomString(128);
@@ -25,8 +20,7 @@ Future<dynamic> runOAuth(String clientId, String authorizationEndpoint,
   print('The auth token is not yet defined. FETCHING NOW');
   final AuthorizationTokenResponse result = await appAuth
       .authorizeAndExchangeCode(
-        AuthorizationTokenRequest(
-            clientId, 'com.eventhopper.app:/oauth2redirect',
+        AuthorizationTokenRequest(clientId, redirectURL,
             serviceConfiguration: AuthorizationServiceConfiguration(
               authorizationEndpoint,
               tokenEndpoint,
