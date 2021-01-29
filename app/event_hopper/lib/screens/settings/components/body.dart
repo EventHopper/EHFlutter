@@ -1,3 +1,4 @@
+import 'package:EventHopper/services/oauth/spotify/spotify_oauth.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/utils/constants.dart';
@@ -13,7 +14,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  String oAuthText = 'Run OAuth (Debug)';
+  String googleOAuthText = 'Connect with Google Calendar (Debug)';
+  String spotifyOAuthText = 'Connect with Spotify (Debug)';
 
   @override
   void initState() {
@@ -47,11 +49,25 @@ class _BodyState extends State<Body> {
                 width: 10,
               ),
               title: Text(
-                oAuthText,
+                googleOAuthText,
               ),
               onTap: () async {
-                oAuthText +=
+                googleOAuthText +=
                     '\n' + await new GoogleOAuth().configureOAuthAccess();
+                setState(() {});
+              },
+            ),
+            ListTile(
+              leading: Container(
+                height: 30,
+                width: 10,
+              ),
+              title: Text(
+                spotifyOAuthText,
+              ),
+              onTap: () async {
+                spotifyOAuthText +=
+                    '\n' + await new SpotifyOAuth().configureOAuthAccess();
                 setState(() {});
               },
             ),

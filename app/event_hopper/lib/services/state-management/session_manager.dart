@@ -84,7 +84,7 @@ class SessionManager extends ChangeNotifier {
     int page = Random().nextInt(25);
     int days = Random().nextInt(14);
     print('page is $page');
-    this.eventsNearMe = apiService.getEventsByCity('$city',
+    this.eventsNearMe = eventHopperApiService.getEventsByCity('$city',
         page: page, dateAfter: DateTime.now().add(new Duration(days: days)));
     notifyListeners();
   }
@@ -101,7 +101,8 @@ class SessionManager extends ChangeNotifier {
   }
 
   void getLeftMap() async {
-    var eventLeftMap = await apiService.getUserEventList('event_left');
+    var eventLeftMap =
+        await eventHopperApiService.getUserEventList('event_left');
     this.eventLeft = eventLeftMap['events'] as List<Event>;
     this.eventLeftCount = eventLeftMap['count'];
     print('done left');
@@ -110,7 +111,7 @@ class SessionManager extends ChangeNotifier {
   }
 
   void getUpMap() async {
-    var eventUpMap = await apiService.getUserEventList('event_up');
+    var eventUpMap = await eventHopperApiService.getUserEventList('event_up');
     this.eventUp = eventUpMap['events'] as List<Event>;
     this.eventTotalCount += eventUpMap['count'];
     this.eventUpCount = eventUpMap['count'];
@@ -120,7 +121,8 @@ class SessionManager extends ChangeNotifier {
   }
 
   void getRightMap() async {
-    var eventRightMap = await apiService.getUserEventList('event_right');
+    var eventRightMap =
+        await eventHopperApiService.getUserEventList('event_right');
     this.eventRight = eventRightMap['events'] as List<Event>;
     this.eventTotalCount += eventRightMap['count'];
     this.eventRightCount = eventRightMap['count'];
@@ -178,8 +180,8 @@ class SessionManager extends ChangeNotifier {
 
   void fetchEventsByCategory(String category) async {
     int page = Random().nextInt(9);
-    this.eventsFromCategory =
-        apiService.getEventsByCity('$city', page: page, categories: [category]);
+    this.eventsFromCategory = eventHopperApiService
+        .getEventsByCity('$city', page: page, categories: [category]);
     notifyListeners();
   }
 

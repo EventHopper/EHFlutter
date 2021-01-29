@@ -1,7 +1,6 @@
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/location_banner.dart';
-import 'package:flutter_svg/svg.dart';
 import '../utils/constants.dart';
 
 AppBar buildAppBar(BuildContext context,

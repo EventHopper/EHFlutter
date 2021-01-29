@@ -164,7 +164,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                             if (frontCardAlign.x > kRightSwipeThreshold &&
                                 frontCardAlign.y > kUpSwipeThreshold) {
                               print('RIGHT SWIPE');
-                              apiService.swipeEntry(
+                              eventHopperApiService.swipeEntry(
                                   direction: "event_right",
                                   eventId: "${cards[cardIndex].getEvent().id}");
                               addEventToLocalList(
@@ -177,7 +177,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                             if (frontCardAlign.x < kLeftSwipeThreshold &&
                                 frontCardAlign.y > kUpSwipeThreshold) {
                               print('LEFT SWIPE');
-                              apiService.swipeEntry(
+                              eventHopperApiService.swipeEntry(
                                   direction: "event_left",
                                   eventId: "${cards[cardIndex].getEvent().id}");
                               addEventToLocalList(
@@ -192,7 +192,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                               showDialog(
                                   context: context,
                                   builder: (_) => getCalendarDialog());
-                              apiService.swipeEntry(
+                              eventHopperApiService.swipeEntry(
                                   direction: "event_up",
                                   eventId: "${cards[cardIndex].getEvent().id}");
                               addEventToLocalList(
@@ -360,7 +360,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
               print('LEFT SWIPE');
               endAlignmentPuppet = kLeftSwipeAlign;
               frontCardRot = kLeftSwipeRotation;
-              apiService.swipeEntry(
+              eventHopperApiService.swipeEntry(
                   direction: kLeftSwipeDirectionLabel,
                   eventId: "${cards[cardIndex].getEvent().id}");
               addEventToLocalList(context, kLeftSwipeDirectionLabel,
@@ -379,7 +379,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
               print('UP SWIPE');
               endAlignmentPuppet = kUpSwipeAlign;
               frontCardRot = kUpSwipeRotation;
-              apiService.swipeEntry(
+              eventHopperApiService.swipeEntry(
                   direction: kUpSwipeDirectionLabel,
                   eventId: "${cards[cardIndex].getEvent().id}");
               addEventToLocalList(
@@ -399,7 +399,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
               print('RIGHT SWIPE');
               endAlignmentPuppet = kRightSwipeAlign;
               frontCardRot = kRightSwipeRotation;
-              apiService.swipeEntry(
+              eventHopperApiService.swipeEntry(
                   direction: kRightSwipeDirectionLabel,
                   eventId: "${cards[cardIndex].getEvent().id}");
               addEventToLocalList(context, kRightSwipeDirectionLabel,
