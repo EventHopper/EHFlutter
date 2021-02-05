@@ -153,6 +153,13 @@ class API {
         path: '/users/$userID/oauth/revoke',
       );
 
+  Uri addEventToCalendar(String uid) => Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/calendar/create/$uid',
+      );
+
 //**************************************************************** */
 // EventHopper Swipe Management API
 //**************************************************************** */

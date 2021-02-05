@@ -172,4 +172,27 @@ class APIService {
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
   }
+
+  /// Requires a [userID] and a [eventID]
+  /// Adds event to user's calendar if they have granted Google OAuth permission
+  Future<Map<dynamic, dynamic>> addEventToCalendar(
+      String userID, String eventID) async {
+    final url = api.addEventToCalendar(userID).toString();
+    final client = new http.Client();
+    final response = await client.post(Uri.parse(url), headers: {
+      'Authorization': '${api.apiKey}'
+    }, body: {
+      "eventid": eventID,
+    });
+    if (response.statusCode == 200) {
+      print('successfully added to calendar: ' + response.body);
+      return jsonDecode(response.body);
+    } else {
+      // throw ('Request ${addEventToCalendar(userID, eventID)} failed' +
+      //     '\nResponse:${response.statusCode}\n${response.reasonPhrase}'
+      // );
+      print('an error occured: ' + response.body);
+      return jsonDecode(response.body);
+    }
+  }
 }

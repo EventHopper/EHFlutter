@@ -1,13 +1,16 @@
 import 'package:EventHopper/screens/event_page/event_page.dart';
+import 'package:EventHopper/services/oauth/google/google_oauth.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:EventHopper/utils/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:EventHopper/screens/swipe/utils/components/swipe_end_message.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'swipe_indicator_painter.dart';
 import 'swipe_card.dart';
 import 'package:EventHopper/models/events/Event.dart';
@@ -330,20 +333,57 @@ class _CardsSectionState extends State<SwipeSequenceSection>
 
   NetworkGiffyDialog getCalendarDialog() {
     return NetworkGiffyDialog(
-      image: Image.network(
-        cards[cardIndex].getEvent().image,
-        fit: BoxFit.cover,
+        image: Image.network(
+          cards[cardIndex].getEvent().image,
+          fit: BoxFit.cover,
+        ),
+        entryAnimation: EntryAnimation.BOTTOM,
+        title: kTitleText,
+        description: Text(
+          kAddToCalendarDescription,
+          textAlign: TextAlign.center,
+        ),
+        onOkButtonPressed: () {
+          Navigator.of(context).pop();
+          calendarCallback();
+        });
+  }
+
+  void calendarCallback() async {
+    assert(cards[cardIndex].getEvent().id != null);
+    var result = await eventHopperApiService.addEventToCalendar(
+        FirebaseAuth.instance.currentUser.uid, cards[cardIndex].getEvent().id);
+
+    switch (result['code']) {
+      case 0:
+        Scaffold.of(context)
+            .showSnackBar(buildSnackbar(result['message'], 'View', () {
+          launch(result['link'].toString());
+        }));
+        break;
+      case -1:
+        await new GoogleOAuth().configureOAuthAccess();
+        break;
+      case -2:
+        Scaffold.of(context).showSnackBar(
+            buildSnackbar(result['message'], 'Retry', calendarCallback));
+        break;
+      case -3:
+        Scaffold.of(context).showSnackBar(
+            buildSnackbar(result['message'], 'Retry', calendarCallback));
+        break;
+    }
+  }
+
+  SnackBar buildSnackbar(String text, String label, Function() onPressed) {
+    return SnackBar(
+      content: Text(text),
+      action: SnackBarAction(
+        label: label,
+        onPressed: () {
+          onPressed();
+        },
       ),
-      entryAnimation: EntryAnimation.BOTTOM,
-      title: kTitleText,
-      description: Text(
-        kAddToCalendarDescription,
-        textAlign: TextAlign.center,
-      ),
-      onOkButtonPressed: () {
-        Navigator.of(context).pop();
-        //TODO: Add to calendar
-      },
     );
   }
 
