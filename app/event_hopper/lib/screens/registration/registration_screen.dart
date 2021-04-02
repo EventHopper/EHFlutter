@@ -17,6 +17,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     if (!Provider.of<SessionManager>(context, listen: false)
         .initialStateLoaded) {
+      Provider.of<SessionManager>(context, listen: false)
+          .fetchCurrentUserData();
       Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
       Provider.of<SessionManager>(context, listen: false)
           .updateInitialState(true);

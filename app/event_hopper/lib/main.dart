@@ -1,4 +1,5 @@
 import 'package:EventHopper/screens/calendar/calendar_screen.dart';
+import 'package:EventHopper/screens/search/search_screen.dart';
 import 'package:EventHopper/screens/friends/friends_screen.dart';
 import 'package:EventHopper/screens/login/login_screen.dart';
 import 'package:EventHopper/screens/organizations/organizations_screen.dart';
@@ -39,6 +40,7 @@ class App extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return FutureBuilder(
       // Initialize FlutterFire:
       future: _initialization,
@@ -93,6 +95,7 @@ class App extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.light,
           scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(brightness: Brightness.light),
           textTheme:
               GoogleFonts.poppinsTextTheme().apply(displayColor: kTextColor),
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -111,6 +114,7 @@ class App extends StatelessWidget {
           RouteConfig.organizations: (context) => OrganizationsScreen(),
           RouteConfig.friends: (context) => FriendsScreen(),
           RouteConfig.calendar: (context) => CalendarScreen(),
+          RouteConfig.search: (context) => SearchScreen(),
         },
       ),
     );

@@ -15,13 +15,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
-    if (!Provider.of<SessionManager>(context, listen: false)
-        .initialStateLoaded) {
-      Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
-      Provider.of<SessionManager>(context, listen: false)
-          .updateInitialState(true);
-      Provider.of<SessionManager>(context, listen: false).fetchUserEventLists();
+    if (mounted) {
+      if (!Provider.of<SessionManager>(context, listen: false)
+          .initialStateLoaded) {
+        Provider.of<SessionManager>(context, listen: false).updatePackageInfo();
+        Provider.of<SessionManager>(context, listen: false)
+            .fetchCurrentUserData();
+        Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
+        Provider.of<SessionManager>(context, listen: false)
+            .updateInitialState(true);
+        Provider.of<SessionManager>(context, listen: false)
+            .fetchUserEventLists();
+      }
     }
   }
 

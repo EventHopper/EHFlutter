@@ -13,12 +13,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     super.initState();
-
-    if (!Provider.of<SessionManager>(context, listen: false)
-        .initialStateLoaded) {
-      Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
-      Provider.of<SessionManager>(context, listen: false)
-          .updateInitialState(true);
+    if (mounted) {
+      if (!Provider.of<SessionManager>(context, listen: false)
+          .initialStateLoaded) {
+        Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
+        Provider.of<SessionManager>(context, listen: false)
+            .updateInitialState(true);
+      }
     }
   }
 

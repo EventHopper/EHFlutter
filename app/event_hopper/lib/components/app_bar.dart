@@ -1,7 +1,12 @@
+import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/screens/route_config.dart';
+import 'package:EventHopper/services/state-management/session_manager.dart';
+import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/location_banner.dart';
+import 'package:provider/provider.dart';
 import '../utils/constants.dart';
+import 'dart:math';
 
 AppBar buildAppBar(BuildContext context,
     {bool isTransparent = false,
@@ -37,15 +42,43 @@ AppBar buildAppBar(BuildContext context,
     centerTitle: true,
     actions: [
       //User Profile Photo
-      if (profileIcon)
-        IconButton(
-          icon: ClipOval(
-              child: Image.network(
-                  "https://pbs.twimg.com/profile_images/1215038784913510400/fZAZQwmh_400x400.jpg")),
-          onPressed: () {
-            Navigator.pushNamed(context, RouteConfig.myProfile);
-          },
-        )
+      if (profileIcon) UserAvatar(),
     ],
   );
+}
+
+class UserAvatar extends StatefulWidget {
+  const UserAvatar({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _UserAvatarState createState() => _UserAvatarState();
+}
+
+class _UserAvatarState extends State<UserAvatar> {
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<User>(
+        future: Provider.of<SessionManager>(context, listen: true).currentUser,
+        builder: (context, user) {
+          return IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, RouteConfig.myProfile);
+              },
+              icon: user.hasData
+                  ? CircleAvatar(
+                      backgroundColor: Colors.blueGrey,
+                      backgroundImage: NetworkImage(
+                        user.data.image,
+                      ))
+                  : CircleAvatar(
+                      backgroundColor: Colors.blueGrey,
+                      child: CircularProgressIndicator()));
+        });
+  }
 }

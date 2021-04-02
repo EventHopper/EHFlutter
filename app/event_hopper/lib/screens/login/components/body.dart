@@ -1,6 +1,8 @@
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import '../../route_config.dart';
 
 class Body extends StatefulWidget {
@@ -109,23 +111,31 @@ class _BodyState extends State<Body> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-              email: emailFieldController.text,
-              password: passwordFieldController.text);
+              email: emailFieldController.text.trim(),
+              password: passwordFieldController.text.trim());
 
       if (userCredential.user != null) {
+        Provider.of<SessionManager>(context, listen: false)
+            .fetchCurrentUserData();
+        Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
+        Provider.of<SessionManager>(context, listen: false)
+            .updateInitialState(true);
+        Provider.of<SessionManager>(context, listen: false)
+            .fetchUserEventLists();
+
         //successfully logged in
         ScreenNavigator.navigateSwipe(context, RouteConfig.home,
             replaceAll: true);
       } else {
-        Scaffold.of(context).showSnackBar(buildSnackbar(
+        ScaffoldMessenger.of(context).showSnackBar(buildSnackbar(
             'An error occurred. Please check your internet connection'));
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        Scaffold.of(context)
+        ScaffoldMessenger.of(context)
             .showSnackBar(buildSnackbar('No user found for that email.'));
       } else if (e.code == 'wrong-password') {
-        Scaffold.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
             buildSnackbar('Wrong password provided for that user.'));
       }
     }

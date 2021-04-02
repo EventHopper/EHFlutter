@@ -41,8 +41,15 @@ class API {
       DateTime dateBefore,
       DateTime dateAfter,
       List<String> category,
-      List<String> tags}) {
-    Map<String, String> queryParameters = {'index': 'location', 'city': city};
+      List<String> tags,
+      bool isRandom = false}) {
+    Map<String, String> queryParameters = {
+      'index': isRandom ? 'random' : 'location',
+      'city': city
+    };
+    if (isRandom) {
+      queryParameters.putIfAbsent('size', () => '16');
+    }
 
     queryParameters.addAll(_createEventQueryParameters(
         page: page,
@@ -125,12 +132,25 @@ class API {
         path: '/search/users',
       );
 
-  Uri getUser(String username) => Uri(
-        port: port,
-        scheme: scheme,
-        host: host,
-        path: '/users/$username',
-      );
+  Uri getUser(String username, {String userID}) {
+    Uri finalUri = userID == null
+        ? Uri(
+            port: port,
+            scheme: scheme,
+            host: host,
+            path: '/users/$username',
+          )
+        : Uri(
+            port: port,
+            scheme: scheme,
+            host: host,
+            path: '/users/$username',
+            queryParameters: {
+                'user_id': userID,
+              });
+
+    return finalUri;
+  }
 
   Uri getUserEventList(String listType, String userID) => Uri(
         port: port,
@@ -159,6 +179,32 @@ class API {
         host: host,
         path: '/calendar/create/$uid',
       );
+
+  Uri uploadUserMedia(String uid) => Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/users/media/$uid',
+      );
+
+  Uri getUserUserRelationships(String uid, String state,
+      {String relationshipID}) {
+    Uri finalUri = Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/users/network/relationships/',
+        queryParameters: {
+          'user_id': uid,
+          'state': state,
+        });
+    if (relationshipID != null) {
+      finalUri.queryParameters
+          .putIfAbsent('relationship_id', () => relationshipID);
+    }
+
+    return finalUri;
+  }
 
 //**************************************************************** */
 // EventHopper Swipe Management API

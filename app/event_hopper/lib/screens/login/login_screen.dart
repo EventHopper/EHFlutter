@@ -16,6 +16,8 @@ class _LogInScreenState extends State<LogInScreen> {
 
     if (!Provider.of<SessionManager>(context, listen: false)
         .initialStateLoaded) {
+      Provider.of<SessionManager>(context, listen: false)
+          .fetchCurrentUserData();
       Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
       Provider.of<SessionManager>(context, listen: false)
           .updateInitialState(true);

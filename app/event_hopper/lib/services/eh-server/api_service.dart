@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:EventHopper/models/events/Event.dart';
+import 'package:EventHopper/models/users/Relationship.dart';
+import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/services/services-config.dart';
 import 'package:http/http.dart' as http;
 import 'package:EventHopper/services/eh-server/api.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
+import 'package:mime/mime.dart';
+import 'package:http_parser/http_parser.dart';
 
 final eventHopperApiService = APIService(API.sandbox());
 
@@ -12,20 +16,55 @@ class APIService {
   final API api;
   APIService(this.api);
 
+  Future<User> getUser(String username,
+      {String uid, bool isCurrentUser}) async {
+    final url = isCurrentUser
+        ? api
+            .getUser(username,
+                userID: fbAuth.FirebaseAuth.instance.currentUser.uid)
+            .toString()
+        : api.getUser(username, userID: uid).toString();
+    log(url);
+    final client = new http.Client();
+    final response = await client
+        .get(Uri.parse(url), headers: {'Authorization': '${api.apiKey}'});
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      User user = User.fromJson(data);
+      return user;
+    } else {
+      throw ('Request get User $username failed' +
+          '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
+    }
+  }
+
   Future<List<Event>> getEventsByCity(String city,
       {List<String> categories,
       DateTime dateAfter,
       DateTime dateBefore,
-      int page}) async {
-    final url = api
-        .getEventsByCity(
-          city,
-          page: page != null ? page : 0,
-          dateAfter: dateAfter != null ? dateAfter : DateTime.now(),
-          category: categories != null ? categories : null,
-          //Change to user  default category preference(s)
-        )
-        .toString();
+      int page,
+      bool isRandom = false}) async {
+    final url = isRandom
+        ? api
+            .getEventsByCity(
+              city,
+              page: page != null ? page : 0,
+              dateAfter: dateAfter != null ? dateAfter : DateTime.now(),
+              category: categories != null ? categories : null,
+              isRandom: isRandom,
+              //Change to user  default category preference(s)
+            )
+            .toString()
+        : api
+            .getEventsByCity(
+              city,
+              page: page != null ? page : 0,
+              dateAfter: dateAfter != null ? dateAfter : DateTime.now(),
+              category: categories != null ? categories : null,
+
+              //Change to user  default category preference(s)
+            )
+            .toString();
     log(url);
     final client = new http.Client();
     final response = await client
@@ -36,7 +75,7 @@ class APIService {
           data.map((dynamic item) => Event.fromJson(item)).toList();
       return events;
     } else {
-      throw ('Request ${api.getEventsByCity(city, page: 2, dateAfter: DateTime.parse('2021-08-10T00:00:00.000Z'))} failed' +
+      throw ('Request ${url} failed' +
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
   }
@@ -67,7 +106,7 @@ class APIService {
     print(url);
     final client = new http.Client();
     final response = await client.post(Uri.parse(url), headers: {
-      'Authorization': '${api.apiKey}'
+      'Authorization': '${api.apiKey}',
     }, body: {
       "username": username,
       "password": password,
@@ -86,7 +125,7 @@ class APIService {
     String direction,
     String eventId,
   }) async {
-    User currentUser = FirebaseAuth.instance.currentUser;
+    fbAuth.User currentUser = fbAuth.FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       return;
     }
@@ -109,7 +148,6 @@ class APIService {
       Uri.parse(url),
       headers: {
         'Authorization': '${api.apiKey}',
-        'Content-type': 'application/json',
       },
       body: encoded,
     );
@@ -124,7 +162,7 @@ class APIService {
   Future<Map<dynamic, dynamic>> getUserEventList(
     String listType,
   ) async {
-    User currentUser = FirebaseAuth.instance.currentUser;
+    fbAuth.User currentUser = fbAuth.FirebaseAuth.instance.currentUser;
     if (currentUser == null) {
       return {};
     }
@@ -135,7 +173,9 @@ class APIService {
     final client = new http.Client();
     final response = await client.get(
       Uri.parse(url),
-      headers: {'Authorization': '${api.apiKey}'},
+      headers: {
+        'Authorization': '${api.apiKey}',
+      },
     );
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body)['events'];
@@ -158,7 +198,7 @@ class APIService {
     print(url);
     final client = new http.Client();
     final response = await client.post(Uri.parse(url), headers: {
-      'Authorization': '${api.apiKey}'
+      'Authorization': '${api.apiKey}',
     }, body: {
       "provider_name": providerName,
       "client_id": clientID,
@@ -180,7 +220,7 @@ class APIService {
     final url = api.addEventToCalendar(userID).toString();
     final client = new http.Client();
     final response = await client.post(Uri.parse(url), headers: {
-      'Authorization': '${api.apiKey}'
+      'Authorization': '${api.apiKey}',
     }, body: {
       "eventid": eventID,
     });
@@ -193,6 +233,66 @@ class APIService {
       // );
       print('an error occured: ' + response.body);
       return jsonDecode(response.body);
+    }
+  }
+
+  /// Requires a [state] integer between -1 and 2 incluive where:
+  ///-1 = 'blocked users',
+  /// 0 = N/A,
+  /// 1 = 'pending friend requests',
+  /// 2 = 'friends'
+  Future<Map<dynamic, dynamic>> getUserRelationships(int state) async {
+    final url = api
+        .getUserUserRelationships(
+            fbAuth.FirebaseAuth.instance.currentUser.uid, state.toString())
+        .toString();
+    final client = new http.Client();
+    final response = await client.get(Uri.parse(url), headers: {
+      'Authorization': '${api.apiKey}',
+      'TOKEN_ID':
+          '${(await fbAuth.FirebaseAuth.instance.currentUser.getIdTokenResult(true)).token}'
+    });
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body)['relationship_list'];
+      return {
+        'relationship_list': data
+            .map((dynamic item) => Relationship.fromJson(
+                item, fbAuth.FirebaseAuth.instance.currentUser.uid))
+            .toList(),
+      };
+    } else {
+      throw ('Request ${getUserRelationships(state)} failed' +
+          '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
+    }
+  }
+
+  /// Requires a [filePath], [userID] and [accessType]
+  Future<Map<dynamic, dynamic>> uploadUserMedia(
+    String filePath,
+    String userID,
+    String accessType,
+  ) async {
+    final url = api.uploadUserMedia(userID).toString();
+    print(url);
+    final client = new http.MultipartRequest(
+      "POST",
+      Uri.parse(url),
+    );
+    var image = await http.MultipartFile.fromPath('avatar', filePath,
+        filename: filePath,
+        contentType: MediaType('image', lookupMimeType(filePath)));
+    client
+      ..fields['access_type'] = accessType
+      ..files.add(image);
+    client.headers['Authorization'] = '${api.apiKey}';
+    final response = await client.send();
+
+    if (response.statusCode == 200) {
+      return {'status': 'successful'};
+    } else {
+      throw ('Request ${String.fromCharCodes(await response.stream.toBytes())}' +
+          '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
   }
 }
