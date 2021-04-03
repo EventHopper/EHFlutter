@@ -30,7 +30,15 @@ Drawer buildDrawer(BuildContext context) {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.account_circle),
+          leading: FutureBuilder<User>(
+              future: Provider.of<SessionManager>(context, listen: true)
+                  .currentUser,
+              builder: (context, user) => user.hasData
+                  ? CircleAvatar(
+                      maxRadius: getProportionateScreenWidth(15),
+                      backgroundImage: NetworkImage(user.data.image),
+                    )
+                  : Icon(Icons.account_circle)),
           title: FutureBuilder<User>(
               future: Provider.of<SessionManager>(context, listen: true)
                   .currentUser,

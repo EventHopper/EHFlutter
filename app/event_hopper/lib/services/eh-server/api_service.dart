@@ -16,24 +16,50 @@ class APIService {
   final API api;
   APIService(this.api);
 
-  Future<User> getUser(String username,
-      {String uid, bool isCurrentUser}) async {
+  Future<dynamic> getUser(
+    String username, {
+    String relatedTo,
+    bool isCurrentUser,
+  }) async {
     final url = isCurrentUser
         ? api
             .getUser(username,
                 userID: fbAuth.FirebaseAuth.instance.currentUser.uid)
             .toString()
-        : api.getUser(username, userID: uid).toString();
+        : api.getUser(username, userID: relatedTo).toString();
     log(url);
     final client = new http.Client();
     final response = await client
         .get(Uri.parse(url), headers: {'Authorization': '${api.apiKey}'});
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
-      User user = User.fromJson(data);
+      User user = User.fromJson(data['user']);
+      if (data['relationship'] != null) {
+        Relationship relationship = Relationship.fromJson(data['relationship']);
+        return Future<Map<String, dynamic>>(
+            () => {'user': user, 'relationship': relationship});
+      }
       return user;
     } else {
       throw ('Request get User $username failed' +
+          '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
+    }
+  }
+
+  Future<List<User>> searchUsers(String query) async {
+    final url = api.searchUsers(query).toString();
+    print(url);
+    final client = new http.Client();
+    final response = await client
+        .get(Uri.parse(url), headers: {'Authorization': '${api.apiKey}'});
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      List<User> users =
+          data.map((dynamic item) => User.fromJson(item)).toList();
+      return users;
+    } else {
+      throw ('Request search users $query failed' +
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
   }

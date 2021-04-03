@@ -125,11 +125,12 @@ class API {
         path: '/users',
       );
 
-  Uri searchUsers() => Uri(
+  Uri searchUsers(String query) => Uri(
         port: port,
         scheme: scheme,
         host: host,
         path: '/search/users',
+        queryParameters: {'query': query},
       );
 
   Uri getUser(String username, {String userID}) {
@@ -146,7 +147,7 @@ class API {
             host: host,
             path: '/users/$username',
             queryParameters: {
-                'user_id': userID,
+                'related_to': userID,
               });
 
     return finalUri;

@@ -14,6 +14,8 @@ class SessionManager extends ChangeNotifier {
   int currentPage = 0;
   Future<List<Event>> eventsNearMe;
   Future<List<Event>> eventsFromCategory;
+
+  Future<List<User>> search = new Future(() => null);
   bool initialStateLoaded = false;
   Future<PackageInfo> packageInfo;
   int index = 0;
@@ -38,6 +40,12 @@ class SessionManager extends ChangeNotifier {
     'Boston',
     'Dallas'
   ];
+
+  Future<List<User>> updateSearch(String query) {
+    this.search = eventHopperApiService.searchUsers(query);
+    notifyListeners();
+    return this.search;
+  }
 
   void updateSessionID(String newID) {
     this.sessionID = newID;
@@ -213,6 +221,7 @@ class SessionManager extends ChangeNotifier {
     this.eventsNearMe = null;
     this.eventsFromCategory = null;
     this.initialStateLoaded = false;
+    this.search = new Future(() => null);
     this.index = 0;
 
     this.eventLeft = <Event>[];
