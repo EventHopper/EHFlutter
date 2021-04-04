@@ -11,6 +11,7 @@ import 'package:package_info/package_info.dart';
 class SessionManager extends ChangeNotifier {
   String sessionID; //May be replaced by sessionToken or JWT or something
   Future<User> currentUser;
+  Future<Map<String, dynamic>> otherUserProfileView;
   int currentPage = 0;
   Future<List<Event>> eventsNearMe;
   Future<List<Event>> eventsFromCategory;
@@ -72,7 +73,7 @@ class SessionManager extends ChangeNotifier {
   }
 
   void updateUser() {
-    this.currentUser = eventHopperApiService.getUser(null, isCurrentUser: true);
+    this.currentUser = eventHopperApiService.getLoggedInUserData();
     notifyListeners();
   }
 
@@ -90,8 +91,8 @@ class SessionManager extends ChangeNotifier {
   void fetchEventsNearMe() async {
     // this.eventsNearMe =
     //     apiService.getEventsByGeo('39.960863', '-75.6200333', 0.006);
-    int page = Random().nextInt(25);
-    int days = Random().nextInt(14);
+    int page = Random().nextInt(10);
+    int days = Random().nextInt(60);
     print('page is $page');
     this.eventsNearMe = eventHopperApiService.getEventsByCity('$city',
         page: page, dateAfter: DateTime.now().add(new Duration(days: days)));
@@ -238,8 +239,17 @@ class SessionManager extends ChangeNotifier {
   }
 
   void fetchCurrentUserData() async {
-    this.currentUser = eventHopperApiService.getUser(null, isCurrentUser: true)
+    this.currentUser = eventHopperApiService.getLoggedInUserData()
       ..then((value) => value..image += '?q=${Random.secure().nextDouble()}');
+    notifyListeners();
+  }
+
+  void fetchOtherUserProfileViewData(String username) async {
+    String currentUsername = (await this.currentUser).username;
+    this.otherUserProfileView = eventHopperApiService.getUser(username,
+        relatedTo: currentUsername)
+      ..then((value) =>
+          value['user']..image += '?q=${Random.secure().nextDouble()}');
     notifyListeners();
   }
 }

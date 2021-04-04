@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:EventHopper/utils/size_config.dart';
 import 'package:EventHopper/utils/system_utils.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,10 @@ class AdBanner extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         borderRadius: BorderRadius.circular(300),
         child: Ink.image(
-          image: AssetImage('assets/images/blackpanther-thin-ad.png'),
+          image: Random.secure().nextInt(2) == 1
+              ? AssetImage('assets/images/blackpanther-thin-ad.png')
+              : NetworkImage(
+                  'https://cdn.mos.cms.futurecdn.net/YaWgrtBKmcesRZ2eZYQunH.jpg'),
           fit: BoxFit.cover,
           alignment:
               Alignment.lerp(Alignment.topCenter, Alignment.bottomCenter, 0.6),

@@ -15,6 +15,16 @@ class Relationship {
       @required this.recipientId,
       @required this.requesterId});
 
+  factory Relationship.noRelation() {
+    return Relationship(
+      id: null,
+      user: null,
+      requesterId: null,
+      recipientId: null,
+      state: 0,
+    );
+  }
+
   factory Relationship.fromJson(Map<String, dynamic> relationshipSchema,
       [String currentUserID]) {
     print('serverSide: ' +

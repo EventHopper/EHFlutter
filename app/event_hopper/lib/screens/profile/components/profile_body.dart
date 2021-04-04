@@ -1,3 +1,4 @@
+import 'package:EventHopper/models/users/Relationship.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/services/eh-server/api_service.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
@@ -5,19 +6,19 @@ import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
 import 'package:flutter/material.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/size_config.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class Body extends StatefulWidget {
+class ProfileBody extends StatefulWidget {
+  ProfileBody();
+
   @override
-  _BodyState createState() => _BodyState();
+  _ProfileBodyState createState() => _ProfileBodyState();
 }
 
-class _BodyState extends State<Body> {
+class _ProfileBodyState extends State<ProfileBody> {
   @override
   void initState() {
     super.initState();

@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:EventHopper/components/app_bar.dart';
+import 'package:EventHopper/components/drawer.dart';
 import 'package:EventHopper/components/friend_request.dart';
+import 'package:EventHopper/components/user_profile.dart';
 import 'package:EventHopper/models/users/Relationship.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/screens/friends/components/no_friends.dart';
+import 'package:EventHopper/screens/profile/components/profile_body.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
+import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:EventHopper/utils/system_utils.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
@@ -163,30 +168,41 @@ class UserListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AwesomeDialog(
-          context: context,
-          headerAnimationLoop: false,
-          customHeader: Container(
-            height: 120,
-            width: 120,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(100),
-              child: Image(
-                fit: BoxFit.cover,
-                image: null == null
-                    ? NetworkImage(user.image)
-                    : NetworkImage(
-                            'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg') ??
-                        CircularProgressIndicator(),
-              ),
-            ),
-          ),
-          btnOkText: 'View Profile',
-          btnOkOnPress: () {},
-          btnOkColor: Colors.blueGrey,
-          title: user.fullName,
-          desc: '@${user.username}',
-        ).show();
+        ScreenNavigator.widget(
+            context,
+            new Scaffold(
+                drawer: null,
+                appBar: buildAppBar(context,
+                    title: "Search",
+                    color: Colors.black,
+                    backButton: true,
+                    profileIcon: false),
+                body: new UserProfile(this.user)));
+
+        // AwesomeDialog(
+        //   context: context,
+        //   headerAnimationLoop: false,
+        //   customHeader: Container(
+        //     height: 120,
+        //     width: 120,
+        //     child: ClipRRect(
+        //       borderRadius: BorderRadius.circular(100),
+        //       child: Image(
+        //         fit: BoxFit.cover,
+        //         image: null == null
+        //             ? NetworkImage(user.image)
+        //             : NetworkImage(
+        //                     'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-800x825.jpg') ??
+        //                 CircularProgressIndicator(),
+        //       ),
+        //     ),
+        //   ),
+        //   btnOkText: 'View Profile',
+        //   btnOkOnPress: () {},
+        //   btnOkColor: Colors.blueGrey,
+        //   title: user.fullName,
+        //   desc: '@${user.username}',
+        // ).show();
       },
       child: ListTile(
         leading: ClipOval(

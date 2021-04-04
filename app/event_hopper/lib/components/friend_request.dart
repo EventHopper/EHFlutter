@@ -1,9 +1,14 @@
+import 'package:EventHopper/components/app_bar.dart';
+import 'package:EventHopper/components/user_profile.dart';
 import 'package:EventHopper/models/users/Relationship.dart';
+import 'package:EventHopper/services/eh-server/api_service.dart';
+import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:EventHopper/utils/size_config.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:toast/toast.dart';
 
 class FriendRequest extends StatelessWidget {
   final Relationship relationship;
@@ -32,7 +37,20 @@ class FriendRequest extends StatelessWidget {
             ),
           ),
           btnOkText: 'View Profile',
-          btnOkOnPress: () {},
+          btnOkOnPress: () {
+            ScreenNavigator.widget(
+              context,
+              new Scaffold(
+                  drawer: null,
+                  appBar: buildAppBar(context,
+                      title: "Search",
+                      color: Colors.black,
+                      backButton: true,
+                      profileIcon: false),
+                  body: new UserProfile(this.relationship.user)),
+              replace: true,
+            );
+          },
           btnOkColor: Colors.blueGrey,
           title: relationship.user.fullName,
           desc: '@${relationship.user.username}',
@@ -55,7 +73,7 @@ class FriendRequest extends StatelessWidget {
             '@${relationship.user.username}',
             style: TextStyle(color: Colors.black38),
           ),
-          trailing: RelationshipActionButton(
+          trailing: RelationshipActionButton(relationship,
               state: relationship.state,
               isRecipient: (FirebaseAuth.instance.currentUser.uid ==
                   this.relationship.recipientId))),
@@ -63,48 +81,152 @@ class FriendRequest extends StatelessWidget {
   }
 }
 
-class RelationshipActionButton extends StatelessWidget {
+class RelationshipActionButton extends StatefulWidget {
   final int state;
   final bool isRecipient;
-  const RelationshipActionButton({this.state, this.isRecipient});
+  final Relationship relationship;
+  const RelationshipActionButton(this.relationship,
+      {this.state, this.isRecipient});
+
+  @override
+  _RelationshipActionButtonState createState() =>
+      _RelationshipActionButtonState();
+}
+
+class _RelationshipActionButtonState extends State<RelationshipActionButton> {
   @override
   Widget build(BuildContext context) {
-    return state == 1 && isRecipient
-        ? Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.check_circle,
-                    color: Colors.greenAccent[400],
-                  )),
-              IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.cancel,
-                    color: Colors.blueGrey,
-                  )),
-            ],
+    return widget.state == 0
+        ? Container(
+            width: 140,
+            child: OutlineButton(
+                onPressed: () async {
+                  // STUB - ask for confirmation to remove friendship
+                  // STUB - send update relationships request to 0
+                  //STUB - Toast Confirmation
+                  setState(() {});
+                  Map<dynamic, dynamic> result = await eventHopperApiService
+                      .updateUserRelationships(2, widget.relationship);
+
+                  result['status'] == 1
+                      ? showToast(context, 'Friend Request Sent!')
+                      : showToast(context,
+                          'Could not send friend request,\nplease try again later');
+                },
+                child: Text('send request'),
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0))),
           )
-        : state == 1 && !isRecipient
-            ? Container(
-                width: 100,
-                child: OutlineButton(
-                    onPressed: () {},
-                    child: Text('pending'),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0))),
+        : widget.state == 1 && widget.isRecipient
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                      onPressed: () async {
+                        //STUB - send update relationships request to 2 with user token
+                        //STUB - Toast Confirmation
+
+                        Map<dynamic, dynamic> result =
+                            await eventHopperApiService.updateUserRelationships(
+                                2, widget.relationship);
+
+                        result['status'] == 1
+                            ? showToast(context, 'Friend Request Accepted 😏')
+                            : showToast(context,
+                                'Could not accept friend request,\nplease try again later');
+                      },
+                      icon: Icon(
+                        Icons.check_circle,
+                        color: Colors.greenAccent[400],
+                      )),
+                  IconButton(
+                      onPressed: () async {
+                        //STUB - send update relationships request to 0 with user token
+                        //STUB - Toast Confirmation
+                        //
+                        showConfirmationDialog(context, 'Reject Friend Request',
+                            'are you sure you would like to reject ${widget.relationship.user.username}\'s request?',
+                            okCallback: () async {
+                          Map<dynamic, dynamic> result =
+                              await eventHopperApiService
+                                  .updateUserRelationships(
+                                      0, widget.relationship);
+
+                          result['status'] == 1
+                              ? showToast(context, 'Friend Request Rejected')
+                              : showToast(context,
+                                  'Could not reject friend request,\nplease try again later');
+                        });
+                      },
+                      icon: Icon(
+                        Icons.cancel,
+                        color: Colors.blueGrey,
+                      )),
+                ],
               )
-            : state == 2
+            : widget.state == 1 && !widget.isRecipient
                 ? Container(
-                    width: 95,
+                    width: 100,
                     child: OutlineButton(
-                        onPressed: () {},
-                        child: Text('friends'),
+                        onPressed: () async {
+                          // STUB - ask for confirmation to withdraw friendship request
+                          // STUB - send update relationships request to 0
+                          //STUB - Toast Confirmation
+                        },
+                        child: Text('pending'),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(30.0))),
                   )
-                : null;
+                : widget.state == 2
+                    ? Container(
+                        width: 95,
+                        child: FlatButton(
+                            color: Colors.blue,
+                            onPressed: () {
+                              showConfirmationDialog(context, 'Unfriend',
+                                  'are you sure you would like to unfriend\n${widget.relationship.user.fullName}?',
+                                  okCallback: () async {
+                                Map<dynamic, dynamic> result =
+                                    await eventHopperApiService
+                                        .updateUserRelationships(
+                                            0, widget.relationship);
+
+                                result['status'] == 1
+                                    ? showToast(context,
+                                        'Unfriended ${widget.relationship.user.fullName}')
+                                    : showToast(context,
+                                        'Could not accept friend request,\nplease try again later');
+                              });
+                            },
+                            child: Text(
+                              'friends',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0))),
+                      )
+                    : null;
   }
+}
+
+void showToast(BuildContext context, String message) {
+  Toast.show(message, context,
+      duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+}
+
+void showConfirmationDialog(BuildContext context, String title, String message,
+    {Function okCallback, Function cancelCallback}) {
+  AwesomeDialog(
+    context: context,
+    headerAnimationLoop: false,
+    isDense: true,
+    btnOkText: 'Confirm',
+    btnOkOnPress: okCallback,
+    btnCancelColor: Colors.blueGrey,
+    btnCancelText: 'Cancel',
+    btnCancelOnPress: cancelCallback,
+    btnOkColor: Colors.blueGrey,
+    title: title,
+    desc: message,
+  ).show();
 }

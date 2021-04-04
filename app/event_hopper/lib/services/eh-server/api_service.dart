@@ -16,17 +16,13 @@ class APIService {
   final API api;
   APIService(this.api);
 
-  Future<dynamic> getUser(
+  Future<Map<String, dynamic>> getUser(
     String username, {
     String relatedTo,
-    bool isCurrentUser,
   }) async {
-    final url = isCurrentUser
-        ? api
-            .getUser(username,
-                userID: fbAuth.FirebaseAuth.instance.currentUser.uid)
-            .toString()
-        : api.getUser(username, userID: relatedTo).toString();
+    final url = relatedTo != null
+        ? api.getUser(username, relatedTo: relatedTo).toString()
+        : api.getUser(username).toString();
     log(url);
     final client = new http.Client();
     final response = await client
@@ -34,14 +30,35 @@ class APIService {
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);
       User user = User.fromJson(data['user']);
+
+      Relationship relationship;
       if (data['relationship'] != null) {
-        Relationship relationship = Relationship.fromJson(data['relationship']);
-        return Future<Map<String, dynamic>>(
-            () => {'user': user, 'relationship': relationship});
+        data['relationship']?.length > 0
+            ? relationship = Relationship.fromJson(data['relationship'][0])
+            : relationship = Relationship.noRelation();
       }
-      return user;
+      return Future<Map<String, dynamic>>(
+          () => {'user': user, 'relationship': relationship});
     } else {
       throw ('Request get User $username failed' +
+          '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
+    }
+  }
+
+  Future<User> getLoggedInUserData() async {
+    final url = api
+        .getUser(null, userID: fbAuth.FirebaseAuth.instance.currentUser.uid)
+        .toString();
+    log(url);
+    final client = new http.Client();
+    final response = await client
+        .get(Uri.parse(url), headers: {'Authorization': '${api.apiKey}'});
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      User user = User.fromJson(data['user']);
+      return user;
+    } else {
+      throw ('Request to get Logged In User data failed' +
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
   }
@@ -76,6 +93,9 @@ class APIService {
               city,
               page: page != null ? page : 0,
               dateAfter: dateAfter != null ? dateAfter : DateTime.now(),
+              dateBefore: dateBefore != null
+                  ? dateBefore
+                  : DateTime.now().add(Duration(days: 365)),
               category: categories != null ? categories : null,
               isRandom: isRandom,
               //Change to user  default category preference(s)
@@ -86,6 +106,11 @@ class APIService {
               city,
               page: page != null ? page : 0,
               dateAfter: dateAfter != null ? dateAfter : DateTime.now(),
+              dateBefore: dateBefore != null
+                  ? dateBefore
+                  : dateAfter != null
+                      ? dateAfter.add(Duration(days: 365))
+                      : DateTime.now().add(Duration(days: 365)),
               category: categories != null ? categories : null,
 
               //Change to user  default category preference(s)
@@ -269,15 +294,18 @@ class APIService {
   /// 2 = 'friends'
   Future<Map<dynamic, dynamic>> getUserRelationships(int state) async {
     final url = api
-        .getUserUserRelationships(
+        .getUserRelationships(
             fbAuth.FirebaseAuth.instance.currentUser.uid, state.toString())
         .toString();
     final client = new http.Client();
-    final response = await client.get(Uri.parse(url), headers: {
-      'Authorization': '${api.apiKey}',
-      'TOKEN_ID':
-          '${(await fbAuth.FirebaseAuth.instance.currentUser.getIdTokenResult(true)).token}'
-    });
+    final response = await client.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': '${api.apiKey}',
+        'TOKEN_ID':
+            '${(await fbAuth.FirebaseAuth.instance.currentUser.getIdTokenResult(true)).token}',
+      },
+    );
 
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body)['relationship_list'];
@@ -290,6 +318,42 @@ class APIService {
     } else {
       throw ('Request ${getUserRelationships(state)} failed' +
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
+    }
+  }
+
+  /// Requires a [state] integer between -1 and 2 incluive where:
+  ///-1 = 'blocked users',
+  /// 0 = N/A,
+  /// 1 = 'pending friend requests',
+  /// 2 = 'friends'
+  Future<Map<dynamic, dynamic>> updateUserRelationships(
+    int state,
+    Relationship relationship,
+  ) async {
+    final url = api.updateUserRelationships().toString();
+    final idToken =
+        (await fbAuth.FirebaseAuth.instance.currentUser.getIdTokenResult(true))
+            .token;
+    final client = new http.Client();
+    final response = await client.post(Uri.parse(url), headers: {
+      'Authorization': '${api.apiKey}',
+      'ID_TOKEN': '$idToken'
+    }, body: {
+      "recipient_id": relationship.recipientId,
+      "requester_id": relationship.requesterId,
+      "state": "$state"
+    });
+    dynamic data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return {
+        'status': data['status'],
+        'message': data['message'],
+      };
+    } else {
+      return {
+        'status': data['status'],
+        'message': data['message'],
+      };
     }
   }
 

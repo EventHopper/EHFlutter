@@ -133,8 +133,19 @@ class API {
         queryParameters: {'query': query},
       );
 
-  Uri getUser(String username, {String userID}) {
-    Uri finalUri = userID == null
+  Uri getUser(String username, {String userID, String relatedTo}) {
+    if (userID != null) {
+      return Uri(
+          port: port,
+          scheme: scheme,
+          host: host,
+          path: '/users/$username',
+          queryParameters: {
+            'user_id': userID,
+          });
+    }
+
+    Uri finalUri = relatedTo == null
         ? Uri(
             port: port,
             scheme: scheme,
@@ -147,7 +158,7 @@ class API {
             host: host,
             path: '/users/$username',
             queryParameters: {
-                'related_to': userID,
+                'related_to': relatedTo,
               });
 
     return finalUri;
@@ -188,8 +199,7 @@ class API {
         path: '/users/media/$uid',
       );
 
-  Uri getUserUserRelationships(String uid, String state,
-      {String relationshipID}) {
+  Uri getUserRelationships(String uid, String state, {String relationshipID}) {
     Uri finalUri = Uri(
         port: port,
         scheme: scheme,
@@ -205,6 +215,14 @@ class API {
     }
 
     return finalUri;
+  }
+
+  Uri updateUserRelationships() {
+    return Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/users/network/relationships/');
   }
 
 //**************************************************************** */
