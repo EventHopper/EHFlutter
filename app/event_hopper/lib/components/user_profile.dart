@@ -164,7 +164,9 @@ class UserDetails extends StatelessWidget {
           textAlign: TextAlign.left,
         ),
         relationshipWithLoggedInUser != null
-            ? RelationshipStatus(relationship: relationshipWithLoggedInUser)
+            ? RelationshipStatus(
+                relationship: relationshipWithLoggedInUser
+                  ..user = userToDisplay)
             : SpinKitThreeBounce(
                 color: Colors.lightBlue,
               )
@@ -183,6 +185,10 @@ class RelationshipStatus extends StatelessWidget {
     loggedInUserID = fbAuth.FirebaseAuth.instance.currentUser.uid;
     if (relationship == null) {
       relationship = Relationship.noRelation();
+    }
+    if (relationship.state == 0) {
+      relationship..requesterId = loggedInUserID;
+      relationship..recipientId = relationship.user.id;
     }
     return RelationshipActionButton(relationship,
         state: this.relationship.state,

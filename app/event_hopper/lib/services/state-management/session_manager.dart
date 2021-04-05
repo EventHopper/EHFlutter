@@ -213,6 +213,7 @@ class SessionManager extends ChangeNotifier {
   void wipeState() {
     this.sessionID = null; //May be replaced by sessionToken or JWT or something
     this.currentUser = new Future<User>(() => new User(
+        id: 'N/A',
         username: 'anon',
         fullName: 'anonymous',
         image:

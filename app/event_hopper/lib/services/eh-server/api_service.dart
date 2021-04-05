@@ -32,10 +32,11 @@ class APIService {
       User user = User.fromJson(data['user']);
 
       Relationship relationship;
-      if (data['relationship'] != null) {
-        data['relationship']?.length > 0
+      if (relatedTo != null && data['relationship'] != null) {
+        print('this is data: ' + data.toString());
+        data['relationship'].length > 0
             ? relationship = Relationship.fromJson(data['relationship'][0])
-            : relationship = Relationship.noRelation();
+            : relationship = Relationship.noRelation(user: user);
       }
       return Future<Map<String, dynamic>>(
           () => {'user': user, 'relationship': relationship});
@@ -330,6 +331,7 @@ class APIService {
     int state,
     Relationship relationship,
   ) async {
+    print(relationship.toString());
     final url = api.updateUserRelationships().toString();
     final idToken =
         (await fbAuth.FirebaseAuth.instance.currentUser.getIdTokenResult(true))
@@ -339,11 +341,12 @@ class APIService {
       'Authorization': '${api.apiKey}',
       'ID_TOKEN': '$idToken'
     }, body: {
-      "recipient_id": relationship.recipientId,
-      "requester_id": relationship.requesterId,
+      "recipient_id": "${relationship.recipientId}",
+      "requester_id": "${relationship.requesterId}",
       "state": "$state"
     });
     dynamic data = jsonDecode(response.body);
+    print('this was data: ' + data.toString());
     if (response.statusCode == 200) {
       return {
         'status': data['status'],
