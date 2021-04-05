@@ -1,8 +1,11 @@
+import 'package:EventHopper/components/friend_request.dart';
+import 'package:EventHopper/models/users/Relationship.dart';
+import 'package:EventHopper/screens/friends/components/no_friends.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/size_config.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:EventHopper/services/eh-server/api_service.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -19,97 +22,58 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     // Future<List<Event>> events = getEvents();
 
-    return Container(
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(
-              'assets/images/orgs.svg',
-              height: getProportionateScreenHeight(180),
-            ),
-            VerticalSpacing(),
-            VerticalSpacing(),
-            Container(
-                width: getProportionateScreenWidth(300),
-                child: Column(
-                  children: [
-                    Text(
-                      "COMING SOON",
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 23,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                    VerticalSpacing(),
-                    VerticalSpacing(),
-                    Text(
-                      "Find, follow and organize with friends!",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        wordSpacing: 1,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.grey[350],
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
-                )),
-            VerticalSpacing(),
-            VerticalSpacing(),
-          ],
-        ),
-      ),
-    );
-  }
-}
+    // List<Relationship> relationships = [
+    //   defaultRelationship,
+    //   defaultRelationship,
+    //   defaultRelationship,
+    //   defaultRelationship,
+    //   defaultRelationship,
+    //   defaultRelationship,
+    //   defaultRelationship,
+    // ];
+    return FutureBuilder(
+        future: Future.wait([
+          eventHopperApiService.getUserRelationships(1),
+          eventHopperApiService.getUserRelationships(2)
+        ]),
+        builder: (context, relationships) {
+          if (relationships.connectionState == ConnectionState.none &&
+                  relationships.hasData == null ||
+              !relationships.hasData) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: getProportionateScreenHeight(600),
+                  child: SpinKitRotatingCircle(
+                    color: kTextColor,
+                    size: 50.0,
+                  ),
+                ),
+              ],
+            );
+          }
+          if (relationships.hasData) {
+            List<Relationship> recievedFriendRequests =
+                relationships.data[0]['relationship_list'];
+            List<Relationship> friends =
+                relationships.data[1]['relationship_list'];
 
-class AddNewEventCard extends StatelessWidget {
-  const AddNewEventCard({
-    Key key,
-  }) : super(key: key);
+            List<Relationship> allRelationships =
+                [recievedFriendRequests, friends].expand((x) => x).toList();
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: getProportionateScreenWidth(350),
-      width: getProportionateScreenWidth(158),
-      decoration: BoxDecoration(
-        color: Color(0xFF6A6C93).withOpacity(0.09),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          width: 2,
-          color: Color(0xFFEBE8F6),
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: getProportionateScreenWidth(53),
-            width: getProportionateScreenWidth(53),
-            child: FlatButton(
-              padding: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(60),
-              ),
-              color: kPrimaryColor,
-              onPressed: () {},
-              child: Icon(
-                Icons.add,
-                size: getProportionateScreenWidth(35),
-                color: Colors.blue,
-              ),
-            ),
-          ),
-          VerticalSpacing(of: 10),
-          Text(
-            "Add New Event",
-            style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
+            if (allRelationships.length < 1) {
+              return NoFriendsMessage();
+            }
+            print(allRelationships);
+            return ListView.builder(
+              itemCount: allRelationships.length,
+              itemBuilder: (BuildContext context, int index) {
+                return new FriendRequest(relationship: allRelationships[index]);
+              },
+            );
+          }
+          return null;
+        });
   }
 }

@@ -1,3 +1,4 @@
+import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/size_config.dart';
@@ -29,8 +30,20 @@ Drawer buildDrawer(BuildContext context) {
           ),
         ),
         ListTile(
-          leading: Icon(Icons.account_circle),
-          title: Text('Profile'),
+          leading: FutureBuilder<User>(
+              future: Provider.of<SessionManager>(context, listen: true)
+                  .currentUser,
+              builder: (context, user) => user.hasData
+                  ? CircleAvatar(
+                      maxRadius: getProportionateScreenWidth(15),
+                      backgroundImage: NetworkImage(user.data.image),
+                    )
+                  : Icon(Icons.account_circle)),
+          title: FutureBuilder<User>(
+              future: Provider.of<SessionManager>(context, listen: true)
+                  .currentUser,
+              builder: (context, user) =>
+                  user.hasData ? Text(user.data.fullName) : Text('loading...')),
           onTap: () {
             Navigator.pop(context);
             Navigator.pushNamed(context, RouteConfig.myProfile);
@@ -94,14 +107,28 @@ class StateText extends StatefulWidget {
 class _StateTextState extends State<StateText> {
   @override
   Widget build(BuildContext context) {
-    PackageInfo info =
-        Provider.of<SessionManager>(context, listen: true).packageInfo;
-
-    return Text(
-      "© EventHopper 2020 \n${info != null ? info.appName + '-' + info.version + '-' + info.buildNumber : 'unknown'}",
-      style: TextStyle(
-        color: Colors.grey,
-      ),
-    );
+    return Consumer<SessionManager>(
+        builder: (BuildContext context, SessionManager sessionManager,
+                Widget widget) =>
+            FutureBuilder<PackageInfo>(
+                future: sessionManager.packageInfo,
+                builder: (context, info) {
+                  if (info.hasData) {
+                    return Text(
+                      "© EventHopper 2020 \n${info != null ? info.data.appName + '-' + info.data.version + '-' + info.data.buildNumber : 'unknown'}",
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    );
+                  } else {
+                    return Text(
+                      "© EventHopper 2020 \n package info loading...",
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    );
+                    ;
+                  }
+                }));
   }
 }

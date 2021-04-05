@@ -5,6 +5,7 @@ import 'package:EventHopper/screens/organizations/organizations_screen.dart';
 import 'package:EventHopper/screens/settings/settings_screen.dart';
 import 'package:EventHopper/screens/swipe/swipe_screen.dart';
 import 'package:EventHopper/screens/home/home_screen.dart';
+import 'package:EventHopper/screens/search/search_screen.dart';
 import 'package:EventHopper/screens/welcome/welcome_screen.dart';
 import 'package:EventHopper/screens/login/login_screen.dart';
 import 'package:EventHopper/screens/registration/registration_screen.dart';
@@ -21,6 +22,7 @@ class RouteConfig {
   static const String friends = '/friends';
   static const String login = '/login';
   static const String registration = '/register';
+  static const String search = '/search';
 
   static getPage(String route) {
     switch (route) {
@@ -53,6 +55,9 @@ class RouteConfig {
         break;
       case RouteConfig.friends:
         return FriendsScreen();
+        break;
+      case RouteConfig.search:
+        return SearchScreen();
         break;
     }
   }

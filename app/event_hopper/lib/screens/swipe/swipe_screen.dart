@@ -30,6 +30,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
     return WillPopScope(
       onWillPop: () {
         ScreenNavigator.navigate(context, RouteConfig.home, replace: true);
+        return new Future<bool>(() => true);
       },
       child: Scaffold(
         key: _scaffoldKey,

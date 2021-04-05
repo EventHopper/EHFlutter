@@ -30,11 +30,10 @@ dependencies:
   # Allows you to easily use any of the 977 fonts
   google_fonts: ^1.1.0
   # Allow us to use .svg file
-  flutter_svg: ^0.18.1
+  flutter_svg: ^0.19.3
   # Date and number formatting and parsing
-  intl: ^0.16.1
   provider: ^4.3.2+2
-  url_launcher: ^5.7.2
+  url_launcher: ^6.0.3
   font_awesome_flutter: ^8.8.1
   http: ^0.12.2
   permission_handler: ^5.0.1+1
@@ -56,7 +55,14 @@ dependencies:
   oauth2: ^1.6.3
   webview_flutter: ^1.0.7
   uni_links: ^0.4.0
+  awesome_dialog: ^1.1.3
+  modal_progress_hud: ^0.1.3
+  image_picker: ^0.6.7+4
+  mime: ^1.0.0
+  intl: ^0.16.1
+  toast: ^0.1.5
 
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

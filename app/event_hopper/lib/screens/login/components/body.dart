@@ -1,10 +1,13 @@
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import '../../route_config.dart';
 
 class Body extends StatefulWidget {
   Body({Key key, this.title}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
@@ -19,7 +22,6 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  final _formKey = GlobalKey<FormState>();
 
   final emailFieldController = TextEditingController();
   final passwordFieldController = TextEditingController();
@@ -37,24 +39,27 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-        key: _formKey,
+        key: widget._formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextFormField(
-              style: style,
-              decoration: buildInputDecoration("email"),
-              controller: emailFieldController,
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please enter email';
-                }
-                if (!isValidEmail(value)) {
-                  return 'Please enter a valid email';
-                }
-                return null;
-              },
+            Material(
+              child: TextFormField(
+                style: style,
+                decoration: buildInputDecoration("email"),
+                controller: emailFieldController,
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter email';
+                  }
+                  if (!isValidEmail(value)) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+              ),
             ),
             SizedBox(
               height: 15.0,
@@ -64,6 +69,7 @@ class _BodyState extends State<Body> {
               style: style,
               decoration: buildInputDecoration("Password"),
               controller: passwordFieldController,
+              keyboardType: TextInputType.text,
               validator: (value) {
                 if (value.isEmpty) {
                   return 'Please enter password';
@@ -78,7 +84,7 @@ class _BodyState extends State<Body> {
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: ElevatedButton(
                 onPressed: () async {
-                  if (_formKey.currentState.validate()) {
+                  if (widget._formKey.currentState.validate()) {
                     // If the form is valid, send post request to firebase.
                     logInUser();
                   }
@@ -109,23 +115,31 @@ class _BodyState extends State<Body> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-              email: emailFieldController.text,
-              password: passwordFieldController.text);
+              email: emailFieldController.text.trim(),
+              password: passwordFieldController.text.trim());
 
       if (userCredential.user != null) {
+        Provider.of<SessionManager>(context, listen: false)
+            .fetchCurrentUserData();
+        Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
+        Provider.of<SessionManager>(context, listen: false)
+            .updateInitialState(true);
+        Provider.of<SessionManager>(context, listen: false)
+            .fetchUserEventLists();
+
         //successfully logged in
         ScreenNavigator.navigateSwipe(context, RouteConfig.home,
             replaceAll: true);
       } else {
-        Scaffold.of(context).showSnackBar(buildSnackbar(
+        ScaffoldMessenger.of(context).showSnackBar(buildSnackbar(
             'An error occurred. Please check your internet connection'));
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        Scaffold.of(context)
+        ScaffoldMessenger.of(context)
             .showSnackBar(buildSnackbar('No user found for that email.'));
       } else if (e.code == 'wrong-password') {
-        Scaffold.of(context).showSnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
             buildSnackbar('Wrong password provided for that user.'));
       }
     }

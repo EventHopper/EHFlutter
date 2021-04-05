@@ -81,7 +81,7 @@ class _NavItemState extends State<NavItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        SystemUtils.vibrate();
+        // SystemUtils.vibrate();
         widget.press();
       },
       child: Container(

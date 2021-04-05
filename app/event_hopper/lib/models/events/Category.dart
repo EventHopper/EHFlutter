@@ -38,6 +38,6 @@ Category category4 = Category(
         "https://media1.tenor.com/images/23da875fa07afb4a71dd66e22265c8a7/tenor.gif?itemid=7384355");
 Category category5 = Category(
     name: "Surprise",
-    apiName: "Miscellaneous",
+    apiName: "Random",
     image:
         "https://media1.tenor.com/images/6b3160004ff0a49639ddbfea2d895ee5/tenor.gif?itemid=5225075");

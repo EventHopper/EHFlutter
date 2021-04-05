@@ -41,8 +41,15 @@ class API {
       DateTime dateBefore,
       DateTime dateAfter,
       List<String> category,
-      List<String> tags}) {
-    Map<String, String> queryParameters = {'index': 'location', 'city': city};
+      List<String> tags,
+      bool isRandom = false}) {
+    Map<String, String> queryParameters = {
+      'index': isRandom ? 'random' : 'location',
+      'city': city
+    };
+    if (isRandom) {
+      queryParameters.putIfAbsent('size', () => '16');
+    }
 
     queryParameters.addAll(_createEventQueryParameters(
         page: page,
@@ -118,19 +125,44 @@ class API {
         path: '/users',
       );
 
-  Uri searchUsers() => Uri(
+  Uri searchUsers(String query) => Uri(
         port: port,
         scheme: scheme,
         host: host,
         path: '/search/users',
+        queryParameters: {'query': query},
       );
 
-  Uri getUser(String username) => Uri(
-        port: port,
-        scheme: scheme,
-        host: host,
-        path: '/users/$username',
-      );
+  Uri getUser(String username, {String userID, String relatedTo}) {
+    if (userID != null) {
+      return Uri(
+          port: port,
+          scheme: scheme,
+          host: host,
+          path: '/users/$username',
+          queryParameters: {
+            'user_id': userID,
+          });
+    }
+
+    Uri finalUri = relatedTo == null
+        ? Uri(
+            port: port,
+            scheme: scheme,
+            host: host,
+            path: '/users/$username',
+          )
+        : Uri(
+            port: port,
+            scheme: scheme,
+            host: host,
+            path: '/users/$username',
+            queryParameters: {
+                'related_to': relatedTo,
+              });
+
+    return finalUri;
+  }
 
   Uri getUserEventList(String listType, String userID) => Uri(
         port: port,
@@ -159,6 +191,39 @@ class API {
         host: host,
         path: '/calendar/create/$uid',
       );
+
+  Uri uploadUserMedia(String uid) => Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/users/media/$uid',
+      );
+
+  Uri getUserRelationships(String uid, String state, {String relationshipID}) {
+    Uri finalUri = Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/users/network/relationships/',
+        queryParameters: {
+          'user_id': uid,
+          'state': state,
+        });
+    if (relationshipID != null) {
+      finalUri.queryParameters
+          .putIfAbsent('relationship_id', () => relationshipID);
+    }
+
+    return finalUri;
+  }
+
+  Uri updateUserRelationships() {
+    return Uri(
+        port: port,
+        scheme: scheme,
+        host: host,
+        path: '/users/network/relationships/');
+  }
 
 //**************************************************************** */
 // EventHopper Swipe Management API

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
 import 'package:flutter/material.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/models/events/Event.dart';
@@ -9,21 +10,24 @@ import 'package:package_info/package_info.dart';
 
 class SessionManager extends ChangeNotifier {
   String sessionID; //May be replaced by sessionToken or JWT or something
-  User currentUser;
+  Future<User> currentUser;
+  Future<Map<String, dynamic>> otherUserProfileView;
   int currentPage = 0;
   Future<List<Event>> eventsNearMe;
   Future<List<Event>> eventsFromCategory;
+
+  Future<List<User>> search = new Future(() => null);
   bool initialStateLoaded = false;
-  PackageInfo packageInfo;
+  Future<PackageInfo> packageInfo;
   int index = 0;
 
-  List<Event> eventLeft = new List<Event>();
+  List<Event> eventLeft = <Event>[];
   int eventLeftCount;
 
-  List<Event> eventUp = new List<Event>();
+  List<Event> eventUp = <Event>[];
   int eventUpCount;
 
-  List<Event> eventRight = new List<Event>();
+  List<Event> eventRight = <Event>[];
   int eventRightCount;
 
   int eventTotalCount = 0;
@@ -38,13 +42,19 @@ class SessionManager extends ChangeNotifier {
     'Dallas'
   ];
 
+  Future<List<User>> updateSearch(String query) {
+    this.search = eventHopperApiService.searchUsers(query);
+    notifyListeners();
+    return this.search;
+  }
+
   void updateSessionID(String newID) {
     this.sessionID = newID;
     notifyListeners();
   }
 
   updatePackageInfo() async {
-    this.packageInfo = await PackageInfo.fromPlatform();
+    this.packageInfo = PackageInfo.fromPlatform();
     notifyListeners();
   }
 
@@ -62,8 +72,8 @@ class SessionManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateUser(User newUser) {
-    this.currentUser = newUser;
+  void updateUser() {
+    this.currentUser = eventHopperApiService.getLoggedInUserData();
     notifyListeners();
   }
 
@@ -81,8 +91,8 @@ class SessionManager extends ChangeNotifier {
   void fetchEventsNearMe() async {
     // this.eventsNearMe =
     //     apiService.getEventsByGeo('39.960863', '-75.6200333', 0.006);
-    int page = Random().nextInt(25);
-    int days = Random().nextInt(14);
+    int page = Random().nextInt(10);
+    int days = Random().nextInt(60);
     print('page is $page');
     this.eventsNearMe = eventHopperApiService.getEventsByCity('$city',
         page: page, dateAfter: DateTime.now().add(new Duration(days: days)));
@@ -180,8 +190,13 @@ class SessionManager extends ChangeNotifier {
 
   void fetchEventsByCategory(String category) async {
     int page = Random().nextInt(9);
-    this.eventsFromCategory = eventHopperApiService
-        .getEventsByCity('$city', page: page, categories: [category]);
+    if (category == 'Random') {
+      this.eventsFromCategory = eventHopperApiService.getEventsByCity('$city',
+          page: page, isRandom: true);
+    } else {
+      this.eventsFromCategory = eventHopperApiService
+          .getEventsByCity('$city', page: page, categories: [category]);
+    }
     notifyListeners();
   }
 
@@ -197,23 +212,45 @@ class SessionManager extends ChangeNotifier {
 
   void wipeState() {
     this.sessionID = null; //May be replaced by sessionToken or JWT or something
-    this.currentUser = null;
+    this.currentUser = new Future<User>(() => new User(
+        id: 'N/A',
+        username: 'anon',
+        fullName: 'anonymous',
+        image:
+            'https://assets-global.website-files.com/5b5aa355afe474a8b1329a37/5ecd4938ec0ff060bfac3899_anonymous%20feedback.jpg',
+        email: 'anonymous@eventhopper.app'));
     this.currentPage = 0;
     this.eventsNearMe = null;
     this.eventsFromCategory = null;
     this.initialStateLoaded = false;
+    this.search = new Future(() => null);
     this.index = 0;
 
-    this.eventLeft = new List<Event>();
+    this.eventLeft = <Event>[];
     this.eventLeftCount = 0;
 
-    this.eventUp = new List<Event>();
+    this.eventUp = <Event>[];
     this.eventUpCount = 0;
 
-    this.eventRight = new List<Event>();
+    this.eventRight = <Event>[];
     this.eventRightCount = 0;
 
     this.eventTotalCount = 0;
+    notifyListeners();
+  }
+
+  void fetchCurrentUserData() async {
+    this.currentUser = eventHopperApiService.getLoggedInUserData()
+      ..then((value) => value..image += '?q=${Random.secure().nextDouble()}');
+    notifyListeners();
+  }
+
+  void fetchOtherUserProfileViewData(String username) async {
+    String currentUsername = (await this.currentUser).username;
+    this.otherUserProfileView = eventHopperApiService.getUser(username,
+        relatedTo: currentUsername)
+      ..then((value) =>
+          value['user']..image += '?q=${Random.secure().nextDouble()}');
     notifyListeners();
   }
 }
