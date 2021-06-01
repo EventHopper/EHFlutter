@@ -111,7 +111,7 @@ class _StateTextState extends State<StateText> {
         builder: (BuildContext context, SessionManager sessionManager,
                 Widget widget) =>
             FutureBuilder<PackageInfo>(
-                future: sessionManager.packageInfo,
+                future: PackageInfo.fromPlatform(),
                 builder: (context, info) {
                   if (info.hasData) {
                     return Text(

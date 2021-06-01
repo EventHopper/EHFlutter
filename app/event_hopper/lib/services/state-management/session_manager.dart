@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'package:EventHopper/services/eh-server/api_service.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:package_info/package_info.dart';
 
 class SessionManager extends ChangeNotifier {
@@ -39,7 +40,7 @@ class SessionManager extends ChangeNotifier {
     'New York',
     'Los Angeles',
     'Boston',
-    'Dallas'
+    'Dallas',
   ];
 
   Future<List<User>> updateSearch(String query) {
@@ -50,11 +51,6 @@ class SessionManager extends ChangeNotifier {
 
   void updateSessionID(String newID) {
     this.sessionID = newID;
-    notifyListeners();
-  }
-
-  updatePackageInfo() async {
-    this.packageInfo = PackageInfo.fromPlatform();
     notifyListeners();
   }
 
@@ -211,6 +207,7 @@ class SessionManager extends ChangeNotifier {
   }
 
   void wipeState() {
+    OneSignal.shared.removeExternalUserId();
     this.sessionID = null; //May be replaced by sessionToken or JWT or something
     this.currentUser = new Future<User>(() => new User(
         id: 'N/A',

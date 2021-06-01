@@ -18,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
     if (mounted) {
       if (!Provider.of<SessionManager>(context, listen: false)
           .initialStateLoaded) {
-        Provider.of<SessionManager>(context, listen: false).updatePackageInfo();
         Provider.of<SessionManager>(context, listen: false)
             .fetchCurrentUserData();
         Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();

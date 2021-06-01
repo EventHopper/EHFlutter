@@ -17,31 +17,31 @@ class LocalEnvironment implements APIEnvironmentConfig {
   @override
   Environment get name => Environment.LOCAL;
   @override
-  String get key => env['EHKEY_LOCAL'];
+  String get key => dotenv.env['EHKEY_LOCAL'];
   @override
-  String get host => env['LOCAL_HOST'];
+  String get host => dotenv.env['LOCAL_HOST'];
   @override
-  int get port => int.parse(env['LOCAL_PORT']);
+  int get port => int.parse(dotenv.env['LOCAL_PORT']);
 }
 
 class SandboxEnvironment implements APIEnvironmentConfig {
   @override
   Environment get name => Environment.SANDBOX;
   @override
-  String get key => env['EHKEY_SANDBOX'];
+  String get key => dotenv.env['EHKEY_SANDBOX'];
   @override
-  String get host => env['SANDBOX_HOST'];
+  String get host => dotenv.env['SANDBOX_HOST'];
   @override
-  int get port => int.parse(env['SANDBOX_PORT']);
+  int get port => int.parse(dotenv.env['SANDBOX_PORT']);
 }
 
 class ProductionEnvironment implements APIEnvironmentConfig {
   @override
   Environment get name => Environment.PRODUCTION;
   @override
-  String get key => env['EHKEY_PRODUCTION'];
+  String get key => dotenv.env['EHKEY_PRODUCTION'];
   @override
-  String get host => env['PRODUCTION_HOST'];
+  String get host => dotenv.env['PRODUCTION_HOST'];
   @override
   int get port => null;
 }
@@ -86,11 +86,11 @@ class GoogleOAuthConfig extends OAuthConfig {
       throw UnsupportedError('Oauth provder does not accept single client ID');
 
   @override
-  String get clientIdAndroid => env['GOOGLE_ANDROID_CLIENT_ID'];
+  String get clientIdAndroid => dotenv.env['GOOGLE_ANDROID_CLIENT_ID'];
   @override
-  String get clientIdIOS => env['GOOGLE_IOS_CLIENT_ID'];
+  String get clientIdIOS => dotenv.env['GOOGLE_IOS_CLIENT_ID'];
   @override
-  String get clientIdWeb => env['GOOGLE_WEB_CLIENT_ID'];
+  String get clientIdWeb => dotenv.env['GOOGLE_WEB_CLIENT_ID'];
   @override
   String get authorizationEndpoint =>
       'https://accounts.google.com/o/oauth2/auth';
@@ -113,10 +113,10 @@ class SpotifyOAuthConfig extends OAuthConfig {
   List<String> get scopes => const ['user-top-read'];
 
   @override
-  String get clientId => env['SPOTIFY_CLIENT_ID'];
+  String get clientId => dotenv.env['SPOTIFY_CLIENT_ID'];
 
   @override
-  String get clientSecret => env['SPOTIFY_CLIENT_SECRET'];
+  String get clientSecret => dotenv.env['SPOTIFY_CLIENT_SECRET'];
 
   @override
   String get authorizationEndpoint => 'https://accounts.spotify.com/authorize';

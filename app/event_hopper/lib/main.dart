@@ -20,12 +20,25 @@ import 'package:provider/provider.dart';
 import 'services/state-management/session_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future main() async {
-  await DotEnv.load(fileName: ".env");
+  await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
+  //Remove this method to stop OneSignal Debugging
+  // OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  OneSignal.shared.setAppId("1929f3f1-c98a-47c6-b090-53c1b93c1d32");
+  // OneSignal.shared.init("1929f3f1-c98a-47c6-b090-53c1b93c1d32", iOSSettings: {
+  //   OSiOSSettings.autoPrompt: false,
+  //   OSiOSSettings.inAppLaunchUrl: false
+  // });
+  // OneSignal.shared
+  //     .setInFocusDisplayType(OSNotificationDisplayType.notification);
+
+// The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+
   runApp(App());
 }
 
