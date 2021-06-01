@@ -1,6 +1,6 @@
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/screens/welcome/components/body.dart';
+import 'package:EventHopper/screens/welcome/components/figma_body.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -13,22 +13,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     super.initState();
-    if (mounted) {
-      if (!Provider.of<SessionManager>(context, listen: false)
-          .initialStateLoaded) {
-        Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
-        Provider.of<SessionManager>(context, listen: false)
-            .updateInitialState(true);
-      }
+    Future.delayed(Duration.zero, intializeApp);
+  }
+
+  void intializeApp() {
+    if (!Provider.of<SessionManager>(context, listen: false)
+        .initialStateLoaded) {
+      Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
+      Provider.of<SessionManager>(context, listen: false)
+          .updateInitialState(true);
+      initSystem();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    initSystem();
     return Scaffold(
+      backgroundColor: Colors.black54,
       extendBodyBehindAppBar: true,
-      body: Body(),
+      body: FigmaBody(),
     );
   }
 
@@ -38,8 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     } // ideally you should specify another condition if permissions is denied
     else if (permission == PermissionStatus.denied ||
         permission == PermissionStatus.permanentlyDenied ||
-        permission == PermissionStatus.restricted ||
-        permission == PermissionStatus.undetermined) {
+        permission == PermissionStatus.restricted) {
       try {
         await [Permission.location].request();
       } catch (e) {}
@@ -47,7 +49,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   void initSystem() async {
-    Provider.of<SessionManager>(context).updatePackageInfo();
     getPermissionStatus();
   }
 }

@@ -29,7 +29,7 @@ class User {
       image: json['image_url'] != null
           ? json['image_url'] as String
           : defaultImage,
-      email: 'hidden',
+      email: json['email'],
     );
   }
 }
@@ -39,18 +39,21 @@ List<User> topTravelers = [user1, user2, user3];
 
 // demo user
 User user1 = User(
+    id: 'test-1',
     fullName: "Ransford",
     image:
         "https://entrepreneurship.wharton.upenn.edu/wp-content/uploads/2019/02/headshot-Ransford-200x200.jpg",
     email: 'ransford@something.com',
     username: 'ransford');
 User user2 = User(
+    id: 'test-2',
     fullName: "Batchema",
     image:
         "https://pbs.twimg.com/profile_images/1113609838502789126/TKvveUDv.png",
     email: 'batchema@something.com',
     username: 'batchema');
 User user3 = User(
+    id: 'test-3',
     fullName: "Kyler",
     image:
         "https://pbs.twimg.com/profile_images/1215038784913510400/fZAZQwmh_400x400.jpg",

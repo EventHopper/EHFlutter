@@ -46,6 +46,20 @@ class APIService {
     }
   }
 
+  Future<String> getEmail(String username) async {
+    final url = api.getUser(username).toString();
+    final client = new http.Client();
+    final response = await client
+        .get(Uri.parse(url), headers: {'Authorization': '${api.apiKey}'});
+    if (response.statusCode == 200) {
+      Map<String, dynamic> data = jsonDecode(response.body);
+      User user = User.fromJson(data['user']);
+      return user.email;
+    } else {
+      return '';
+    }
+  }
+
   Future<User> getLoggedInUserData() async {
     final url = api
         .getUser(null, userID: fbAuth.FirebaseAuth.instance.currentUser.uid)
