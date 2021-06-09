@@ -59,9 +59,10 @@ User user3 = User(
         "https://pbs.twimg.com/profile_images/1215038784913510400/fZAZQwmh_400x400.jpg",
     email: 'kyler@something.com',
     username: 'kyler');
-// User user4 = User(
-//     fullName: "Mo",
-//     image:
-//         "https://s.yimg.com/ny/api/res/1.2/12UU2JphAsbxTTDca.7QFQ--~A/YXBwaWQ9aGlnaGxhbmRlcjtzbT0xO3c9MTA4MDtoPTcxNg--/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-uploaded-images/2019-11/7b5b5330-112b-11ea-a77f-7c019be7ecae",
-//     email: 'mo@something.com',
-//     username: 'MoMoney');
+User user4 = User(
+    id: 'test-3',
+    fullName: "Jintana",
+    image:
+        "https://pbs.twimg.com/profile_images/1396913055691415557/AWPM8nh8_400x400.jpg",
+    email: 'jintana@something.com',
+    username: 'jintana');

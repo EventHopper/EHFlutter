@@ -53,23 +53,12 @@ class Body extends StatelessWidget {
                 EventsCarousel(
                   events: sessionManager.eventsNearMe.asStream(),
                   sectionTitle: SectionTitle(
-                    title: "Events Near You",
+                    title: "Selected for you",
                     press: () {},
                     actionTitle: "See All",
                   ),
                 ),
                 // VerticalSpacing(of: 5),
-                EventCategories(),
-                VerticalSpacing(),
-                SectionTitle(
-                  title: "Featured",
-                  press: () {
-                    launchURL('https://www.playstation.com/en-us/ps5/');
-                  },
-                  actionTitle: "Learn More",
-                ),
-                VerticalSpacing(),
-                AdBanner(),
                 VerticalSpacing(),
                 VerticalSpacing(),
                 new EventsCarousel(
@@ -85,11 +74,23 @@ class Body extends StatelessWidget {
                   sectionTitle: SectionTitle(
                     title:
                         // "Events this ${DateFormat('EEEE').format(DateTime.now())}",
-                        "Events this Week",
+                        "Popular Near You",
                     press: () {},
                     actionTitle: "See All",
                   ),
                 ),
+                VerticalSpacing(),
+                EventCategories(),
+                VerticalSpacing(),
+                SectionTitle(
+                  title: "Featured",
+                  press: () {
+                    launchURL('https://www.playstation.com/en-us/ps5/');
+                  },
+                  actionTitle: "Learn More",
+                ),
+                VerticalSpacing(),
+                AdBanner(),
                 VerticalSpacing(),
                 VerticalSpacing(),
               ],

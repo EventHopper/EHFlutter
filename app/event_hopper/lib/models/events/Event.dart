@@ -57,4 +57,4 @@ class Event extends Comparable<Event> {
   int get hashCode => super.hashCode;
 }
 
-List<User> users = [user1, user2, user3];
+List<User> users = [user1, user2, user3, user4];

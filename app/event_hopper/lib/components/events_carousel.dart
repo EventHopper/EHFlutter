@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:EventHopper/screens/event_page/event_page.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:flutter/material.dart';
-import 'package:EventHopper/components/event_card.dart';
+import 'package:EventHopper/components/ux_approved/event_card.dart';
 import 'package:EventHopper/components/section_title.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
