@@ -1,4 +1,5 @@
 import 'package:EventHopper/screens/event_page/event_page.dart';
+import 'package:EventHopper/services/eh-server/api_wrapper.dart';
 import 'package:EventHopper/services/oauth/google/google_oauth.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/constants.dart';
@@ -8,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:EventHopper/screens/swipe/utils/components/swipe_end_message.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'swipe_indicator_painter.dart';
@@ -16,7 +16,6 @@ import 'swipe_card.dart';
 import 'package:EventHopper/models/events/Event.dart';
 import 'dart:math';
 import 'package:EventHopper/utils/system_utils.dart';
-import 'package:EventHopper/services/eh-server/api_service.dart';
 import 'package:EventHopper/screens/swipe/utils/constants.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
 
@@ -167,9 +166,13 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                             if (frontCardAlign.x > kRightSwipeThreshold &&
                                 frontCardAlign.y > kUpSwipeThreshold) {
                               print('RIGHT SWIPE');
-                              eventHopperApiService.swipeEntry(
-                                  direction: "event_right",
-                                  eventId: "${cards[cardIndex].getEvent().id}");
+                              EventHopperAPI.eventHopperApiService(
+                                      Provider.of<SessionManager>(context)
+                                          .apiMode)
+                                  .swipeEntry(
+                                      direction: "event_right",
+                                      eventId:
+                                          "${cards[cardIndex].getEvent().id}");
                               addEventToLocalList(
                                   context,
                                   kRightSwipeDirectionLabel,
@@ -180,9 +183,13 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                             if (frontCardAlign.x < kLeftSwipeThreshold &&
                                 frontCardAlign.y > kUpSwipeThreshold) {
                               print('LEFT SWIPE');
-                              eventHopperApiService.swipeEntry(
-                                  direction: "event_left",
-                                  eventId: "${cards[cardIndex].getEvent().id}");
+                              EventHopperAPI.eventHopperApiService(
+                                      Provider.of<SessionManager>(context)
+                                          .apiMode)
+                                  .swipeEntry(
+                                      direction: "event_left",
+                                      eventId:
+                                          "${cards[cardIndex].getEvent().id}");
                               addEventToLocalList(
                                   context,
                                   kLeftSwipeDirectionLabel,
@@ -195,9 +202,13 @@ class _CardsSectionState extends State<SwipeSequenceSection>
                               showDialog(
                                   context: context,
                                   builder: (_) => getCalendarDialog());
-                              eventHopperApiService.swipeEntry(
-                                  direction: "event_up",
-                                  eventId: "${cards[cardIndex].getEvent().id}");
+                              EventHopperAPI.eventHopperApiService(
+                                      Provider.of<SessionManager>(context)
+                                          .apiMode)
+                                  .swipeEntry(
+                                      direction: "event_up",
+                                      eventId:
+                                          "${cards[cardIndex].getEvent().id}");
                               addEventToLocalList(
                                   context,
                                   kUpSwipeDirectionLabel,
@@ -351,8 +362,10 @@ class _CardsSectionState extends State<SwipeSequenceSection>
 
   void calendarCallback() async {
     assert(cards[cardIndex].getEvent().id != null);
-    var result = await eventHopperApiService.addEventToCalendar(
-        FirebaseAuth.instance.currentUser.uid, cards[cardIndex].getEvent().id);
+    var result = await EventHopperAPI.eventHopperApiService(
+            Provider.of<SessionManager>(context).apiMode)
+        .addEventToCalendar(FirebaseAuth.instance.currentUser.uid,
+            cards[cardIndex].getEvent().id);
 
     switch (result['code']) {
       case 0:
@@ -362,7 +375,7 @@ class _CardsSectionState extends State<SwipeSequenceSection>
         }));
         break;
       case -1:
-        await new GoogleOAuth().configureOAuthAccess();
+        await new GoogleOAuth().configureOAuthAccess(context);
         break;
       case -2:
         Scaffold.of(context).showSnackBar(
@@ -400,9 +413,11 @@ class _CardsSectionState extends State<SwipeSequenceSection>
               print('LEFT SWIPE');
               endAlignmentPuppet = kLeftSwipeAlign;
               frontCardRot = kLeftSwipeRotation;
-              eventHopperApiService.swipeEntry(
-                  direction: kLeftSwipeDirectionLabel,
-                  eventId: "${cards[cardIndex].getEvent().id}");
+              EventHopperAPI.eventHopperApiService(
+                      Provider.of<SessionManager>(context).apiMode)
+                  .swipeEntry(
+                      direction: kLeftSwipeDirectionLabel,
+                      eventId: "${cards[cardIndex].getEvent().id}");
               addEventToLocalList(context, kLeftSwipeDirectionLabel,
                   cards[cardIndex].getEvent());
               animateCards();
@@ -419,9 +434,11 @@ class _CardsSectionState extends State<SwipeSequenceSection>
               print('UP SWIPE');
               endAlignmentPuppet = kUpSwipeAlign;
               frontCardRot = kUpSwipeRotation;
-              eventHopperApiService.swipeEntry(
-                  direction: kUpSwipeDirectionLabel,
-                  eventId: "${cards[cardIndex].getEvent().id}");
+              EventHopperAPI.eventHopperApiService(
+                      Provider.of<SessionManager>(context).apiMode)
+                  .swipeEntry(
+                      direction: kUpSwipeDirectionLabel,
+                      eventId: "${cards[cardIndex].getEvent().id}");
               addEventToLocalList(
                   context, kUpSwipeDirectionLabel, cards[cardIndex].getEvent());
               animateCards();
@@ -439,9 +456,11 @@ class _CardsSectionState extends State<SwipeSequenceSection>
               print('RIGHT SWIPE');
               endAlignmentPuppet = kRightSwipeAlign;
               frontCardRot = kRightSwipeRotation;
-              eventHopperApiService.swipeEntry(
-                  direction: kRightSwipeDirectionLabel,
-                  eventId: "${cards[cardIndex].getEvent().id}");
+              EventHopperAPI.eventHopperApiService(
+                      Provider.of<SessionManager>(context).apiMode)
+                  .swipeEntry(
+                      direction: kRightSwipeDirectionLabel,
+                      eventId: "${cards[cardIndex].getEvent().id}");
               addEventToLocalList(context, kRightSwipeDirectionLabel,
                   cards[cardIndex].getEvent());
               animateCards();

@@ -1,4 +1,5 @@
 import 'package:EventHopper/services/state-management/session_manager.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/components/app_bar.dart';
 import 'package:EventHopper/components/custom_bottom_nav_bar.dart';
@@ -14,12 +15,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    super.initState();
     if (mounted) {
       if (!Provider.of<SessionManager>(context, listen: false)
           .initialStateLoaded) {
-        Provider.of<SessionManager>(context, listen: false)
-            .fetchCurrentUserData();
+        if (FirebaseAuth.instance.currentUser != null) {
+          Provider.of<SessionManager>(context, listen: false)
+              .fetchCurrentUserData();
+        }
         Provider.of<SessionManager>(context, listen: false).fetchEventsNearMe();
         Provider.of<SessionManager>(context, listen: false)
             .updateInitialState(true);
@@ -27,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
             .fetchUserEventLists();
       }
     }
+    super.initState();
   }
 
   @override

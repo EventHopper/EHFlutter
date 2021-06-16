@@ -1,4 +1,5 @@
 import 'package:EventHopper/services/eh-server/api_service.dart';
+import 'package:EventHopper/services/eh-server/api_wrapper.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/components/section_title.dart';
@@ -51,7 +52,9 @@ class Body extends StatelessWidget {
                 HomeHeader(),
                 VerticalSpacing(),
                 EventsCarousel(
-                  events: sessionManager.eventsNearMe.asStream(),
+                  events: Provider.of<SessionManager>(context)
+                      .eventsNearMe
+                      .asStream(),
                   sectionTitle: SectionTitle(
                     title: "Selected for you",
                     press: () {},
@@ -62,7 +65,8 @@ class Body extends StatelessWidget {
                 VerticalSpacing(),
                 VerticalSpacing(),
                 new EventsCarousel(
-                  events: eventHopperApiService
+                  events: EventHopperAPI.eventHopperApiService(
+                          Provider.of<SessionManager>(context).apiMode)
                       .getEventsByCity(
                         sessionManager.city,
                         page: 0,

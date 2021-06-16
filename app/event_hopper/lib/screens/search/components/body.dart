@@ -8,6 +8,7 @@ import 'package:EventHopper/models/users/Relationship.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/screens/friends/components/no_friends.dart';
 import 'package:EventHopper/screens/profile/components/profile_body.dart';
+import 'package:EventHopper/services/eh-server/api_wrapper.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:EventHopper/utils/system_utils.dart';
@@ -113,7 +114,10 @@ class _BodyState extends State<Body> {
           child: Container(
             padding: EdgeInsets.all(5),
             child: StreamBuilder<List<User>>(
-                stream: eventHopperApiService.searchUsers(query).asStream(),
+                stream: EventHopperAPI.eventHopperApiService(
+                        Provider.of<SessionManager>(context).apiMode)
+                    .searchUsers(query)
+                    .asStream(),
                 builder: (BuildContext context, users) {
                   if (!users.hasData ||
                       users.connectionState == ConnectionState.waiting) {

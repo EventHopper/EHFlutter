@@ -265,13 +265,13 @@ class API {
   }
 
   Uri _buildUri(Map<String, String> queryParameters) {
-    print(Uri(
-            port: port,
-            scheme: scheme,
-            host: host,
-            path: '/events',
-            queryParameters: queryParameters)
-        .toString());
+    // print(Uri(
+    //         port: port,
+    //         scheme: scheme,
+    //         host: host,
+    //         path: '/events',
+    //         queryParameters: queryParameters)
+    //     .toString());
     return Uri(
         port: port,
         scheme: scheme,

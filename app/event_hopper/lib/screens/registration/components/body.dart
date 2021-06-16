@@ -1,7 +1,10 @@
 import 'package:EventHopper/services/eh-server/api_service.dart';
+import 'package:EventHopper/services/eh-server/api_wrapper.dart';
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 import '../../route_config.dart';
 
@@ -112,11 +115,13 @@ class _BodyState extends State<Body> {
                     // If the form is valid, send post request to firebase.
                     dynamic responseBody;
                     try {
-                      responseBody = await eventHopperApiService.registerUser(
-                          email: emailFieldController.text,
-                          fullName: nameFieldController.text,
-                          password: passwordFieldController.text,
-                          username: usernameFieldController.text);
+                      responseBody = await EventHopperAPI.eventHopperApiService(
+                              Provider.of<SessionManager>(context).apiMode)
+                          .registerUser(
+                              email: emailFieldController.text,
+                              fullName: nameFieldController.text,
+                              password: passwordFieldController.text,
+                              username: usernameFieldController.text);
                     } catch (e) {
                       Scaffold.of(context).showSnackBar(
                         SnackBar(

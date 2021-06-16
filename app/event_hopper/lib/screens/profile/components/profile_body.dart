@@ -1,6 +1,7 @@
 import 'package:EventHopper/models/users/Relationship.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/services/eh-server/api_service.dart';
+import 'package:EventHopper/services/eh-server/api_wrapper.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
 import 'package:flutter/material.dart';
@@ -86,7 +87,11 @@ class _ProfileBodyState extends State<ProfileBody> {
                                         ImageSource.camera,
                                       );
                                       if (_profileImageFile != null) {
-                                        await eventHopperApiService
+                                        await EventHopperAPI
+                                                .eventHopperApiService(
+                                                    Provider.of<SessionManager>(
+                                                            context)
+                                                        .apiMode)
                                             .uploadUserMedia(
                                                 _profileImageFile.path,
                                                 fbAuth.FirebaseAuth.instance
@@ -109,7 +114,11 @@ class _ProfileBodyState extends State<ProfileBody> {
                                       });
                                       await getImage(ImageSource.gallery);
                                       if (_profileImageFile != null) {
-                                        await eventHopperApiService
+                                        await EventHopperAPI
+                                                .eventHopperApiService(
+                                                    Provider.of<SessionManager>(
+                                                            context)
+                                                        .apiMode)
                                             .uploadUserMedia(
                                                 _profileImageFile.path,
                                                 fbAuth.FirebaseAuth.instance
@@ -153,7 +162,8 @@ class _ProfileBodyState extends State<ProfileBody> {
                                                   image: user.hasData
                                                       ? NetworkImage(
                                                           user.data.image)
-                                                      : Container(),
+                                                      : NetworkImage(
+                                                          'https://github.com/flutter/plugins/raw/master/packages/video_player/video_player/doc/demo_ipod.gif?raw=true'),
                                                 ),
                                               ),
                                             ),
