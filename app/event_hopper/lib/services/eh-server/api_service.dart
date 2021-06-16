@@ -4,16 +4,15 @@ import 'package:EventHopper/models/events/Event.dart';
 import 'package:EventHopper/models/users/Relationship.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/services/services-config.dart';
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:http/http.dart' as http;
 import 'package:EventHopper/services/eh-server/api.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 
-final eventHopperApiService = APIService(API.sandbox());
-
 class APIService {
-  final API api;
+  API api;
   APIService(this.api);
 
   Future<Map<String, dynamic>> getUser(
@@ -33,7 +32,7 @@ class APIService {
 
       Relationship relationship;
       if (relatedTo != null && data['relationship'] != null) {
-        print('this is data: ' + data.toString());
+        //print('this is data: ' + data.toString());
         data['relationship'].length > 0
             ? relationship = Relationship.fromJson(data['relationship'][0])
             : relationship = Relationship.noRelation(user: user);
@@ -80,7 +79,7 @@ class APIService {
 
   Future<List<User>> searchUsers(String query) async {
     final url = api.searchUsers(query).toString();
-    print(url);
+    //print(url);
     final client = new http.Client();
     final response = await client
         .get(Uri.parse(url), headers: {'Authorization': '${api.apiKey}'});
@@ -169,7 +168,7 @@ class APIService {
   Future<dynamic> registerUser(
       {String username, String password, String email, String fullName}) async {
     final url = api.registerUser().toString();
-    print(url);
+    //print(url);
     final client = new http.Client();
     final response = await client.post(Uri.parse(url), headers: {
       'Authorization': '${api.apiKey}',
@@ -198,8 +197,8 @@ class APIService {
 
     String userId = currentUser.uid;
     final url = api.swipeEntry(eventId).toString();
-    print(url);
-    print(direction);
+    //print(url);
+    //print(direction);
     String encoded = json.encode({
       "user_id": "$userId",
       "direction": "$direction",
@@ -207,7 +206,7 @@ class APIService {
       "user_manager_update": {"$direction": "$eventId"},
     });
 
-    print(encoded);
+    //print(encoded);
 
     final client = new http.Client();
     final response = await client.post(
@@ -235,7 +234,7 @@ class APIService {
 
     String userId = currentUser.uid;
     final url = api.getUserEventList(listType, userId).toString();
-    print(url);
+    //print(url);
     final client = new http.Client();
     final response = await client.get(
       Uri.parse(url),
@@ -261,7 +260,7 @@ class APIService {
       String userID, String providerName, String clientID, String refreshToken,
       [String accessToken]) async {
     final url = api.grantOAuth(userID).toString();
-    print(url);
+    //print(url);
     final client = new http.Client();
     final response = await client.post(Uri.parse(url), headers: {
       'Authorization': '${api.apiKey}',
@@ -273,7 +272,7 @@ class APIService {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      print(providerName);
+      //print(providerName);
       throw ('Request ${grantUserOAuthData(userID, providerName, clientID, refreshToken)} failed' +
           '\nResponse:${response.statusCode}\n${response.reasonPhrase}');
     }
@@ -291,13 +290,13 @@ class APIService {
       "eventid": eventID,
     });
     if (response.statusCode == 200) {
-      print('successfully added to calendar: ' + response.body);
+      //print('successfully added to calendar: ' + response.body);
       return jsonDecode(response.body);
     } else {
       // throw ('Request ${addEventToCalendar(userID, eventID)} failed' +
       //     '\nResponse:${response.statusCode}\n${response.reasonPhrase}'
       // );
-      print('an error occured: ' + response.body);
+      //print('an error occured: ' + response.body);
       return jsonDecode(response.body);
     }
   }
@@ -345,7 +344,7 @@ class APIService {
     int state,
     Relationship relationship,
   ) async {
-    print(relationship.toString());
+    //print(relationship.toString());
     final url = api.updateUserRelationships().toString();
     final idToken =
         (await fbAuth.FirebaseAuth.instance.currentUser.getIdTokenResult(true))
@@ -360,7 +359,7 @@ class APIService {
       "state": "$state"
     });
     dynamic data = jsonDecode(response.body);
-    print('this was data: ' + data.toString());
+    //print('this was data: ' + data.toString());
     if (response.statusCode == 200) {
       return {
         'status': data['status'],
@@ -381,7 +380,7 @@ class APIService {
     String accessType,
   ) async {
     final url = api.uploadUserMedia(userID).toString();
-    print(url);
+    //print(url);
     final client = new http.MultipartRequest(
       "POST",
       Uri.parse(url),

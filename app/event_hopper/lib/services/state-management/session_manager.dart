@@ -1,11 +1,11 @@
-import 'dart:convert';
 import 'dart:math';
 
-import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
+import 'package:EventHopper/services/eh-server/api.dart';
+import 'package:EventHopper/services/eh-server/api_service.dart';
+import 'package:EventHopper/services/eh-server/api_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/models/users/User.dart';
 import 'package:EventHopper/models/events/Event.dart';
-import 'package:EventHopper/services/eh-server/api_service.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:package_info/package_info.dart';
 
@@ -33,6 +33,15 @@ class SessionManager extends ChangeNotifier {
 
   int eventTotalCount = 0;
 
+  var apiMode = API.production();
+
+  bool setApiMode(value) {
+    apiMode = value ? new API.sandbox() : new API.production();
+    print(apiMode.environment.name);
+    notifyListeners();
+    return value;
+  }
+
   var city = 'Philadelphia';
 
   List<String> cities = [
@@ -44,7 +53,8 @@ class SessionManager extends ChangeNotifier {
   ];
 
   Future<List<User>> updateSearch(String query) {
-    this.search = eventHopperApiService.searchUsers(query);
+    this.search =
+        EventHopperAPI.eventHopperApiService(apiMode).searchUsers(query);
     notifyListeners();
     return this.search;
   }
@@ -69,7 +79,8 @@ class SessionManager extends ChangeNotifier {
   }
 
   void updateUser() {
-    this.currentUser = eventHopperApiService.getLoggedInUserData();
+    this.currentUser =
+        EventHopperAPI.eventHopperApiService(apiMode).getLoggedInUserData();
     notifyListeners();
   }
 
@@ -90,8 +101,10 @@ class SessionManager extends ChangeNotifier {
     int page = Random().nextInt(10);
     int days = Random().nextInt(60);
     print('page is $page');
-    this.eventsNearMe = eventHopperApiService.getEventsByCity('$city',
-        page: page, dateAfter: DateTime.now().add(new Duration(days: days)));
+    this.eventsNearMe = EventHopperAPI.eventHopperApiService(apiMode)
+        .getEventsByCity('$city',
+            page: page,
+            dateAfter: DateTime.now().add(new Duration(days: days)));
     notifyListeners();
   }
 
@@ -107,8 +120,8 @@ class SessionManager extends ChangeNotifier {
   }
 
   void getLeftMap() async {
-    var eventLeftMap =
-        await eventHopperApiService.getUserEventList('event_left');
+    var eventLeftMap = await EventHopperAPI.eventHopperApiService(apiMode)
+        .getUserEventList('event_left');
     this.eventLeft = eventLeftMap['events'] as List<Event>;
     this.eventLeftCount = eventLeftMap['count'];
     print('done left');
@@ -117,7 +130,8 @@ class SessionManager extends ChangeNotifier {
   }
 
   void getUpMap() async {
-    var eventUpMap = await eventHopperApiService.getUserEventList('event_up');
+    var eventUpMap = await EventHopperAPI.eventHopperApiService(apiMode)
+        .getUserEventList('event_up');
     this.eventUp = eventUpMap['events'] as List<Event>;
     this.eventTotalCount += eventUpMap['count'];
     this.eventUpCount = eventUpMap['count'];
@@ -127,8 +141,8 @@ class SessionManager extends ChangeNotifier {
   }
 
   void getRightMap() async {
-    var eventRightMap =
-        await eventHopperApiService.getUserEventList('event_right');
+    var eventRightMap = await EventHopperAPI.eventHopperApiService(apiMode)
+        .getUserEventList('event_right');
     this.eventRight = eventRightMap['events'] as List<Event>;
     this.eventTotalCount += eventRightMap['count'];
     this.eventRightCount = eventRightMap['count'];
@@ -187,10 +201,10 @@ class SessionManager extends ChangeNotifier {
   void fetchEventsByCategory(String category) async {
     int page = Random().nextInt(9);
     if (category == 'Random') {
-      this.eventsFromCategory = eventHopperApiService.getEventsByCity('$city',
-          page: page, isRandom: true);
+      this.eventsFromCategory = EventHopperAPI.eventHopperApiService(apiMode)
+          .getEventsByCity('$city', page: page, isRandom: true);
     } else {
-      this.eventsFromCategory = eventHopperApiService
+      this.eventsFromCategory = EventHopperAPI.eventHopperApiService(apiMode)
           .getEventsByCity('$city', page: page, categories: [category]);
     }
     notifyListeners();
@@ -237,17 +251,19 @@ class SessionManager extends ChangeNotifier {
   }
 
   void fetchCurrentUserData() async {
-    this.currentUser = eventHopperApiService.getLoggedInUserData()
-      ..then((value) => value..image += '?q=${Random.secure().nextDouble()}');
+    this.currentUser = EventHopperAPI.eventHopperApiService(apiMode)
+        .getLoggedInUserData()
+          ..then(
+              (value) => value..image += '?q=${Random.secure().nextDouble()}');
     notifyListeners();
   }
 
   void fetchOtherUserProfileViewData(String username) async {
     String currentUsername = (await this.currentUser).username;
-    this.otherUserProfileView = eventHopperApiService.getUser(username,
-        relatedTo: currentUsername)
-      ..then((value) =>
-          value['user']..image += '?q=${Random.secure().nextDouble()}');
+    this.otherUserProfileView = EventHopperAPI.eventHopperApiService(apiMode)
+        .getUser(username, relatedTo: currentUsername)
+          ..then((value) =>
+              value['user']..image += '?q=${Random.secure().nextDouble()}');
     notifyListeners();
   }
 }

@@ -62,6 +62,7 @@ dependencies:
   intl: ^0.17.0
   toast: ^0.1.5
   onesignal_flutter: ^3.0.0-beta1
+  shared_preferences: ^2.0.6
 
 dependency_overrides:
   # Override path_provider to pick up fixes for FFI changes.

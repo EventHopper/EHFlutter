@@ -1,11 +1,14 @@
 import 'package:EventHopper/components/friend_request.dart';
 import 'package:EventHopper/models/users/Relationship.dart';
 import 'package:EventHopper/screens/friends/components/no_friends.dart';
+import 'package:EventHopper/services/eh-server/api_wrapper.dart';
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/size_config.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:EventHopper/services/eh-server/api_service.dart';
+import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -33,8 +36,12 @@ class _BodyState extends State<Body> {
     // ];
     return FutureBuilder(
         future: Future.wait([
-          eventHopperApiService.getUserRelationships(1),
-          eventHopperApiService.getUserRelationships(2)
+          EventHopperAPI.eventHopperApiService(
+                  Provider.of<SessionManager>(context).apiMode)
+              .getUserRelationships(1),
+          EventHopperAPI.eventHopperApiService(
+                  Provider.of<SessionManager>(context).apiMode)
+              .getUserRelationships(2)
         ]),
         builder: (context, relationships) {
           if (relationships.connectionState == ConnectionState.none &&

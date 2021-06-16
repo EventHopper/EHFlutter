@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:EventHopper/components/ux_approved/glass_text_field.dart';
 import 'package:EventHopper/screens/route_config.dart';
 import 'package:EventHopper/services/eh-server/api_service.dart';
+import 'package:EventHopper/services/eh-server/api_wrapper.dart';
 import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -130,7 +131,9 @@ class FigmaBody extends StatelessWidget {
                       ),
                       onPressed: () async {
                         if (!isValidEmail(email)) {
-                          email = await eventHopperApiService.getEmail(email);
+                          email = await EventHopperAPI.eventHopperApiService(
+                                  Provider.of<SessionManager>(context).apiMode)
+                              .getEmail(email);
                         }
                         print("email is $email");
                         if (email != null) {

@@ -2,6 +2,8 @@ import 'package:EventHopper/components/app_bar.dart';
 import 'package:EventHopper/components/user_profile.dart';
 import 'package:EventHopper/models/users/Relationship.dart';
 import 'package:EventHopper/services/eh-server/api_service.dart';
+import 'package:EventHopper/services/eh-server/api_wrapper.dart';
+import 'package:EventHopper/services/state-management/session_manager.dart';
 import 'package:EventHopper/utils/constants.dart';
 import 'package:EventHopper/utils/screen_navigator.dart';
 import 'package:EventHopper/utils/size_config.dart';
@@ -10,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class FriendRequest extends StatelessWidget {
@@ -116,8 +119,10 @@ class _RelationshipActionButtonState extends State<RelationshipActionButton> {
                         widget.state = -5;
                       });
                       widget.isRecipient = false;
-                      Map<dynamic, dynamic> result = await eventHopperApiService
-                          .updateUserRelationships(1, widget.relationship);
+                      Map<dynamic, dynamic> result =
+                          await EventHopperAPI.eventHopperApiService(
+                                  Provider.of<SessionManager>(context).apiMode)
+                              .updateUserRelationships(1, widget.relationship);
                       setState(() {
                         result['status'] == 2
                             ? executeRelationshipUpdate(1)
@@ -141,7 +146,9 @@ class _RelationshipActionButtonState extends State<RelationshipActionButton> {
                               widget.state = -5;
                             });
                             Map<dynamic, dynamic> result =
-                                await eventHopperApiService
+                                await EventHopperAPI.eventHopperApiService(
+                                        Provider.of<SessionManager>(context)
+                                            .apiMode)
                                     .updateUserRelationships(
                                         2, widget.relationship);
                             setState(() {
@@ -169,7 +176,9 @@ class _RelationshipActionButtonState extends State<RelationshipActionButton> {
                                 widget.state = -5;
                               });
                               Map<dynamic, dynamic> result =
-                                  await eventHopperApiService
+                                  await EventHopperAPI.eventHopperApiService(
+                                          Provider.of<SessionManager>(context)
+                                              .apiMode)
                                       .updateUserRelationships(
                                           0, widget.relationship);
                               setState(() {
@@ -203,7 +212,9 @@ class _RelationshipActionButtonState extends State<RelationshipActionButton> {
                                   widget.state = -5;
                                 });
                                 Map<dynamic, dynamic> result =
-                                    await eventHopperApiService
+                                    await EventHopperAPI.eventHopperApiService(
+                                            Provider.of<SessionManager>(context)
+                                                .apiMode)
                                         .updateUserRelationships(
                                             0, widget.relationship);
                                 setState(() {
@@ -231,7 +242,11 @@ class _RelationshipActionButtonState extends State<RelationshipActionButton> {
                                       widget.state = -5;
                                     });
                                     Map<dynamic, dynamic> result =
-                                        await eventHopperApiService
+                                        await EventHopperAPI
+                                                .eventHopperApiService(
+                                                    Provider.of<SessionManager>(
+                                                            context)
+                                                        .apiMode)
                                             .updateUserRelationships(
                                                 0, widget.relationship);
                                     setState(() {
